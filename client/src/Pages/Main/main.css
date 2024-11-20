@@ -1,0 +1,13 @@
+
+.courses{
+    display: flex;
+    flex-wrap: wrap;
+}
+.course{
+
+    border: 1px solid black;
+    margin-right: 10px;
+    width: 200px;
+    text-align: center;
+    border-radius: 10px;
+}
