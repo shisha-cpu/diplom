@@ -26,7 +26,10 @@ const userModel = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
         default: {}
-    }]
+    }],
+    fovourite: {
+        type :Array
+    }
 }, {
     timestamps: true
 });

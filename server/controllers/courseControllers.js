@@ -39,6 +39,20 @@ export const getCourseById = async (req , res )=>{
     }
 }
 
+export const getFovourite = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findOne({ _id: id });
+        if (!user) {
+            return res.status(404).json({ message: 'Пользователь не найден' });
+        }
+        // Возвращаем только массив fovourite
+        res.json(user.fovourite);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
 export const getUserCourses = async (req, res) => {
     try {
         const { id } = req.params;
@@ -48,13 +62,41 @@ export const getUserCourses = async (req, res) => {
         }
         const userCourses = await Course.find({author : id})
         res.json(userCourses);
-        console.log(userCourses);
         
     } catch (err) {
         res.status(500).send(err.message);
     }
 };
 
+export const changeLikes = async (req , res ) =>{
+    try {
+        const {userId  , courseId , action }=  req.body
+        const user = await User.findOne({_id: userId});
+        if (!user) {
+            res.status(404).json({message : 'Пользователь не найден'})
+      }
+      const course = await Course.findOne({_id: courseId});
+        if (!course) {  
+            res.status(404).json({message : 'Курс не найден '})
+        }
+        switch (action) {
+            case 'plus':
+                    course.likes += 1
+                    user.fovourite.push(courseId)
+                break;
+            case 'minus':
+                course.likes -= 1 
+                user.fovourite = user.fovourite.filter(id => id.toString() !== courseId.toString()); 
+            break;
+        }
+        await course.save()
+        await user.save()
+
+        res.json(user.fovourite)
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
 
 export const deleteCourse = async (req, res) => {
     try {

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 
 export default function Dashboard(){
     const user = useSelector(store =>store.user.userInfo)
-    const [change , setChange] = useState(false)
+    const [change , setChange] = useState('my')
     const [title , setTitle] = useState('')
     const [text , setText ] = useState('')
     const [price , setPrice] = useState(0)
@@ -61,6 +61,8 @@ export default function Dashboard(){
                 <div className="user-info">
                     <h3>Личный кабинет пользователя  : {user.name}</h3>
                     <h5>Email : {user.email}</h5>
+                    <p>За последнее время вы заработали : </p>
+                    <button>Забрать </button>
                     {/* <h5>Навыки : {user.skills.map((skill , id)=>(
                         <p key={id}>{skill}</p>
                     ))}</h5> */}
@@ -69,41 +71,71 @@ export default function Dashboard(){
             <hr />
             <div className="dashboard-main">
                 <div className="content">
-                    <button onClick={()=>setChange(false)}>Мои курсы </button>
-                    <button onClick={()=>setChange(true)}>Новый курс </button>
-                    {change ?               
-                    <div className="new-content">
-                        <form onSubmit={handleSubmit}>
-                           <input type="text"  value={title} onChange={e=>setTitle(e.target.value)} placeholder="Заголовок"/>\
-                           <input type="text"  value={text} onChange={e=>setText(e.target.value)} placeholder="Текст курса"/>
-                           <input type="text"  value={img} onChange={e=>setImg(e.target.value)} placeholder="Фотошрафия"/>
-                           <input type="number"value={price}   onChange={e=>setPrice(e.target.value)} placeholder="Цена"/>
-                           <button type="submit">Создать</button>
-                        </form>
-                    </div>
-                    :
-                    <div className="active-content">
-                   {loading ? (
-                        <p>Загрузка...</p>
-                    ) : userCourses.length > 0 ? (
-                        userCourses.map((course, id) => {
-                            console.log(course); // Логируем курс
-                            return (
-                                <div key={id} className="user-courses">
-                                    <h4>
-                                        <Link to={`/course/${course._id}`}>{course.title}</Link>
-                                    </h4>
-                                    <button onClick={() => handleDelete(course._id)}>Удалить</button>
-                                </div>
-                            );
-                        })
-                    ) : (
-                        <p>Курсы не найдены.</p>
-                    )}
+                    <button onClick={()=>setChange('my')}>Мои курсы </button>
+                    <button onClick={()=>setChange('new')}>Новый курс </button>
+                    <button onClick={()=>setChange('stat')}  >Стаитистика </button>
+                    {change === 'new' ? (
+  <div className="new-content">
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        placeholder="Заголовок"
+      />
+      <input
+        type="text"
+        value={text}
+        onChange={e => setText(e.target.value)}
+        placeholder="Текст курса"
+      />
+      <input
+        type="text"
+        value={img}
+        onChange={e => setImg(e.target.value)}
+        placeholder="Фотошрафия"
+      />
+      <input
+        type="number"
+        value={price}
+        onChange={e => setPrice(e.target.value)}
+        placeholder="Цена"
+      />
+      <button type="submit">Создать</button>
+    </form>
+  </div>
+) : change === 'my' ? (
+  <div className="active-content">
+    {loading ? (
+      <p>Загрузка...</p>
+    ) : userCourses.length > 0 ? (
+      userCourses.map((course, id) => {
+        console.log(course); // Логируем курс
+        return (
+          <div key={id} className="user-courses">
+            <h4>
+              <Link to={`/course/${course._id}`}>{course.title}</Link>
+            </h4>
+            <button onClick={() => handleDelete(course._id)}>Удалить</button>
+          </div>
+        );
+      })
+    ) : (
+      <p>Курсы не найдены.</p>
+    )}
+  </div>
+) : change === 'stat' ? (
+  <div className="stat-content">
+    <p>Всего просмотров </p>
+    <p>Всего лайков </p>
+    
+    <p>CRT</p>
+  
+  </div>
+) : (
+  <p>Неверное состояние.</p> 
+)}
 
-
-                </div>
-                    }
                 </div>
             </div>
         </div>

@@ -25,7 +25,8 @@
     app.get('/course/:id' , CourseController.getCourseById)
     app.get('/courseDelete/:id' , CourseController.deleteCourse)
     app.get('/userCourse/:id' , CourseController.getUserCourses)
-    
+    app.post('/courseLike' , CourseController.changeLikes)
+    app.get('/fovourite/:id' , CourseController.getFovourite)
     //Баланс
 
     app.post('/balance' , UserController.changeBalance)
