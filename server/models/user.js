@@ -27,6 +27,10 @@ const userModel = new mongoose.Schema({
         ref: "Course",
         default: {}
     }],
+    purchased :
+    {type : Array 
+        
+    },
     fovourite: {
         type :Array
     }

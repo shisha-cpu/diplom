@@ -27,6 +27,10 @@
     app.get('/userCourse/:id' , CourseController.getUserCourses)
     app.post('/courseLike' , CourseController.changeLikes)
     app.get('/fovourite/:id' , CourseController.getFovourite)
+    app.post('/pushared' , CourseController.userGetCourse)
+    app.get('/pushared/:id' , CourseController.getPurchased)
+    app.post('/addView/:id' , CourseController.AddView)
+    
     //Баланс
 
     app.post('/balance' , UserController.changeBalance)

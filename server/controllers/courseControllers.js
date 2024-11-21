@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import Course from "../models/course.js";
+import { application } from "express";
 
 //Курсы 
 export const addCourse = async (req, res) => {
@@ -19,6 +20,56 @@ export const addCourse = async (req, res) => {
     }
   };
   
+  export const userGetCourse = async (req, res) => {
+    try {
+        const { userId, courseId } = req.body;
+
+        const user = await User.findOne({ _id: userId });
+        if (!user) {
+            return res.status(404).json({ message: 'Пользователь не найден' });
+        }
+
+        const course = await Course.findOne({ _id: courseId });
+        if (!course) {
+            return res.status(404).json({ message: 'Курс не найден' });
+        }
+
+        if (user.purchased.length > 0) {
+            let isCoursePurchased = false;
+            for (let i = 0; i < user.purchased.length; i++) {
+                if (user.purchased[i]._id.equals(course._id)) {
+                    isCoursePurchased = true;
+                    break;
+                }
+            }
+
+            if (!isCoursePurchased) {
+                user.purchased.push(course);
+            }
+        } else {
+            user.purchased.push(course);
+        }
+
+        await user.save();
+        res.json(user.purchased);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+export const getPurchased = async (req , res )=>{
+    try {
+        const {id} = req.params
+        const user = await User.findOne({ _id: id });
+        if (!user) {
+            return res.status(404).json({ message: 'Пользователь не найден' });
+        }
+
+        res.json(user.purchased)
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
 export const getCourse = async (req , res )=>{
     try {
         const courses = await Course.find() 
@@ -94,7 +145,7 @@ export const changeLikes = async (req , res ) =>{
         await course.save()
         await user.save()
 
-        res.json(user.fovourite)
+        res.json(course.likes)
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -122,3 +173,18 @@ export const deleteCourse = async (req, res) => {
         res.status(500).send(err.message);
     }
 };
+export const AddView = async (req , res )=>{
+    try {
+        const {id }  = req.params
+        const course = await Course.findOne({_id : id})
+        if (!course) {
+            return res.status(404).json({message : 'Курс не найден '})            
+        }
+        course.views ++
+        await course.save()
+
+        res.json(course.views)
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}

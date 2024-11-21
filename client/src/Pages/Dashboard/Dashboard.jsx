@@ -16,24 +16,45 @@ export default function Dashboard() {
   const [modules, setModules] = useState([]); // Новый список для модулей
   const [price, setPrice] = useState("");
   const [img, setImg] = useState("");
-
-  // Поля для модуля
+  const [pushared , setPushared] = useState([])
   const [moduleTitle, setModuleTitle] = useState("");
   const [moduleContent, setModuleContent] = useState("");
   const [moduleImg, setModuleImg] = useState("");
-
+  const [likes , setLikes ] = useState(0)
+  const [views ,setViews] = useState(0)
+  const [ctr , setCtr] = useState(0)
   useEffect(() => {
     if (user._id) {
       axios
         .get(`http://localhost:4444/userCourse/${user._id}`)
         .then((res) => {
           setUserCourses(res.data);
+
+      
           setLoading(false);
         })
         .catch((err) => console.log(err));
+        axios
+        .get(`http://localhost:4444/pushared/${user._id}`)
+        .then((res) => {
+          setPushared(res.data);
+        })
+        .catch((err) => console.log(err));
+        
     }
+    
   }, [user._id]);
 
+  useEffect(()=>{
+    if (userCourses) {
+      const totalLikes = userCourses.reduce((sum , course )=>sum + course.likes , 0 )
+      setLikes(totalLikes)
+      const totalViews = userCourses.reduce((sum , course )=>sum + course.views , 0 )
+      setViews(totalViews)
+      setCtr(Math.round(likes / views * 100));
+
+    }
+  },[userCourses])
   // Добавление модуля
   const addModule = () => {
     if (moduleTitle && moduleContent) {
@@ -80,13 +101,17 @@ export default function Dashboard() {
       })
       .catch((e) => console.log(e));
   };
-
+  //Статистика 
+  
+  
   return (
     <div className="dashboard">
       <div className="dashboard-header">
         <div className="user-info">
           <h3>Личный кабинет пользователя: {user.name}</h3>
           <h5>Email: {user.email}</h5>
+          <p>Новые поступления :123 </p>
+          <button>Получить </button>
         </div>
       </div>
       <hr />
@@ -94,7 +119,9 @@ export default function Dashboard() {
         <div className="content">
           <button onClick={() => setChange("my")}>Мои курсы</button>
           <button onClick={() => setChange("new")}>Новый курс</button>
-          <button onClick={() => setChange("stat")}>Статистика </button>
+          <button onClick={() => setChange("pushared")}>Купленные курсы  </button>
+          <button onClick={() => setChange("stat")}>Моя статистика </button>
+
 
           {change === "new" ? (
             <div className="new-content">
@@ -176,6 +203,8 @@ export default function Dashboard() {
                     <h4>
                       <Link to={`/course/${course._id}`}>{course.title}</Link>
                     </h4>
+                    <button> Удалить </button>
+                    <button>Статистика </button>
                   </div>
                 ))
               ) : (
@@ -183,8 +212,32 @@ export default function Dashboard() {
               )}
             </div>
           ) : change==="stat" ? (
-            <><h3>Статистика </h3></>
-          ) : ''}
+            <>
+            <div className="stat">
+              <h3>Всего публикаций : {userCourses.length} </h3>
+              <h3>лайки : {likes}</h3>
+              <h3>посмотры : {views}</h3>
+              <h3>CTR : {ctr}%</h3>
+              <h3>Заработанно : </h3>
+            </div>
+            </>
+          ) :  change==="pushared" ? 
+          <div className="pushared">
+            {loading ? (
+                <p>Загрузка...</p>
+              ) : pushared.length > 0 ? (
+                pushared.map((course, id) => (
+                  <div key={id} className="pushared-courses">
+                    <h4>
+                      <Link to={`/course/${course._id}`}>{course.title}</Link>
+                    </h4>
+                  </div>
+                ))
+              ) : (
+                <p>Курсы не найдены.</p>
+              )}
+          </div> 
+          : ''}
         </div>
       </div>
     </div>

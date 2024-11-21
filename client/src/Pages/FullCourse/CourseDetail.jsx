@@ -12,6 +12,12 @@ export default function CourseDetail() {
   const [likeStatus , setlikeStatus ] = useState(false)
 
 
+
+
+useEffect(()=>{
+    axios.post(`http://localhost:4444/addView/${id}`)
+},[])
+
 useEffect(() => {
   axios.get(`http://localhost:4444/course/${id}`)
       .then(res => {
@@ -67,6 +73,7 @@ useEffect(() => {
       {userId : user._id , courseId : course._id , action : 'plus'})
     .then(res =>{
       setlikeStatus(true)
+
     })
   }
 
@@ -74,12 +81,11 @@ useEffect(() => {
     axios.post(`http://localhost:4444/courseLike`,
       {userId : user._id , courseId : course._id , action : 'minus'})
     .then(res =>{
-      console.log(res.data)
       setlikeStatus(false)
     })
   }
 
-  console.log(course);
+  // console.log(course);
   
   return (
 <div className="course-detail">
@@ -106,8 +112,8 @@ useEffect(() => {
     <p>Модули отсутствуют.</p>
   )}
 
-  <p>Просмотров: {course.views || 0}</p>
-  <p>Лайков: {course.likes || 0}</p>
+  <p>Просмотров: {course.views }</p>
+  <p>Лайков: {course.likes}</p>
   {!likeStatus ? (
     <button onClick={addLIke}>Поставить лайк</button>
   ) : (
@@ -117,6 +123,7 @@ useEffect(() => {
     <>
       <button>Редактировать</button>
       <button>Статистика</button>
+      <button>Удалить</button>
     </>
   )}
 </div>
