@@ -4,19 +4,21 @@ import Course from "../models/course.js";
 //Курсы 
 export const addCourse = async (req, res) => {
     try {
-        const { courseData, userId } = req.body;
-        
- 
-        const newCourse = await Course.create({ ...courseData, author: userId });
-
-        
-        await User.findByIdAndUpdate(userId, { $push: { courses: newCourse._id } });
-
-        res.status(201).json(newCourse);
+      const { courseData, userId } = req.body;
+  
+      const newCourse = await Course.create({ 
+        ...courseData, 
+        author: userId 
+      });
+  
+      await User.findByIdAndUpdate(userId, { $push: { courses: newCourse._id } });
+  
+      res.status(201).json(newCourse);
     } catch (err) {
-        res.status(500).send(err.message);
+      res.status(500).send(err.message);
     }
-};
+  };
+  
 export const getCourse = async (req , res )=>{
     try {
         const courses = await Course.find() 

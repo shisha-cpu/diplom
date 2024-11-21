@@ -10,7 +10,7 @@ export default function CourseDetail() {
   const user  = useSelector(state => state.user.userInfo)
   const [isAuthor , setAuthor] = useState(false)
   const [likeStatus , setlikeStatus ] = useState(false)
-const [fovourite , setFovourite] = useState()
+
 
 useEffect(() => {
   axios.get(`http://localhost:4444/course/${id}`)
@@ -55,7 +55,7 @@ useEffect(() => {
       setAuthor(true);
     }
   }
-}, [course?.author, user?._id]); // Зависимости — только те поля, которые изменяются
+}, [course?.author, user?._id]); 
 
   if (loading) {
     return <h3>Loading...</h3>;
@@ -79,21 +79,47 @@ useEffect(() => {
     })
   }
 
+  console.log(course);
+  
   return (
-    <div className="course-detail">
-      <h2>{course.title}</h2>
-      <p>{course.description}</p>
-      <p>Цена: {course.price > 0 ? `${course.price} руб.` : 'Бесплатно'}</p>
-      <p>Просмотров: {course.views}</p>
-      <p>Лайков: {course.likes}</p>
-      {!likeStatus ? <button onClick={addLIke}>Поставить лайк </button> 
-      : <button onClick={removeLike}>Лайк стоит </button> }
-      {isAuthor ? 
-        <>
-          <button>Редактировать </button>
-          <button>Статистика </button>
-        </> 
-      : ''}
-    </div>
+<div className="course-detail">
+  <h2>{course.title}</h2>
+  <p>{course.description}</p>
+  <p>Цена: {course.price > 0 ? `${course.price} руб.` : 'Бесплатно'}</p>
+  <p>Продолжительность: {course.duration} часов</p>
+
+  <p>Дата создания: {new Date(course.createdAt).toLocaleDateString()}</p>
+  <p>Дата обновления: {new Date(course.updatedAt).toLocaleDateString()}</p>
+  
+  <h3>Модули курса</h3>
+  {course.modules && course.modules.length > 0 ? (
+    <ul>
+      {course.modules.map((module) => (
+        <li key={module._id} className="module-item">
+          <h4>{module.title}</h4>
+          <p>{module.content}</p>
+          {module.img && <img src={module.img} alt={module.title} />}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>Модули отсутствуют.</p>
+  )}
+
+  <p>Просмотров: {course.views || 0}</p>
+  <p>Лайков: {course.likes || 0}</p>
+  {!likeStatus ? (
+    <button onClick={addLIke}>Поставить лайк</button>
+  ) : (
+    <button onClick={removeLike}>Лайк стоит</button>
+  )}
+  {isAuthor && (
+    <>
+      <button>Редактировать</button>
+      <button>Статистика</button>
+    </>
+  )}
+</div>
+
   );
 }
