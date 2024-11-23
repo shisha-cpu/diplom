@@ -16,7 +16,7 @@ const userSlice = createSlice({
             localStorage.removeItem('user')
         },
         changeUserBalance(state , action){
-            state.userInfo.balance = action.payload
+            state.userInfo.balance.balance = action.payload
             localStorage.setItem('user', JSON.stringify(state.userInfo));
         }
     }

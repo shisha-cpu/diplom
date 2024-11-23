@@ -37,7 +37,7 @@ export const addCourse = async (req, res) => {
         if (user.purchased.length > 0) {
             let isCoursePurchased = false;
             for (let i = 0; i < user.purchased.length; i++) {
-                if (user.purchased[i]._id.equals(course._id)) {
+                if (user.purchased[i]._id.equals(course._id) && userId !== course.author) {
                     isCoursePurchased = true;
                     break;
                 }
@@ -134,10 +134,16 @@ export const changeLikes = async (req , res ) =>{
         }
         switch (action) {
             case 'plus':
+                    user.balance.nweBalance += 1 
+                    user.balance.allHistoryBalance ++
                     course.likes += 1
                     user.fovourite.push(courseId)
                 break;
             case 'minus':
+                if (user.balance.nweBalance > 0 ) {
+                    user.balance.nweBalance -= 1 
+                    user.balance.allHistoryBalance --
+                }
                 course.likes -= 1 
                 user.fovourite = user.fovourite.filter(id => id.toString() !== courseId.toString()); 
             break;
@@ -151,9 +157,39 @@ export const changeLikes = async (req , res ) =>{
     }
 }
 
+
+export const addNewBalance =async ( req , res ) =>{
+    try {
+        const {id }=req.params
+        const user = await User.findOne({_id: id});
+        if (!user) {
+            res.status(404).json({message : 'Пользователь не найден'})
+      }
+
+        res.json(user.balance.nweBalance)
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+export const clwarNewBalance = async (req , res) =>{
+    try {
+        const {id }=req.params
+        const user = await User.findOne({_id: id});
+        if (!user) {
+            res.status(404).json({message : 'Пользователь не найден'})
+      }
+        user.balance.nweBalance =0
+        await user.save()
+        res.json(user.balance.nweBalance)
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
 export const deleteCourse = async (req, res) => {
     try {
         const { id } = req.params;
+        const {userId} = req.body
         if (!id) {
             return res.status(404).send('ID не пришел');
         }
@@ -163,11 +199,17 @@ export const deleteCourse = async (req, res) => {
             return res.status(404).send('Курс не найден');
         }
 
+        const user = await User.findById(userId)
+        if (!user) {
+            res.status(404).json({message : 'Пользователь не найден'})
+      }
+      user.pushared = user.pushared.filter(item => item.toString() !== course._id.toString());
+      await user.save();
         await User.updateOne(
             { _id: course.author }, 
             { $pull: { courses: course._id } }
         );
-
+        
         res.send('Курс успешно удален');
     } catch (err) {
         res.status(500).send(err.message);
@@ -186,5 +228,17 @@ export const AddView = async (req , res )=>{
         res.json(course.views)
     } catch (err) {
         res.status(500).send(err.message);
+    }
+}
+export const getAllBalance = async (req , res )=>{
+    try {
+        const {id}  = req.params
+        const user = await User.findById(id)
+        if (!user) {
+            return res.status(404).json({message : 'Пользователь не найден '})
+        }
+        res.json(user.balance.allHistoryBalance)
+    } catch (err) {
+         res.status(500).send(err.message);
     }
 }

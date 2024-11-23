@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function CourseDetail() {
   const { id } = useParams();
@@ -10,7 +10,7 @@ export default function CourseDetail() {
   const user  = useSelector(state => state.user.userInfo)
   const [isAuthor , setAuthor] = useState(false)
   const [likeStatus , setlikeStatus ] = useState(false)
-
+  const navigate = useNavigate()
 
 
 
@@ -86,7 +86,16 @@ useEffect(() => {
   }
 
   // console.log(course);
-  
+  const redirectToStat =  (id)=>{
+    navigate(`/courseStat/${id}`);
+  }
+  const handleDelete = (id)=>{
+    axios.delete(`http://localhost:4444/courseDelete/${id}`)
+    .then(navigate('/'))
+    .catch(err => console.log(err)
+    )
+      
+  }
   return (
 <div className="course-detail">
   <h2>{course.title}</h2>
@@ -122,8 +131,10 @@ useEffect(() => {
   {isAuthor && (
     <>
       <button>Редактировать</button>
-      <button>Статистика</button>
-      <button>Удалить</button>
+      <button onClick={()=>{
+        redirectToStat(course._id)
+ }}>Статистика</button>
+    <button onClick={()=>{handleDelete(course._id)}}>Удалить</button>
     </>
   )}
 </div>

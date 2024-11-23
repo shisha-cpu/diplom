@@ -9,7 +9,7 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashPass = await bcrypt.hash(password, salt);
 
-    try {
+    try {   
         const userData = new User({
             name,
             email,
@@ -66,16 +66,17 @@ export const login = async (req, res) => {
             }
 
             if (action === 'plus') {
-                user.balance += sum;
+                user.balance.balance += sum;
             } else if (action === 'minus') {
-                user.balance -= sum; 
+                user.balance.balance -= sum; 
             } else {
                 return res.sendStatus(400).json('Такого действия нет');
             }
 
             await user.save(); 
-            res.json(user.balance)
+            res.json(user.balance.balance)
         } catch (err) {
             res.sendStatus(500).json({ message: err.message });
         }
     };
+

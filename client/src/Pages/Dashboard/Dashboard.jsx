@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { changeUserBalance } from "../../store/slices/userSlice";
+
 
 export default function Dashboard() {
   const user = useSelector((store) => store.user.userInfo);
@@ -23,6 +25,10 @@ export default function Dashboard() {
   const [likes , setLikes ] = useState(0)
   const [views ,setViews] = useState(0)
   const [ctr , setCtr] = useState(0)
+  const [newBalance , setNewBalance] = useState(0)
+  const [allHysoryBalance , setAllHistoryBalance] = useState(0)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   useEffect(() => {
     if (user._id) {
       axios
@@ -40,18 +46,34 @@ export default function Dashboard() {
           setPushared(res.data);
         })
         .catch((err) => console.log(err));
-        
-    }
+        axios
+        .get(`http://localhost:4444/getNewBalace/${user._id}`)
+        .then((res) => {
+          setNewBalance(res.data);
+          console.log(res.data);
+          
+        })
+        .catch((err) => console.log(err));
+        axios
+        .get(`http://localhost:4444/allHysoryBalance/${user._id}`)
+        .then((res) => {
+          setAllHistoryBalance(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    } 
     
   }, [user._id]);
 
   useEffect(()=>{
-    if (userCourses) {
+    if (userCourses ) {
       const totalLikes = userCourses.reduce((sum , course )=>sum + course.likes , 0 )
       setLikes(totalLikes)
       const totalViews = userCourses.reduce((sum , course )=>sum + course.views , 0 )
       setViews(totalViews)
-      setCtr(Math.round(likes / views * 100));
+  
+      
+      setCtr(Math.round(totalLikes / totalViews * 100));
 
     }
   },[userCourses])
@@ -91,27 +113,56 @@ export default function Dashboard() {
         userId: user._id,
       })
       .then((res) => {
-        console.log(res);
+        
         setTitle("");
         setDescription("");
         setDuration("");
         setModules([]);
         setPrice("");
         setImg("");
+        location.reload()
       })
       .catch((e) => console.log(e));
   };
-  //Статистика 
-  
-  
+  const addUserBalance = ()=>{
+ 
+    
+    axios.post(`http://localhost:4444/balance` , {action : 'plus' , id : user._id , sum : newBalance})
+    .then(res =>{
+      dispatch(changeUserBalance(res.data))
+      axios.get(`http://localhost:4444/clearNewBalance/${user._id}`)
+      .then(res =>{
+        setNewBalance(res.data)
+        console.log(res.data);
+        
+      }
+    )  .catch(err=>console.log(err)
+  )
+      
+    })
+    .catch(err=>console.log(err)
+    )
+  }
+  // Удаление курса 
+  const handleDelete = (id)=>{
+    axios.delete(`http://localhost:4444/courseDelete/${id}`)
+    .then(location.reload())
+    .catch(err => console.log(err)
+    )
+    
+  }
+  //Редирект в ститистику опр курса
+  const redirectToStat =  (id)=>{
+    navigate(`/courseStat/${id}`);
+  }
   return (
     <div className="dashboard">
       <div className="dashboard-header">
         <div className="user-info">
           <h3>Личный кабинет пользователя: {user.name}</h3>
           <h5>Email: {user.email}</h5>
-          <p>Новые поступления :123 </p>
-          <button>Получить </button>
+          <p>Новые поступления : {newBalance} </p>
+          <button onClick={addUserBalance}>Получить </button>
         </div>
       </div>
       <hr />
@@ -203,8 +254,8 @@ export default function Dashboard() {
                     <h4>
                       <Link to={`/course/${course._id}`}>{course.title}</Link>
                     </h4>
-                    <button> Удалить </button>
-                    <button>Статистика </button>
+                    <button onClick={()=>handleDelete(course._id)}> Удалить </button>
+                    <button onClick={()=>redirectToStat(course._id)}>Статистика </button>
                   </div>
                 ))
               ) : (
@@ -218,7 +269,7 @@ export default function Dashboard() {
               <h3>лайки : {likes}</h3>
               <h3>посмотры : {views}</h3>
               <h3>CTR : {ctr}%</h3>
-              <h3>Заработанно : </h3>
+              <h3>Заработанно : {allHysoryBalance}</h3>
             </div>
             </>
           ) :  change==="pushared" ? 

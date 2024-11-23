@@ -19,8 +19,18 @@ const userModel = new mongoose.Schema({
         type: [String]
     },
     balance: {
+       balance : { 
         type: Number,
         default: 100
+        },
+        nweBalance :{
+            type : Number,
+            default : 0  
+        },
+        allHistoryBalance : {
+            type : Number,
+            default : 0  
+        }
     },
     courses: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -33,7 +43,8 @@ const userModel = new mongoose.Schema({
     },
     fovourite: {
         type :Array
-    }
+    },
+  
 }, {
     timestamps: true
 });

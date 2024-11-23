@@ -44,7 +44,7 @@ export default function Header(){
                     <div className="user-block">
                         <ul>
                             <li>Пользователь : {user.userInfo.name}</li>
-                            <li>Баланс : {user.userInfo.balance}</li>
+                            <li>Баланс : {user.userInfo.balance.balance}</li>
                             <li><Link to='/dashboard'>Личный кабинет</Link> </li>
                             <li><button onClick={removeUser} >Выйти</button></li>
                         </ul>
