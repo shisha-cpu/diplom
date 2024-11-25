@@ -30,12 +30,11 @@ export default function CourseStat (){
         <div className="stat">
             {course ?  <>
                 <h2>Статтистика курса: {course.title}</h2>
-            <p>id курса : {course._id}</p>
-            <p>Создан  : {course.createdAt} </p>
-            <p>Последнее обновление  : {course.updatedAt}</p>
-            <p>Просмотры :  {course.views} </p>
-            <p>Лайки :  {course.likes} </p>
-            <p>CTR: {isNaN(ctr) ? 0 : ctr} %</p>
+                <p>Создан : {new Date(course.createdAt).toLocaleString('ru-RU')}</p>
+                <p>Последнее обновление  : {new Date(course.updatedAt).toLocaleString('ru-RU')}</p>
+                <p>Просмотры :  {course.views} </p>
+                <p>Лайки :  {course.likes} </p>
+                <p>CTR: {isNaN(ctr) ? 0 : ctr} %</p>
 </>
             : ''}
         </div>
