@@ -1,6 +1,6 @@
 
 .courses{
-    display: flex;
+
     flex-wrap: wrap;
 }
 .course{
@@ -13,16 +13,26 @@
 }/* main.css */
 .main {
     display: flex;
-    justify-content: space-between;
+
     padding: 20px;
 }
 
 aside {
-    min-width: 200px;
+    /* min-width: 200px; */
     background-color: #f0f0f0;
-    padding: 15px;
+    padding: 5px;
     position: sticky;
     top: 20px;
 
+}
+.latest-courses{
+
+
+
+}
+.courses-grid{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 

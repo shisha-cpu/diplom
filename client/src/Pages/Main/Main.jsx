@@ -7,17 +7,17 @@ import { fetchUser, changeUserBalance } from '../../store/slices/userSlice';
 import Modal from '../../Components/Modal/Modal';
 export default function Main() {
     const [courses, setCourses] = useState([]);
-    const [ course , setCourse] = useState([])
+ 
     const [loading, setLoading] = useState(true);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [pushared , setPushared] = useState([])
     const user = useSelector(state => state.user);
     const [selectedCourseId, setSelectedCourseId] = useState(null);
-    const [modal , setModal ] = useState(false)
+    const [originalCourses, setOriginalCourses] = useState([]);
     const dispatch = useDispatch();
     const [modalVisible, setModalVisible] = useState(false);
-
+    const [userSlikkslls , setUserSkills ] = useState([])
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('user'));
         if (storedUser) {
@@ -29,6 +29,7 @@ export default function Main() {
         axios.get('http://localhost:4444/course/')
             .then(res => {
                 setCourses(res.data);
+                setOriginalCourses(res.data);
                 setLoading(false);
             })
             .catch(err => console.log(err));
@@ -53,9 +54,12 @@ export default function Main() {
             .then(res => {
                 setPushared(prevState => [...prevState, ...res.data]);  
             })
-        
-        
+            console.log(user);
+            if (user.userInfo.skills.length > 0) {
+                setUserSkills(user.userInfo.skills)
+            }
         }
+   
     },[user.userInfo._id])
 
     const handleClick = (courseId, price, isPusgared) => {
@@ -97,9 +101,7 @@ export default function Main() {
             console.log(res.data);
         })
     }
-    if (!modal) {
-        // return <Modal />
-    }
+
     const openModal = (course) => {
         setSelectedCourse(course);
         console.log(course);
@@ -111,54 +113,168 @@ export default function Main() {
         setSelectedCourse(null);
         setModalVisible(false);
     };
-
+    
     return (
         <div className="main">
-                 <aside>
-              <label htmlFor="sort">Сортировать по:</label>
-              <select id="sort" >
-                  <option value="title">Название</option>
-                  <option value="views">Просмотры</option>
-                  <option value="likes">Лайки</option>
-              </select>
-          </aside>
-  
-            {loading ? <h3>Загрузка...</h3> : 
+          <aside>
+          <aside>
+    <div className="filter-container">
+        <input
+            type="text"
+            placeholder="Поиск курсов"
+            onChange={(e) => {
+                const searchValue = e.target.value.toLowerCase();
+                if (!searchValue) {
+                    // Если строка поиска пустая, возвращаем исходный список
+                    setCourses(originalCourses);
+                } else {
+                    // Фильтруем курсы по введенному тексту
+                    setCourses(
+                        originalCourses.filter((course) =>
+                            course.title.toLowerCase().includes(searchValue)
+                        )
+                    );
+                }
+            }}
+        />
+
+        <select
+            onChange={(e) => {
+                const sortType = e.target.value;
+                setCourses((prevCourses) => {
+                    const sortedCourses = [...prevCourses];
+                    switch (sortType) {
+                        case "views":
+                            sortedCourses.sort((a, b) => b.views - a.views);
+                            break;
+                        case "likes":
+                            sortedCourses.sort((a, b) => b.likes - a.likes);
+                            break;
+                        case "priceLow":
+                            sortedCourses.sort((a, b) => a.price - b.price);
+                            break;
+                        case "priceHigh":
+                            sortedCourses.sort((a, b) => b.price - a.price);
+                            break;
+                        default:
+                            break;
+                    }
+                    return sortedCourses;
+                });
+            }}
+        >
+            <option value="">Сортировать по</option>
+            <option value="views">По популярности (просмотры)</option>
+            <option value="likes">По лайкам</option>
+            <option value="priceLow">По цене (сначала дешевые)</option>
+            <option value="priceHigh">По цене (сначала дорогие)</option>
+        </select>
+    </div>
+</aside>
+
+</aside>
+
+    
+            {loading ? (
+                <h3>Загрузка...</h3>
+            ) : (
                 <div className="courses">
-                              <h2>Новые курсы</h2>
-                              <h2>Рекомендованные  курсы</h2>
-                       
-                    <div className="courses">
-                        {[...courses].reverse().map((course, id) => {
-                        
-                        let isPusgared = false
-                         if (pushared) {
-                            for (let i = 0; i < pushared.length; i++) {
-                                if (pushared[i]._id.toString() === course._id.toString() ) {
-                                    isPusgared = true
-                                }
-                        
-                             }
-                         }
-                            return(
-                                <div key={id} className="course">
-                                <h3>{course.title}</h3>
-                                <h3>Просмотров: {course.views}</h3>
-                                <h3>Лайков: {course.likes}</h3>
-                                <button onClick={() => handleClick(course._id , course.price , isPusgared)}>
-                                    {isPusgared ? 'Открыть'
-                                    :
-                                    course.price > 0 ? `Купить за ${course.price}`
-                                    : 'Пройти бесплатно'}
-                                </button>
-                                <button onClick={() => openModal(course)}>Подробнее</button>
+                    {userSlikkslls.length > 0 && (
+                        <div className="recommended-courses">
+                            <h2>Рекомендованные курсы</h2>
+                            <div className="courses-grid">
+                                {courses
+                                    .filter((course) =>
+                                        course.tags.some((tag) =>
+                                            userSlikkslls.includes(tag)
+                                        )
+                                    )
+                                    .map((course, id) => {
+                                        let isPusgared = pushared.some(
+                                            (pushed) =>
+                                                pushed._id.toString() ===
+                                                course._id.toString()
+                                        );
+    
+                                        return (
+                                            <div key={id} className="course">
+                                                <h3>{course.title}</h3>
+                                                <h3>Просмотров: {course.views}</h3>
+                                                <h3>Лайков: {course.likes}</h3>
+                                                <button
+                                                    onClick={() =>
+                                                        handleClick(
+                                                            course._id,
+                                                            course.price,
+                                                            isPusgared
+                                                        )
+                                                    }
+                                                >
+                                                    {isPusgared
+                                                        ? 'Открыть'
+                                                        : course.price > 0
+                                                        ? `Купить за ${course.price}`
+                                                        : 'Пройти бесплатно'}
+                                                </button>
+                                                <button
+                                                    onClick={() =>
+                                                        openModal(course)
+                                                    }
+                                                >
+                                                    Подробнее
+                                                </button>
+                                            </div>
+                                        );
+                                    })}
                             </div>
-                            )
-                        })}
+                        </div>
+                    )}
+                    <div className="latest-courses">
+                        <h2>Последние курсы</h2>
+                        <div className="courses-grid">
+                            {[...courses].reverse().map((course, id) => {
+                                let isPusgared = pushared.some(
+                                    (pushed) =>
+                                        pushed._id.toString() ===
+                                        course._id.toString()
+                                );
+    
+                                return (
+                                    <div key={id} className="course">
+                                        <h3>{course.title}</h3>
+                                        <h3>Просмотров: {course.views}</h3>
+                                        <h3>Лайков: {course.likes}</h3>
+                                        <button
+                                            onClick={() =>
+                                                handleClick(
+                                                    course._id,
+                                                    course.price,
+                                                    isPusgared
+                                                )
+                                            }
+                                        >
+                                            {isPusgared
+                                                ? 'Открыть'
+                                                : course.price > 0
+                                                ? `Купить за ${course.price}`
+                                                : 'Пройти бесплатно'}
+                                        </button>
+                                        <button onClick={() => openModal(course)}>
+                                            Подробнее
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
-            }
-             {modalVisible && <Modal course={selectedCourse} onClose={closeModal} />}
+            )}
+    
+            {modalVisible && (
+                <Modal course={selectedCourse} onClose={closeModal} />
+            )}
         </div>
     );
+    
+
 }

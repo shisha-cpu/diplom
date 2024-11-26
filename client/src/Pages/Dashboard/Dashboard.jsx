@@ -66,6 +66,7 @@ export default function Dashboard() {
 
     }
   },[userCourses])
+
   // Добавление модуля
 
   const addUserBalance = ()=>{
@@ -99,12 +100,18 @@ export default function Dashboard() {
   const redirectToStat =  (id)=>{
     navigate(`/courseStat/${id}`);
   }
+  console.log(user);
+  
   return (
     <div className="dashboard">
       <div className="dashboard-header">
         <div className="user-info">
           <h3>Личный кабинет пользователя: {user.name}</h3>
           <h5>Email: {user.email}</h5>
+          <p>Навыки : {!user.skills ? 'Не установлены' : user.skills.map((slill , id) =>(
+            <p>{slill}</p>
+          )) } </p>
+                <p>Создан : {new Date(user.createdAt).toLocaleString('ru-RU')}</p>
           <p>Новые поступления : {newBalance} </p>
           <button onClick={addUserBalance}>Получить </button>
         </div>
@@ -144,7 +151,7 @@ export default function Dashboard() {
               <h3>Всего публикаций : {userCourses.length} </h3>
               <h3>лайки : {likes}</h3>
               <h3>посмотры : {views}</h3>
-              <h3>CTR : {ctr}%</h3>
+              <h3>CTR : {isNaN(ctr) ? 0 : ctr}%</h3>
               <h3>Заработанно : {allHysoryBalance}</h3>
             </div>
             </>

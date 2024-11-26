@@ -11,8 +11,8 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route  path="login" element={<Login />} />
-        <Route  path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
         <Route path="dashboard"  element={<Dashboard />}/>
         <Route path="/" element={<Main />} />
         <Route path="/course/:id" element={<CourseDetail />} />
