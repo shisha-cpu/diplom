@@ -1,13 +1,103 @@
-.header{
-    display: flex;
-    justify-content:  space-between;
+/* Общий стиль для шапки */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  border-bottom: 2px solid #00ffe7;
+  box-shadow: 0 4px 10px rgba(0, 255, 231, 0.2);
 }
-.nav-list {
-    display: flex;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+
+.logo img {
+  width: 120px;
+  filter: drop-shadow(0 0 10px #00ffe7);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 20px #00ffe7);
+}
+
+/* Навигационная панель */
+.nav-bar ul {
+  display: flФex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-bar a {
+  text-decoration: none;
+  color: #00ffe7;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-bar a::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #00ffe7;
+  transition: width 0.3s ease;
+}
+
+.nav-bar a:hover {
+  color: #fff;
+}
+
+.nav-bar a:hover::before {
+  width: 100%;
+}
+
+/* Анимация для user-block */
+.user-block, .auyh-bar ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #fff;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.user-block li, .auyh-bar li {
+  list-style: none;
+}
+
+.user-block button {
+  padding: 5px 10px;
+  background: #00ffe7;
+  border: none;
+  border-radius: 4px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.user-block button:hover {
+  background: #fff;
+  transform: scale(1.05);
+}
+
+
+.header {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+      transform: translateY(-20px);
   }
-  li{
-    display:  inline;
+  100% {
+      opacity: 1;
+      transform: translateY(0);
   }
+}

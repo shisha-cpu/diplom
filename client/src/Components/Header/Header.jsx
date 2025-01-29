@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clearUser } from '../../store/slices/userSlice'
 import { useEffect } from 'react'
 import { fetchUser } from '../../store/slices/userSlice'
+import logo from '../../img/logo.png'
 export default function Header(){
     const dispatch = useDispatch()
     const user = useSelector(state=>state.user)
@@ -29,13 +30,14 @@ export default function Header(){
         <header>
             <div className="header">
                 <div className="logo">
-                    <Link to='/'><img src="" alt="Логотип" /></Link>
+                    <Link to='/'><img src={logo} alt="Логотип" /></Link>
                 </div>
                 <div className="nav-bar">
                     <ul>
-                        <li>Страница </li>
-                        <li>Страница</li>
-                        <li>Страница</li>
+                         <Link to='/'>Главная  </Link>
+                        <Link to='/about' >О нас </Link>
+                        <Link to='/contact'>Контакты</Link>
+                        
                     </ul>
                 </div>
                 <div className="auyh-bar">

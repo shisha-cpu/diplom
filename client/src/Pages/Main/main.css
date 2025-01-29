@@ -1,38 +1,173 @@
+/* main.css */
 
-.courses{
-
-    flex-wrap: wrap;
-}
-.course{
-
-    border: 1px solid black;
-    margin-right: 10px;
-    width: 200px;
-    text-align: center;
-    border-radius: 10px;
-}/* main.css */
+/* Основной стиль для страницы */
 .main {
     display: flex;
-
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
+    background: #1e1e2f;
+    color: #fff;
 }
 
-aside {
-    /* min-width: 200px; */
-    background-color: #f0f0f0;
-    padding: 5px;
-    position: sticky;
-    top: 20px;
-
-}
-.latest-courses{
-
-
-
-}
-.courses-grid{
+/* Контейнер для фильтра */
+.filter-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
 }
 
+/* Стиль для поля ввода поиска */
+.filter-container input {
+    padding: 10px;
+    border: 1px solid #00f2ff;
+    background-color: #2e2e44;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 5px;
+    outline: none;
+    width: 48%;
+    transition: background-color 0.3s ease;
+}
+
+/* Стиль для поля выбора сортировки */
+.filter-container select {
+    padding: 10px;
+    border: 1px solid #00f2ff;
+    background-color: #2e2e44;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 5px;
+    outline: none;
+    width: 48%;
+    transition: background-color 0.3s ease;
+}
+
+.filter-container input:focus,
+.filter-container select:focus {
+    background-color: #4b4b63;
+}
+
+/* Стиль для кнопок на курсах */
+.course button {
+    padding: 10px 20px;
+    background-color: #00f2ff;
+    color: #1e1e2f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Эффект нажатия на кнопку */
+.course button:hover {
+    background-color: #ff5b5b;
+    transform: scale(1.05);
+}
+
+/* Эффект нажатия на кнопку */
+.course button:active {
+    transform: scale(0.98);
+}
+
+/* Сеточный контейнер для курсов */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Карточка курса */
+.course {
+    background: #2e2e44;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Эффект при наведении на карточку курса */
+.course:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Рекомендованные курсы */
+.recommended-courses h2,
+.latest-courses h2 {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+/* Стиль для модального окна */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+/* Содержимое модального окна */
+.modal-content {
+    background: #1e1e2f;
+    padding: 30px;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 600px;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Адаптивность */
+
+/* Для экранов меньше 768px */
+@media (max-width: 768px) {
+    .filter-container {
+        flex-direction: column;
+    }
+
+    .filter-container input,
+    .filter-container select {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .courses-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Для экранов меньше 480px */
+@media (max-width: 480px) {
+    .courses-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course {
+        padding: 15px;
+    }
+
+    .modal-content {
+        width: 80%;
+    }
+}
