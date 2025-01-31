@@ -1,173 +1,203 @@
 /* main.css */
 
-/* Основной стиль для страницы */
 .main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    background: #1e1e2f;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+    min-height: 100vh;
     color: #fff;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Контейнер для фильтра */
+aside {
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 40px;
+}
+
 .filter-container {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 600px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
-/* Стиль для поля ввода поиска */
-.filter-container input {
-    padding: 10px;
-    border: 1px solid #00f2ff;
-    background-color: #2e2e44;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 5px;
-    outline: none;
-    width: 48%;
-    transition: background-color 0.3s ease;
-}
-
-/* Стиль для поля выбора сортировки */
+.filter-container input,
 .filter-container select {
-    padding: 10px;
-    border: 1px solid #00f2ff;
-    background-color: #2e2e44;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 5px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
     outline: none;
-    width: 48%;
-    transition: background-color 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.filter-container input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .filter-container input:focus,
 .filter-container select:focus {
-    background-color: #4b4b63;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
 }
 
-/* Стиль для кнопок на курсах */
-.course button {
-    padding: 10px 20px;
-    background-color: #00f2ff;
-    color: #1e1e2f;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+.courses {
+    width: 100%;
+    max-width: 1200px;
 }
 
-/* Эффект нажатия на кнопку */
-.course button:hover {
-    background-color: #ff5b5b;
-    transform: scale(1.05);
+.recommended-courses,
+.latest-courses {
+    margin-bottom: 50px;
 }
 
-/* Эффект нажатия на кнопку */
-.course button:active {
-    transform: scale(0.98);
+.recommended-courses h2,
+.latest-courses h2 {
+    font-size: 28px;
+    margin-bottom: 25px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
 }
 
-/* Сеточный контейнер для курсов */
 .courses-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 25px;
 }
 
-/* Карточка курса */
 .course {
-    background: #2e2e44;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Эффект при наведении на карточку курса */
 .course:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 12px 40px rgba(0, 123, 255, 0.4);
 }
 
-/* Рекомендованные курсы */
-.recommended-courses h2,
-.latest-courses h2 {
-    text-transform: uppercase;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
+.course img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
 }
 
-/* Стиль для модального окна */
+.course h3 {
+    font-size: 20px;
+    margin: 15px;
+    color: #fff;
+    text-align: center;
+}
+
+.course p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 10px 15px;
+    text-align: center;
+}
+
+.course button {
+    display: block;
+    width: 90%;
+    margin: 15px auto;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.course button:hover {
+    background: linear-gradient(135deg, #00bfff, #007bff);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+}
+
+.course button:last-child {
+    background: linear-gradient(135deg, #6c757d, #4a5259);
+}
+
+.course button:last-child:hover {
+    background: linear-gradient(135deg, #4a5259, #6c757d);
+    box-shadow: 0 0 15px rgba(108, 117, 125, 0.7);
+}
+
 .modal {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.3s ease;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
 }
 
-/* Содержимое модального окна */
 .modal-content {
-    background: #1e1e2f;
+    background: rgba(255, 255, 255, 0.1);
     padding: 30px;
-    border-radius: 10px;
-    width: 60%;
-    max-width: 600px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.modal-content h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
 }
 
-/* Адаптивность */
-
-/* Для экранов меньше 768px */
-@media (max-width: 768px) {
-    .filter-container {
-        flex-direction: column;
-    }
-
-    .filter-container input,
-    .filter-container select {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .courses-grid {
-        grid-template-columns: 1fr 1fr;
-    }
+.modal-content p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-/* Для экранов меньше 480px */
-@media (max-width: 480px) {
-    .courses-grid {
-        grid-template-columns: 1fr;
-    }
+.modal-content button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
 
-    .course {
-        padding: 15px;
-    }
+.modal-content button:hover {
+    background: linear-gradient(135deg, #00bfff, #007bff);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+}
 
-    .modal-content {
-        width: 80%;
-    }
+.loading {
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    margin-top: 50px;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
 }

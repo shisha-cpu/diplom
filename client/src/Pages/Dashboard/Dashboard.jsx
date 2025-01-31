@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { changeUserBalance } from "../../store/slices/userSlice";
 import AddCourse from "../../Components/AddCourse/AddCourse";
-
+import './dashboard.css'
 export default function Dashboard() {
   const user = useSelector((store) => store.user.userInfo);
   const [change, setChange] = useState("my");
@@ -119,10 +119,20 @@ export default function Dashboard() {
       <hr />
       <div className="dashboard-main">
         <div className="content">
-          <button onClick={() => setChange("my")}>Мои курсы</button>
-          <button onClick={() => setChange("new")}>Новый курс</button>
-          <button onClick={() => setChange("pushared")}>Купленные курсы  </button>
-          <button onClick={() => setChange("stat")}>Моя статистика </button>
+        <div className="button-group">
+    <button onClick={() => setChange("my")}>
+        <span>Мои курсы</span>
+    </button>
+    <button onClick={() => setChange("new")}>
+        <span>Новый курс</span>
+    </button>
+    <button onClick={() => setChange("pushared")}>
+        <span>Купленные курсы</span>
+    </button>
+    <button onClick={() => setChange("stat")}>
+        <span>Моя статистика</span>
+    </button>
+</div>
 
 
           {change === "new" ? (

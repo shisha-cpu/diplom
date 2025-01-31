@@ -1,0 +1,136 @@
+/* register.css */
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.auth-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.auth-logo {
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label {
+    font-size: 16px;
+    color: #fff;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+input[type="submit"] {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+input[type="submit"]:hover {
+    background: linear-gradient(135deg, #00bfff, #007bff);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+}
+
+/* Стили для react-select */
+.basic-multi-select {
+    width: 100%;
+    color: #333;
+}
+
+.basic-multi-select .select__control {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 12px;
+    min-height: 48px;
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+.basic-multi-select .select__control--is-focused {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+.basic-multi-select .select__multi-value {
+    background: rgba(0, 123, 255, 0.2);
+    border-radius: 8px;
+}
+
+.basic-multi-select .select__multi-value__label {
+    color: #fff;
+    font-size: 14px;
+}
+
+.basic-multi-select .select__multi-value__remove {
+    color: #fff;
+    cursor: pointer;
+}
+
+.basic-multi-select .select__menu {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.basic-multi-select .select__option {
+    color: #fff;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.basic-multi-select .select__option--is-focused {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.basic-multi-select .select__option--is-selected {
+    background: rgba(0, 123, 255, 0.5);
+}

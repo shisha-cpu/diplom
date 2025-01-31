@@ -91,7 +91,8 @@ export default function Main() {
       }
   };
 
-
+  console.log(courses);
+  
     if (shouldNavigate && selectedCourseId) {
         return <Navigate to={`/course/${selectedCourseId}`} />;
     }
@@ -125,10 +126,10 @@ export default function Main() {
             onChange={(e) => {
                 const searchValue = e.target.value.toLowerCase();
                 if (!searchValue) {
-                    // Если строка поиска пустая, возвращаем исходный список
+                
                     setCourses(originalCourses);
                 } else {
-                    // Фильтруем курсы по введенному тексту
+       
                     setCourses(
                         originalCourses.filter((course) =>
                             course.title.toLowerCase().includes(searchValue)
@@ -199,6 +200,8 @@ export default function Main() {
                                         return (
                                             <div key={id} className="course">
                                                 <h3>{course.title}</h3>
+                                                <img src={course.img} alt="" />
+                                
                                                 <h3>Просмотров: {course.views}</h3>
                                                 <h3>Лайков: {course.likes}</h3>
                                                 <button
@@ -242,6 +245,7 @@ export default function Main() {
                                 return (
                                     <div key={id} className="course">
                                         <h3>{course.title}</h3>
+                                        <img src={course.img} alt="" />
                                         <h3>Просмотров: {course.views}</h3>
                                         <h3>Лайков: {course.likes}</h3>
                                         <button

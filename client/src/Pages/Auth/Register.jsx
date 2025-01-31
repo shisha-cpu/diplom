@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../../store/slices/userSlice";
 import { Navigate } from "react-router-dom";
 import Select from 'react-select';
-
+import './register.css'
 export default function Register() {
   const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');

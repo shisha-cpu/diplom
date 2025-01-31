@@ -1,0 +1,289 @@
+/* dashboard.css */
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+    min-height: 100vh;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-header {
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-info {
+    text-align: left;
+}
+
+.user-info h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+}
+
+.user-info h5 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.user-info p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+}
+
+.user-info button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.user-info button:hover {
+    background: linear-gradient(135deg, #00bfff, #007bff);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+}
+
+.dashboard-main {
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.content button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.content button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+}
+
+.active-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.user-courses {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-courses:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 123, 255, 0.4);
+}
+
+.user-courses h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.user-courses a {
+    color: #00bfff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.user-courses a:hover {
+    color: #007bff;
+}
+
+.user-courses button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.user-courses button:hover {
+    background: linear-gradient(135deg, #ff4b2b, #ff416c);
+    box-shadow: 0 0 15px rgba(255, 75, 43, 0.7);
+}
+
+.stat {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.pushared {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pushared-courses {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pushared-courses:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 123, 255, 0.4);
+}
+
+.pushared-courses h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.pushared-courses a {
+    color: #00bfff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.pushared-courses a:hover {
+    color: #007bff;
+}/* dashboard.css */
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.button-group button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.button-group button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease;
+    border-radius: 50%;
+}
+
+.button-group button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.button-group button:hover {
+    background: linear-gradient(135deg, #00bfff, #007bff);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+}
+
+.button-group button:active {
+    transform: scale(0.95);
+}
+
+/* Иконки для кнопок (опционально) */
+.button-group button::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+}
+
+.button-group button:nth-child(1)::after {
+    background-image: url('path-to-my-courses-icon.svg'); /* Иконка для "Мои курсы" */
+}
+
+.button-group button:nth-child(2)::after {
+    background-image: url('path-to-new-course-icon.svg'); /* Иконка для "Новый курс" */
+}
+
+.button-group button:nth-child(3)::after {
+    background-image: url('path-to-purchased-courses-icon.svg'); /* Иконка для "Купленные курсы" */
+}
+
+.button-group button:nth-child(4)::after {
+    background-image: url('path-to-statistics-icon.svg'); /* Иконка для "Моя статистика" */
+}

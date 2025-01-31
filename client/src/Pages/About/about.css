@@ -1,0 +1,172 @@
+/* about.css */
+
+/* Основные стили для секции */
+.about-section {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a2e, #2c3e50);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    padding: 80px 20px;
+  }
+  
+  /* Геометрические фигуры */
+  .about-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.2;
+    z-index: 1;
+  }
+  
+  .about-shape-purple {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #6d28d9, transparent);
+    top: -150px;
+    left: -150px;
+    animation: float 6s infinite ease-in-out;
+  }
+  
+  .about-shape-blue {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #3b82f6, transparent);
+    bottom: -100px;
+    right: -100px;
+    animation: float 8s infinite ease-in-out;
+  }
+  
+  .about-shape-pink {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #ec4899, transparent);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: float 10s infinite ease-in-out;
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+  }
+  
+  /* Заголовок */
+  .about-title {
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 0 10px rgba(109, 40, 217, 0.7);
+  }
+  
+  .about-title span {
+    color: #6d28d9;
+  }
+  
+  /* Текст */
+  .about-text {
+    font-size: 18px;
+    line-height: 1.8;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeInLeft 1s ease forwards;
+  }
+  
+  @keyframes fadeInLeft {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Изображение */
+  .about-image {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: fadeInRight 1s ease forwards;
+  }
+  
+  @keyframes fadeInRight {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Карточки преимуществ */
+  .about-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+  }
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .about-card:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  
+  .about-card-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  
+  .about-card-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #6d28d9;
+  }
+  
+  .about-card-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .about-title {
+      font-size: 36px;
+    }
+  
+    .about-text {
+      font-size: 16px;
+    }
+  
+    .about-card {
+      padding: 20px;
+    }
+  
+    .about-card-title {
+      font-size: 20px;
+    }
+  
+    .about-card-description {
+      font-size: 14px;
+    }
+  }

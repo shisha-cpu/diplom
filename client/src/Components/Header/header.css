@@ -1,103 +1,165 @@
-/* Общий стиль для шапки */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-  border-bottom: 2px solid #00ffe7;
-  box-shadow: 0 4px 10px rgba(0, 255, 231, 0.2);
+/* Анимированный градиентный фон */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
+header {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #1e1e2f, #282845, #1a1a2e, #32324d);
+  background-size: 300% 300%;
+  animation: gradientAnimation 6s ease infinite;
+  padding: 20px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Контейнер шапки */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+/* Логотип с анимацией */
 .logo img {
-  width: 120px;
-  filter: drop-shadow(0 0 10px #00ffe7);
-  transition: transform 0.3s ease, filter 0.3s ease;
+  height: 50px;
+  transition: transform 0.5s ease, filter 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
 }
 
 .logo img:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 20px #00ffe7);
+  transform: scale(1.1) rotate(3deg);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
 }
 
-/* Навигационная панель */
+/* Навигация */
 .nav-bar ul {
-  display: flФex;
-  gap: 20px;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
 .nav-bar a {
   text-decoration: none;
-  color: #00ffe7;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
   position: relative;
   transition: color 0.3s ease;
 }
 
-.nav-bar a::before {
-  content: '';
+.nav-bar a::after {
+  content: "";
   position: absolute;
-  bottom: -2px;
-  left: 0;
+  left: 50%;
+  bottom: -3px;
   width: 0;
   height: 2px;
-  background: #00ffe7;
-  transition: width 0.3s ease;
+  background: rgb(0,181,255);
+  transition: width 0.3s ease, left 0.3s ease;
 }
 
 .nav-bar a:hover {
-  color: #fff;
+  color: rgb(0,181,255);
 }
 
-.nav-bar a:hover::before {
+.nav-bar a:hover::after {
   width: 100%;
+  left: 0;
 }
 
-/* Анимация для user-block */
-.user-block, .auyh-bar ul {
+/* Блок авторизации */
+.auyh-bar ul {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  color: #fff;
-  font-size: 0.9rem;
-  text-align: right;
-}
-
-.user-block li, .auyh-bar li {
+  gap: 15px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
-.user-block button {
-  padding: 5px 10px;
-  background: #00ffe7;
-  border: none;
-  border-radius: 4px;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
+.auyh-bar a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.auyh-bar a:hover {
+  color: rgb(84, 233, 143);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Блок пользователя */
+.user-block {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  backdrop-filter: blur(10px);
   transition: background 0.3s ease, transform 0.3s ease;
 }
 
+.user-block:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+.user-block li {
+  color: #ffffff;
+  list-style: none;
+}
+
+/* Кнопка выхода */
+.user-block button {
+  background: linear-gradient(45deg, #ff4d4d, #ff1a1a);
+  border: none;
+  padding: 8px 15px;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
 .user-block button:hover {
-  background: #fff;
+  background: linear-gradient(45deg, #cc0000, #ff3333);
   transform: scale(1.05);
 }
 
-
-.header {
-  animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-  0% {
-      opacity: 0;
-      transform: translateY(-20px);
+/* Адаптивность */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
   }
-  100% {
-      opacity: 1;
-      transform: translateY(0);
+
+  .nav-bar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .auyh-bar ul {
+    flex-direction: column;
+  }
+
+  .user-block {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 }
