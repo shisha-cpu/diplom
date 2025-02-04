@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Select from 'react-select';
+import './addCourse.css'
 export default function AddCourse() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -284,7 +285,7 @@ export default function AddCourse() {
           ))}
         </ul>
 
-        <button type="submit">Создать курс</button>
+        <button type="submit" className="selected" >Создать курс</button>
       </form>
     </div>
   );

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import './courseDetail.css';
 
 export default function CourseDetail() {
   const { id } = useParams();
@@ -11,7 +12,13 @@ export default function CourseDetail() {
   const [isAuthor, setAuthor] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
   const navigate = useNavigate();
+  const [commentText ,  setCommentText] = useState('')
+  const [comments , setComments] = useState()
+  const [answeredQuestions, setAnsweredQuestions] = useState({});
+  const [answers, setAnswers] = useState({});
 
+  console.log(user);
+  
   useEffect(() => {
     axios.post(`http://localhost:4444/addView/${id}`)
       .catch(err => console.log(err));
@@ -24,7 +31,14 @@ export default function CourseDetail() {
         setLoading(false);
       })
       .catch(err => console.log(err));
-
+    axios.get(`http://localhost:4444/comments/${id}` )
+    .then(res =>{
+      
+      setComments(res.data) 
+ 
+    }
+    )
+    
     axios.get(`http://localhost:4444/fovourite/${user._id}`)
       .then(res => {
         if (res.data.includes(id)) {
@@ -43,7 +57,8 @@ export default function CourseDetail() {
   if (loading) {
     return <h3>Loading...</h3>;
   }
-
+  console.log(comments);
+  
   const addLike = () => {
     axios.post(`http://localhost:4444/courseLike`, {
       userId: user._id,
@@ -63,49 +78,88 @@ export default function CourseDetail() {
       setLikeStatus(false);
     }).catch(err => console.log(err));
   };
-
+  const handleComment = ()=>{
+    location.reload()
+    axios.post('http://localhost:4444/comments' , {
+    userId : user._id,
+    courseId: course._id,
+    text : commentText
+  })
+  .then(res => {
+    setCommentText(' ') 
+    alert('Успешно отправленно ')
+  } )
+  
+  
+  }
   const redirectToStat = () => {
     navigate(`/courseStat/${course._id}`);
   };
-
+  const checkOption = (moduleIndex, questionIndex, option, correctAnswer) => {
+    const questionKey = `${moduleIndex}-${questionIndex}`;
+  
+    if (answers[questionKey]) return; 
+  
+    setAnswers(prev => ({
+      ...prev,
+      [questionKey]: option === correctAnswer ? 'Верно' : 'Ошибка'
+    }));
+  };
+  
   const handleDelete = () => {
     axios.delete(`http://localhost:4444/courseDelete/${course._id}`)
       .then(() => navigate('/'))
       .catch(err => console.log(err));
   };
+console.log(course);
 
   return (
     <div className="course-detail">
-      <h2>{course.title}</h2>
-      <p>{course.description}</p>
-      <p>Цена: {course.price > 0 ? `${course.price} руб.` : 'Бесплатно'}</p>
-      <p>Продолжительность: {course.duration} часов</p>
-      <p>Дата создания: {new Date(course.createdAt).toLocaleDateString()}</p>
-      <p>Дата обновления: {new Date(course.updatedAt).toLocaleDateString()}</p>
+      <h2 className='center'>Курс : {course.title}</h2>
+    <img src={course.img} className='course-img' alt="" />
+    <div className="course-info-card">
+    <p>💸 {course.price > 0 ? `${course.price} руб.` : 'Бесплатно'}</p>
+      <p>🕒 {course.duration} часов</p>
+      <p>👀 {course.views}</p>
+      <p>❤️ {course.likes}</p>
+    </div>
+    <p>О курсе : {course.description}</p>
 
-      <h3>Модули курса</h3>
       {course.modules.length > 0 ? (
         <ul>
+          <h3>Модули курса</h3>
           {course.modules.map((module, index) => (
             <li key={index} className="module-item">
-              <h4>{module.title}</h4>
+              <h4 className='center'>{module.title}</h4>
+              {module.img && <img src={module.img} className='course-img' alt={module.title} />}
               <p>{module.content}</p>
-              {module.img && <img src={module.img} alt={module.title} />}
+             
               {module.questions.length > 0 && (
                 <div>
-                  <h5>Вопросы модуля:</h5>
+                  <h4>Вопросы модуля:</h4>
                   <ul>
-                    {module.questions.map((question, idx) => (
-                      <li key={idx}>
-                        <p><strong>{question.questionText}</strong></p>
-                        <ul>
-                          {question.options.map((option, optionIdx) => (
-                            <li key={optionIdx}>{option}</li>
-                          ))}
-                        </ul>
-                        <p><strong>Правильный ответ:</strong> {question.correctAnswer}</p>
-                      </li>
-                    ))}
+                  {module.questions.map((question, questionIndex) => {
+              const questionKey = `${index}-${questionIndex}`;
+
+  return (
+    <li key={questionIndex}>
+      <p><strong>{question.questionText}</strong></p>
+      <ul>
+        {question.options.map((option, optionIdx) => (
+          <li 
+            key={optionIdx} 
+            className="option-item" 
+            onClick={() => checkOption(index, questionIndex, option, question.correctAnswer)}
+          >
+            - {option}
+          </li>
+        ))}
+      </ul>
+      {answers[questionKey] && <p className={answers[questionKey] === 'Верно' ? 'correct' : 'incorrect'}>{answers[questionKey]}</p>}
+    </li>
+  );
+})}
+
                   </ul>
                 </div>
               )}
@@ -113,12 +167,13 @@ export default function CourseDetail() {
           ))}
         </ul>
       ) : (
-        <p>Модули отсутствуют.</p>
+        ''
       )}
 
-      <h3>Итоговый тест</h3>
+
       {course.finalTest.length > 0 ? (
         <ul>
+          <h3>Итоговый тест</h3>
           {course.finalTest.map((question, index) => (
             <li key={index}>
               <p><strong>{question.questionText}</strong></p>
@@ -132,11 +187,10 @@ export default function CourseDetail() {
           ))}
         </ul>
       ) : (
-        <p>Итоговый тест отсутствует.</p>
+        ''
       )}
 
-      <p>Просмотров: {course.views}</p>
-      <p>Лайков: {course.likes}</p>
+
 
       {!likeStatus ? (
         <button onClick={addLike}>Поставить лайк</button>
@@ -147,10 +201,30 @@ export default function CourseDetail() {
       {isAuthor && (
         <>
           <button>Редактировать</button>
-          <button onClick={redirectToStat}>Статистика</button>
-          <button onClick={handleDelete}>Удалить</button>
+          <button onClick={redirectToStat}  className="course-stat">Статистика</button>
+          <button onClick={handleDelete}  className="course-delete">Удалить</button>
         </>
       )}
-    </div>
+      
+      
+      <div className="course-comment">
+        <h3>Комментарии 💬</h3>
+        <input value={commentText} onChange={e=>setCommentText(e.target.value)} type="text" placeholder='Напишите свой комментарий о курсе ....' className='comment-imput' />
+        <button onClick={handleComment}>Отправить</button>
+        <div className="comment-list">
+          {comments && comments.map((comment , id )=>(
+            <>
+   
+              {comment.text  ? 
+              <>
+              <h6 className={` ${comment.user.name == user.name ? 'this-comment-author ' : 'comment-author'}` } >{comment.user.name}</h6>
+              <p className="commetn-text">{comment.text}</p>
+              </>
+               : null}
+            </>
+          ))}
+        </div>
+      </div>
+    </div>  
   );
 }

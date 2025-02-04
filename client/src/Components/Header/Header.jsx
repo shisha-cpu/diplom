@@ -35,7 +35,7 @@ export default function Header(){
                 <div className="nav-bar">
                     <ul>
                          <Link to='/'>Главная  </Link>
-                        <Link to='/about' >О нас </Link>
+                        <Link to='/courses' >Курсы </Link>
                         <Link to='/contact'>Контакты</Link>
                         
                     </ul>

@@ -5,9 +5,10 @@ import './main.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser, changeUserBalance } from '../../store/slices/userSlice';
 import Modal from '../../Components/Modal/Modal';
+
 export default function Main() {
     const [courses, setCourses] = useState([]);
- 
+    const [sortType, setSortType] = useState(""); 
     const [loading, setLoading] = useState(true);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState(null);
@@ -42,7 +43,34 @@ export default function Main() {
             })
         }
     }, []);
-
+    useEffect(() => {
+        let sortedCourses = [...originalCourses];
+    
+        switch (sortType) {
+            case "views":
+                sortedCourses.sort((a, b) => b.views - a.views);
+                break;
+            case "likes":
+                sortedCourses.sort((a, b) => b.likes - a.likes);
+                break;
+            case "priceLow":
+                sortedCourses.sort((a, b) => a.price - b.price);
+                break;
+            case "priceHigh":
+                sortedCourses.sort((a, b) => b.price - a.price);
+                break;
+            default:
+                sortedCourses = [...originalCourses]; // Без сортировки
+                break;
+        }
+    
+        setCourses(sortedCourses);
+    }, [sortType, originalCourses]); 
+    useEffect(() => {
+        console.log("Текущий тип сортировки:", sortType);
+    }, [sortType]);
+    
+    
     useEffect(()=>{
         if (user.userInfo._id) {
             axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
@@ -122,7 +150,7 @@ export default function Main() {
     <div className="filter-container">
         <input
             type="text"
-            placeholder="Поиск курсов"
+            placeholder="Поиск курсов 🔎" 
             onChange={(e) => {
                 const searchValue = e.target.value.toLowerCase();
                 if (!searchValue) {
@@ -139,37 +167,13 @@ export default function Main() {
             }}
         />
 
-        <select
-            onChange={(e) => {
-                const sortType = e.target.value;
-                setCourses((prevCourses) => {
-                    const sortedCourses = [...prevCourses];
-                    switch (sortType) {
-                        case "views":
-                            sortedCourses.sort((a, b) => b.views - a.views);
-                            break;
-                        case "likes":
-                            sortedCourses.sort((a, b) => b.likes - a.likes);
-                            break;
-                        case "priceLow":
-                            sortedCourses.sort((a, b) => a.price - b.price);
-                            break;
-                        case "priceHigh":
-                            sortedCourses.sort((a, b) => b.price - a.price);
-                            break;
-                        default:
-                            break;
-                    }
-                    return sortedCourses;
-                });
-            }}
-        >
-            <option value="">Сортировать по</option>
-            <option value="views">По популярности (просмотры)</option>
-            <option value="likes">По лайкам</option>
-            <option value="priceLow">По цене (сначала дешевые)</option>
-            <option value="priceHigh">По цене (сначала дорогие)</option>
-        </select>
+<select onChange={(e) => setSortType(e.target.value)}>
+    <option value="">Сортировать по</option>
+    <option value="views">По популярности (просмотры)</option>
+    <option value="likes">По лайкам</option>
+    <option value="priceLow">По цене (сначала дешевые)</option>
+    <option value="priceHigh">По цене (сначала дорогие)</option>
+</select>
     </div>
 </aside>
 
@@ -180,10 +184,13 @@ export default function Main() {
                 <h3>Загрузка...</h3>
             ) : (
                 <div className="courses">
-                    {userSlikkslls.length > 0 && (
+                    {userSlikkslls.length > 0 && courses.some(course => 
+                        course.tags.some(tag => userSlikkslls.includes(tag))
+                            ) && (
                         <div className="recommended-courses">
-                            <h2>Рекомендованные курсы</h2>
+                          <h2>Рекомендованные курсы</h2>
                             <div className="courses-grid">
+                        
                                 {courses
                                     .filter((course) =>
                                         course.tags.some((tag) =>
@@ -199,11 +206,9 @@ export default function Main() {
     
                                         return (
                                             <div key={id} className="course">
+                                                
                                                 <h3>{course.title}</h3>
                                                 <img src={course.img} alt="" />
-                                
-                                                <h3>Просмотров: {course.views}</h3>
-                                                <h3>Лайков: {course.likes}</h3>
                                                 <button
                                                     onClick={() =>
                                                         handleClick(
@@ -226,51 +231,63 @@ export default function Main() {
                                                 >
                                                     Подробнее
                                                 </button>
+                                                
+                                                <div className="card-views">
+                                                    <h3>👀 {course.views}</h3>
+                                                    <h3>❤️ {course.likes}</h3>
+                                                    <h3>💬 {course.comments  ? course.comments.length : 0}</h3>
+                                                </div>
                                             </div>
                                         );
                                     })}
                             </div>
                         </div>
                     )}
-                    <div className="latest-courses">
+                   {courses.length > 0 &&  <div className="latest-courses">
                         <h2>Последние курсы</h2>
                         <div className="courses-grid">
-                            {[...courses].reverse().map((course, id) => {
-                                let isPusgared = pushared.some(
-                                    (pushed) =>
-                                        pushed._id.toString() ===
-                                        course._id.toString()
-                                );
-    
-                                return (
-                                    <div key={id} className="course">
-                                        <h3>{course.title}</h3>
-                                        <img src={course.img} alt="" />
-                                        <h3>Просмотров: {course.views}</h3>
-                                        <h3>Лайков: {course.likes}</h3>
-                                        <button
-                                            onClick={() =>
-                                                handleClick(
-                                                    course._id,
-                                                    course.price,
-                                                    isPusgared
-                                                )
-                                            }
-                                        >
-                                            {isPusgared
-                                                ? 'Открыть'
-                                                : course.price > 0
-                                                ? `Купить за ${course.price}`
-                                                : 'Пройти бесплатно'}
-                                        </button>
-                                        <button onClick={() => openModal(course)}>
-                                            Подробнее
-                                        </button>
-                                    </div>
-                                );
-                            })}
+                            
+                            
+                        {courses.map((course, id) => {
+    let isPusgared = pushared.some(
+        (pushed) =>
+            pushed._id.toString() ===
+            course._id.toString()
+    );
+
+    return (
+        <div key={id} className="course">
+            <h3>{course.title}</h3>
+            <img src={course.img} alt="" />
+            <button
+                onClick={() =>
+                    handleClick(
+                        course._id,
+                        course.price,
+                        isPusgared
+                    )
+                }
+            >
+                {isPusgared
+                    ? 'Открыть'
+                    : course.price > 0
+                    ? `Купить за ${course.price}`
+                    : 'Пройти бесплатно'}
+            </button>
+            <button onClick={() => openModal(course)}>
+                Подробнее
+            </button>
+            
+            <div className="card-views">
+                <h3>👀 {course.views}</h3>
+                <h3>❤️ {course.likes}</h3>
+                <h3>💬 {course.comments  ? course.comments.length : 0}</h3>
+            </div>
+        </div>
+    );
+})}
                         </div>
-                    </div>
+                    </div>}
                 </div>
             )}
     

@@ -30,7 +30,8 @@ app.get('/fovourite/:id' , CourseController.getFovourite)
 app.post('/pushared' , CourseController.userGetCourse)
 app.get('/pushared/:id' , CourseController.getPurchased)
 app.post('/addView/:id' , CourseController.AddView)
-
+app.post('/comments' , CourseController.addComment)
+app.get('/comments/:courseId' , CourseController.getComments)
 //Баланс
 app.get('/getNewBalace/:id' , CourseController.addNewBalance )
 app.get('/clearNewBalance/:id', CourseController.clwarNewBalance)

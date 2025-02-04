@@ -20,7 +20,13 @@ const moduleSchema = new mongoose.Schema(
   { _id: false } // чтобы не создавался отдельный id для каждого модуля
 );
 
-// Схема для курса
+const commentSchema = new mongoose.Schema({
+  user : { type: mongoose.Schema.Types.ObjectId, ref: "User"},
+  text : {
+    type : String
+  },
+  
+})
 const courseSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
@@ -32,8 +38,9 @@ const courseSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     img: { type: String, required: false },
     author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    modules: [moduleSchema], // Модули курса
-    finalTest: [questionSchema], // Итоговый тест курса
+    modules: [moduleSchema], 
+    finalTest: [questionSchema], 
+    comments : [commentSchema]
   },
   {
     timestamps: true,

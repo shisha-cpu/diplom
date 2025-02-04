@@ -116,20 +116,20 @@ export default function Dashboard() {
           <button onClick={addUserBalance}>Получить </button>
         </div>
       </div>
-      <hr />
+      
       <div className="dashboard-main">
         <div className="content">
         <div className="button-group">
-    <button onClick={() => setChange("my")}>
-        <span>Мои курсы</span>
+    <button className={`btn-inner ${change === 'my' ? 'selected' : ''}`} onClick={() => setChange("my")}>
+       <span >Мои курсы</span>
     </button>
-    <button onClick={() => setChange("new")}>
-        <span>Новый курс</span>
+    <button className={`btn-inner ${change === 'new' ? 'selected' : ''}`} onClick={() => setChange("new")}>
+        <span >Новый курс</span>
     </button>
-    <button onClick={() => setChange("pushared")}>
+    <button  className={`btn-inner ${change === 'pushared' ? 'selected' : ''}`} onClick={() => setChange("pushared")}>
         <span>Купленные курсы</span>
     </button>
-    <button onClick={() => setChange("stat")}>
+    <button  className={`btn-inner ${change === 'stat' ? 'selected' : ''}`} onClick={() => setChange("stat")}>
         <span>Моя статистика</span>
     </button>
 </div>
@@ -147,8 +147,8 @@ export default function Dashboard() {
                     <h4>
                       <Link to={`/course/${course._id}`}>{course.title}</Link>
                     </h4>
-                    <button onClick={()=>handleDelete(course._id)}> Удалить </button>
-                    <button onClick={()=>redirectToStat(course._id)}>Статистика </button>
+                    <button onClick={()=>handleDelete(course._id)} className="course-delete"> Удалить </button>
+                    <button onClick={()=>redirectToStat(course._id)} className="course-stat">Статистика </button>
                   </div>
                 ))
               ) : (

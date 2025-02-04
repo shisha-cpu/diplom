@@ -1,67 +1,119 @@
-/* Стиль для затемненного фона */
+/* modal.css */
+
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон */
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     z-index: 1000;
-}
-
-/* Основной контейнер модального окна */
-.modal-content {
-    background-color: #fff; /* Белый фон */
-    border-radius: 10px; /* Скругленные углы */
-    padding: 20px;
-    max-width: 500px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .modal-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
     width: 90%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Тень */
+    max-width: 600px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
-    animation: fadeIn 0.3s ease-in-out; /* Анимация появления */
-}
-
-/* Кнопка закрытия */
-.close-button {
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .modal.active .modal-content {
+    transform: scale(1);
+    opacity: 1;
+  }
+  
+  .close-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.1);
     border: none;
+    color: #fff;
     font-size: 24px;
-    font-weight: bold;
     cursor: pointer;
-    color: #333; /* Темный цвет */
-}
-
-.close-button:hover {
-    color: #ff0000; /* Красный цвет при наведении */
-}
-
-/* Текстовые элементы внутри модального окна */
-.modal-content h1 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.modal-content p {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  .close-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+  }
+  
+  .modal-content h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #6d28d9;
+    text-shadow: 0 0 10px rgba(109, 40, 217, 0.7);
+  }
+  
+  .modal-content p {
     font-size: 16px;
-    margin: 5px 0;
-    line-height: 1.5;
-}
-
-/* Анимация появления модального окна */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 15px;
+  }
+  
+  .modal-content .tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .modal-content .tags span {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #fff;
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .modal-content {
+      padding: 20px;
     }
-    to {
-        opacity: 1;
-        transform: scale(1);
+  
+    .modal-content h1 {
+      font-size: 24px;
     }
-}
+  
+    .modal-content p {
+      font-size: 14px;
+    }
+  
+    .close-button {
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      width: 35px;
+      height: 35px;
+    }
+  }

@@ -73,7 +73,7 @@ export const getPurchased = async(req, res) => {
 export const getCourse = async(req, res) => {
     try {
         const courses = await Course.find()
-        res.json(courses)
+        res.json(courses.reverse())
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -231,6 +231,48 @@ export const AddView = async(req, res) => {
         res.status(500).send(err.message);
     }
 }
+
+export const addComment = async(req , res )=>{
+    const {userId , text , courseId } = req.body
+    try {
+        if (!userId || !text || !courseId) {
+            return res.status(400).json({ message: "Все поля обязательны" });
+        }
+        const course = await Course.findById(courseId)
+        if (!course) {
+         return   res.status(404).send({msg : 'Курс не найден'})
+        }
+        
+        const newComment = {
+            user :  userId , 
+            text : text
+        }
+        console.log(newComment);
+        
+        await course.comments.push(newComment)
+        await course.save()
+        res.status(201).json({ message: "Комментарий добавлен", comment: newComment });
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+export const getComments = async (req, res) => {
+    const { courseId } = req.params;
+    try {
+        const course = await Course.findById(courseId).populate("comments.user", "name"); 
+
+        if (!course) {
+            return res.status(404).json({ msg: "Курс не найден" });
+        }
+
+        res.status(200).json(course.comments);
+    } catch (err) {
+        res.status(500).json({ message: "Ошибка сервера", error: err.message });
+    }
+};
+
+
 export const getAllBalance = async(req, res) => {
     try {
         const { id } = req.params

@@ -135,7 +135,36 @@ aside {
     background: linear-gradient(135deg, #4a5259, #6c757d);
     box-shadow: 0 0 15px rgba(108, 117, 125, 0.7);
 }
+select {
+    background-color: #0f0f0f;
+    color: #00ffcc;
+    border: 2px solid #00ffcc;
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+}
 
+select:hover {
+    background-color: #1a1a1a;
+    border-color: #ff00ff;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+}
+
+select:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+}
+
+option {
+    background-color: #0f0f0f;
+    color: #00ffcc;
+    padding: 10px;
+}
 .modal {
     position: fixed;
     top: 0;
@@ -200,4 +229,10 @@ aside {
     text-align: center;
     margin-top: 50px;
     text-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+}
+
+
+.card-views{
+    display: flex;
+    justify-content: space-between;
 }

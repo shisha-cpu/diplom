@@ -1,0 +1,201 @@
+/* addCourse.css */
+
+.addCourse {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1a1a2e, #2c3e50);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+  
+  .addCourse form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .addCourse h4 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #6d28d9;
+    text-shadow: 0 0 10px rgba(109, 40, 217, 0.7);
+  }
+  
+  .addCourse input,
+  .addCourse textarea,
+  .addCourse select {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .addCourse input::placeholder,
+  .addCourse textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .addCourse input:focus,
+  .addCourse textarea:focus,
+  .addCourse select:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+  }
+  
+  .addCourse textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .addCourse .module-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .addCourse .module-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 123, 255, 0.4);
+  }
+  
+  .addCourse .module-item h5 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #6d28d9;
+  }
+  
+  .addCourse .module-item p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+  }
+  
+  .addCourse .module-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .addCourse .module-item ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .addCourse .module-item ul li {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 5px;
+  }
+  
+  .addCourse button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .addCourse button:hover {
+    background: linear-gradient(135deg, #00bfff, #007bff);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+  }
+  
+  .addCourse button:active {
+    transform: scale(0.95);
+  }
+  
+  /* Стили для react-select */
+  .addCourse .basic-multi-select {
+    width: 100%;
+    color: #333;
+  }
+  
+  .addCourse .basic-multi-select .select__control {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 12px;
+    min-height: 48px;
+    box-shadow: none;
+    transition: all 0.3s ease;
+  }
+  
+  .addCourse .basic-multi-select .select__control--is-focused {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+  }
+  
+  .addCourse .basic-multi-select .select__multi-value {
+    background: rgba(0, 123, 255, 0.2);
+    border-radius: 8px;
+  }
+  
+  .addCourse .basic-multi-select .select__multi-value__label {
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  .addCourse .basic-multi-select .select__multi-value__remove {
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .addCourse .basic-multi-select .select__menu {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .addCourse .basic-multi-select .select__option {
+    color: #fff;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .addCourse .basic-multi-select .select__option--is-focused {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .addCourse .basic-multi-select .select__option--is-selected {
+    background: rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .addCourse {
+      padding: 20px;
+    }
+  
+    .addCourse h4 {
+      font-size: 20px;
+    }
+  
+    .addCourse input,
+    .addCourse textarea,
+    .addCourse select {
+      font-size: 14px;
+    }
+  
+    .addCourse button {
+      font-size: 14px;
+    }
+  }

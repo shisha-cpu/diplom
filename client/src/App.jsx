@@ -16,10 +16,10 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="dashboard"  element={<Dashboard />}/>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<About />} />
         <Route path="/course/:id" element={<CourseDetail />} />
         <Route path="/courseStat/:id" element={<CourseStat />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/courses" element={<Main />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
     </>
