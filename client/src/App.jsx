@@ -8,10 +8,12 @@ import CourseDetail from "./Pages/FullCourse/CourseDetail"
 import CourseStat from "./Pages/Stat/CourseStat"
 import About from "./Pages/About/About"
 import Contact from "./Pages/Contact/Contact"
+import Modal from "./Components/Modal/Modal"
 function App() {
   return (
     <>
       <Header />
+      <Modal />
       <Routes>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

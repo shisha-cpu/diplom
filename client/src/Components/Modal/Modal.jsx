@@ -34,7 +34,7 @@ function Modal({ course, onClose }) {
             <span key={id}>{tag}</span>
           )) : ''}
         </div>
-        <p>Описание: {course.description}</p>
+        <p>{course.description}</p>
       </div>
     </div>
   );

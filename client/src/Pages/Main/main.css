@@ -6,6 +6,8 @@
     align-items: center;
     padding: 40px 20px;
     background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
     min-height: 100vh;
     color: #fff;
     font-family: 'Poppins', sans-serif;
@@ -43,7 +45,7 @@ aside {
 
 .filter-container input:focus,
 .filter-container select:focus {
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
     box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
 }
 
@@ -135,36 +137,61 @@ aside {
     background: linear-gradient(135deg, #4a5259, #6c757d);
     box-shadow: 0 0 15px rgba(108, 117, 125, 0.7);
 }
-select {
-    background-color: #0f0f0f;
-    color: #00ffcc;
-    border: 2px solid #00ffcc;
-    padding: 10px;
+
+
+.select-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+
+  }
+  
+  .select-container select {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
     font-size: 16px;
-    font-family: 'Orbitron', sans-serif;
-    text-transform: uppercase;
-    cursor: pointer;
     outline: none;
+    appearance: none;
+    cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
-}
-
-select:hover {
-    background-color: #1a1a1a;
-    border-color: #ff00ff;
-    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
-}
-
-select:focus {
-    border-color: #ffcc00;
-    box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
-}
-
-option {
-    background-color: #0f0f0f;
-    color: #00ffcc;
-    padding: 10px;
-}
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .select-container select:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .select-container select:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+  }
+  
+  .select-container::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #fff;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+  }
+  
+  .select-container:hover::after {
+    transform: translateY(-50%) rotate(180deg);
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .select-container select {
+      font-size: 14px;
+      padding: 10px 15px;
+    }
+  }
 .modal {
     position: fixed;
     top: 0;
@@ -235,4 +262,103 @@ option {
 .card-views{
     display: flex;
     justify-content: space-between;
+}/* select.css */
+
+.select-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+
+  }
+  
+  .select-container select {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .select-container select:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .select-container select:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+  }
+  
+  .select-container::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #fff;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+  }
+  
+  .select-container:hover::after {
+    transform: translateY(-50%) rotate(180deg);
+  }
+  
+  /* Стили для option */
+  .select-container select option {
+    background: rgba(0, 0, 0, 0.9); /* Темный фон для option */
+    color: #fff; /* Белый текст */
+    padding: 10px 20px; /* Отступы внутри option */
+    font-size: 14px; /* Размер текста */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Разделитель между option */
+  }
+  
+  .select-container select option:hover {
+    background: rgba(255, 255, 255, 0.1); /* Эффект при наведении */
+
+  }
+  
+  .select-container select option:checked {
+
+    color: #fff;
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .select-container select {
+      font-size: 14px;
+      padding: 10px 15px;
+    }
+  
+    .select-container select option {
+      font-size: 12px;
+      padding: 8px 15px;
+    }
+  }
+
+  option {
+    background-color: #1a1a1a; /* Темный фон */
+    border:  none;
+    color: #ffffff; /* Неоновый текст */
+    font-family: 'Orbitron', sans-serif; /* Футуристический шрифт */
+    font-size: 14px;
+    padding: 10px;
+}
+
+/* Стили для option при наведении */
+option:hover {
+
+    color: #0a0a0a; /* Темный текст */
+}
+
+/* Стили для option при выборе */
+option:checked {
+
+    color: #0a0a0a; /* Темный текст */
 }

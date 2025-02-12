@@ -86,7 +86,10 @@ export default function Register() {
       { label: 'Фотореализм', value: 'Фотореализм' },
       { label: 'Рукоделие', value: 'Рукоделие' },
       { label: 'Деревообработка', value: 'Деревообработка' },
-      { label: 'Металлообработка', value: 'Металлообработка' }
+      { label: 'Металлообработка', value: 'Металлообработка' },
+      { label: 'Экология', value: 'Экология' },
+      { label: 'Биалогия', value: 'Биалогия' },
+      { label: 'Фауна', value: 'Фауна' },
     ];
     setSkillOptions(allSkills);
   }, []);

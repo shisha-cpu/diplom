@@ -1,6 +1,6 @@
 import React from 'react';
 import './about.css'; // Подключаем наш CSS файл
-
+import photo from './main.png'
 const About = () => {
   return (
     <section className="about-section py-20 px-4 sm:px-6 lg:px-8">
@@ -32,13 +32,7 @@ const About = () => {
           </div>
 
           {/* Изображение */}
-          <div className="about-image about-fade-in-right">
-            <img
-              src="https://via.placeholder.com/600x400" // Замените на ваше фото
-              alt="EdVentura"
-              className="rounded-lg"
-            />
-          </div>
+ 
         </div>
 
       </div>
