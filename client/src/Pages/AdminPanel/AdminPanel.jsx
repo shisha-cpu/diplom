@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import AllCourses from "../../Components/AllCourses/AllCourses"
-import AllUsers from "../../Components/AllUsers/AllUsers.JSX"
+import AllUsers from "../../Components/AllUsers/AllUsers"
 import NewCoursrs from "../../Components/NewCourses/NewCourses"
 import './adminPanel.css'
 export default function AdminPanel(){
