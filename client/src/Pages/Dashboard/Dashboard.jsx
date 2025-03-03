@@ -24,8 +24,6 @@ export default function Dashboard() {
         .get(`http://localhost:4444/userCourse/${user._id}`)
         .then((res) => {
           setUserCourses(res.data);
-
-      
           setLoading(false);
         })
         .catch((err) => console.log(err));

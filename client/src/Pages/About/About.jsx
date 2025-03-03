@@ -1,6 +1,10 @@
 import React from 'react';
 import './about.css'; // Подключаем наш CSS файл
 import photo from './main.png'
+import Card from '../../Components/Card/Card';
+import StepList from '../../Components/StepList/StepList';
+import ButtonWithArrow from '../../Components/Button/ButtonWithArrow';
+import gif from '../../img/about.gif'
 const About = () => {
   return (
     <section className="about-section py-20 px-4 sm:px-6 lg:px-8">
@@ -16,7 +20,7 @@ const About = () => {
         </h1>
 
         {/* Секция с описанием и изображением */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center ">
           {/* Текст */}
           <div className="space-y-6 center">
           <p className="about-text about-fade-in-left">
@@ -29,13 +33,39 @@ const About = () => {
             Главное преимущество EdVentura — это возможность не только обучаться, но и создавать собственные курсы. Пользователи могут делиться своими знаниями, зарабатывать внутреннюю валюту за прохождение их курсов и использовать её для приобретения новых знаний. Таким образом, обучение становится самодостаточным процессом, где знания обмениваются на знания.
           </p>
 
+        <img src={gif} alt="" className="about-gif" />
           </div>
 
-          {/* Изображение */}
  
         </div>
+        <hr />
+    <div className="about-advantages about-container about-container" >
+      <h1 className="advantages-title center title">Наши приемущества </h1>
+    <div className="card-container">
+    <Card title='Создавай и обучайся' 
+      description='EdVentura — это не только платформа для обучения, но и инструмент для создания курсов. Делись знаниями, создавай авторские программы и зарабатывай!' />
 
+<Card title='Геймификация процесса' 
+      description='Проходи курсы, зарабатывай внутреннюю валюту и используй её для новых знаний. Обучение превращается в увлекательный и мотивирующий процесс!' />
+
+<Card title='Современные технологии' 
+      description='Мы используем передовые методики и технологии, чтобы обучение было интерактивным, доступным и эффективным.' />
+
+<Card title='Гибкость и доступность' 
+      description='Обучайся в удобное время и в удобном формате — на смартфоне, планшете или компьютере. EdVentura доступна везде!' />
+
+    </div>
+    </div>
       </div>
+
+
+      <div className="steps-list about-container">
+      <hr />
+        <StepList />
+      </div>
+
+      <ButtonWithArrow />
+
     </section>
   );
 };

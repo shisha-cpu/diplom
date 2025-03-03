@@ -135,3 +135,8 @@ input[type="submit"]:hover {
 .basic-multi-select .select__option--is-selected {
     background: rgba(0, 123, 255, 0.5);
 }
+.err{
+    color: red;
+    font-size: 20px;
+    font-weight: 600;
+}

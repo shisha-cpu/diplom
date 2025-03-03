@@ -1,6 +1,9 @@
 /* about.css */
 
 /* Основные стили для секции */
+.about-container{
+  min-height: 70svh;
+}
 .about-section {
     position: relative;
     overflow: hidden;
@@ -17,7 +20,10 @@
     opacity: 0.2;
     z-index: 1;
   }
-  
+ .about-advantages{
+
+  padding-bottom: 50px !important;
+ }
   .about-shape-purple {
     width: 300px;
     height: 300px;
@@ -54,7 +60,7 @@
   
   /* Заголовок */
   .about-title {
-    font-size: 48px;
+    font-size: 90px;
     font-weight: 700;
     text-align: center;
     margin-bottom: 40px;
@@ -148,12 +154,20 @@
     color: rgba(255, 255, 255, 0.8);
   }
   
+  .title{
+    font-size: 50px ;
+    font-weight: 600;
+    color: #6d28d9;
+    margin: 10px;
+  }
   /* Адаптивность */
   @media (max-width: 768px) {
     .about-title {
       font-size: 36px;
+    } 
+    .about-gif{
+      max-width: 70svw;
     }
-  
     .about-text {
       font-size: 16px;
     }
@@ -169,4 +183,11 @@
     .about-card-description {
       font-size: 14px;
     }
+  }
+  
+  .card-container{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 90svw;
+ justify-content: center;
   }

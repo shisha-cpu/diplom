@@ -1,0 +1,61 @@
+/* Основные стили для страницы статистики */
+.stat {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1a1a2e, #2c3e50);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.stat h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #6d28d9;
+    text-shadow: 0 0 10px rgba(109, 40, 217, 0.7);
+}
+
+.stat p {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.stat p:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Стили для CTR */
+.stat p:nth-child(6) {
+    font-weight: 600;
+
+    background: rgba(109, 40, 217, 0.1);
+    border: 1px solid #6d28d9;
+}
+
+.stat p:nth-child(6):hover {
+    background: rgba(109, 40, 217, 0.2);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .stat {
+        padding: 20px;
+    }
+
+    .stat h2 {
+        font-size: 28px;
+    }
+
+    .stat p {
+        font-size: 16px;
+    }
+}

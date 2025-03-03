@@ -30,13 +30,14 @@ export default function Main() {
     }, [dispatch]);
 
     useEffect(() => {
-        axios.get('http://localhost:4444/course/')
-            .then(res => {
-                setCourses(res.data);
-                setOriginalCourses(res.data);
-                setLoading(false);
-            })
-            .catch(err => console.log(err));
+    axios.get('http://localhost:4444/course/')
+        .then(res => {
+            const filteredCourses = res.data.filter(course => course.accept !== false);
+            setCourses(filteredCourses);
+            setOriginalCourses(filteredCourses);
+            setLoading(false);
+        })
+        .catch(err => console.log(err));
 
         if (user.userInfo._id) {
             axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
@@ -190,8 +191,6 @@ export default function Main() {
 </aside>
 
 </aside>
-
-    
             {loading ? (
                 <h3>Загрузка...</h3>
             ) : (

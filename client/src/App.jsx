@@ -9,6 +9,8 @@ import CourseStat from "./Pages/Stat/CourseStat"
 import About from "./Pages/About/About"
 import Contact from "./Pages/Contact/Contact"
 import Modal from "./Components/Modal/Modal"
+import AdminPanel from "./Pages/AdminPanel/AdminPanel"
+import Balance from "./Pages/Balance/Balance"
 function App() {
   return (
     <>
@@ -23,6 +25,8 @@ function App() {
         <Route path="/courseStat/:id" element={<CourseStat />} />
         <Route path="/courses" element={<Main />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/balance" element={<Balance />} />
       </Routes>
     </>
   )

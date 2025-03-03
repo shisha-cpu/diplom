@@ -17,7 +17,7 @@ export default function AddCourse() {
   const [moduleContent, setModuleContent] = useState("");
   const [moduleImg, setModuleImg] = useState("");
   const [moduleQuestions, setModuleQuestions] = useState([]);
-
+  const [textQuestion , setTextQuestion] = useState()
   const [finalTestQuestions, setFinalTestQuestions] = useState([]);
 
   const user = useSelector((state) => state.user.userInfo);
@@ -147,6 +147,21 @@ export default function AddCourse() {
       setModuleQuestions([]);
     }
   };
+  const addTextQuestion = () => {
+    const questionText = prompt("Введите текст вопроса:");
+    if (!questionText) return;
+    const correctAnswer = prompt(
+      `Введите правильный ответ:`
+    );
+    setModuleQuestions((prev) => [
+      ...prev,
+      { questionText, type: "text"  , correctAnswer}, // Указываем тип как "text"
+    ]);
+  
+    // Обновляем поле textQuestion
+    setTextQuestion(questionText); // Сохраняем открытый вопрос в textQuestion
+  };
+  
   
   const addQuestion = (setQuestions) => {
     const questionText = prompt("Введите текст вопроса:");
@@ -171,6 +186,7 @@ export default function AddCourse() {
       { questionText, options, correctAnswer },
     ]);
   };
+console.log(modules);
 
   return (
     <div className="addCourse">
@@ -226,20 +242,28 @@ export default function AddCourse() {
 
         <h4>Модули курса</h4>
         {modules.map((mod, index) => (
-          <div key={index} className="module-item">
-            <h5>{mod.title}</h5>
-            <p>{mod.content}</p>
-            {mod.img && <img src={mod.img} alt={mod.title} />}
-            <ul>
-              {mod.questions.map((q, idx) => (
-                <li key={idx}>
-                  {q.questionText} - Ответы: {q.options.join(", ")} - Правильный:{" "}
-                  {q.correctAnswer}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+  <div key={index} className="module-item">
+    <h5>{mod.title}</h5>
+    <p>{mod.content}</p>
+    {mod.img && <img src={mod.img} alt={mod.title} />}
+    <ul>
+      {mod.questions.map((q, idx) => (
+        <li key={idx}>
+          {q.questionText}
+          {q.type === 'multiple_choice' && q.options && q.options.length > 0 && (
+            <> - Ответы: {q.options.join(", ")} </> 
+          )}
+          {q.type === 'multiple_choice' && q.correctAnswer && (
+            <> - Правильный: {q.correctAnswer}</>
+          )}
+          {q.type === 'text' && <span> - Открытый вопрос</span>} 
+        </li>
+      ))}
+    </ul>
+  </div>
+))}
+
+
 
         <h4>Добавить модуль</h4>
         <input
@@ -263,7 +287,13 @@ export default function AddCourse() {
           type="button"
           onClick={() => addQuestion(setModuleQuestions)}
         >
-          Добавить вопрос в тест модуля
+          Добавить тест
+        </button>
+        <button
+          type="button"
+          onClick={() => addTextQuestion(setModuleQuestions)}
+        >
+          Добавить вопрос с открытым ответом 
         </button>
         <button type="button" onClick={addModule}>
           Добавить модуль

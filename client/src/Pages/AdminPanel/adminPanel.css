@@ -1,0 +1,58 @@
+.adminPanel {
+    padding: 20px;
+    text-align: center;
+    background-color: white;
+}
+.adminPanel a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    margin: 10px;
+}
+
+
+.adminPanel h1 {
+    font-size: 34px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.admin-section {
+    display: flex;
+justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.admin-section button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 5px;
+}
+
+.admin-section button:hover {
+    background-color: #0056b3;
+}
+
+.admin-section button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.all-course{
+    margin: 10px;
+}
+
+.public-btn{
+    padding: 10px;
+    background-color: rgb(18, 168, 98);
+    color: white;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}

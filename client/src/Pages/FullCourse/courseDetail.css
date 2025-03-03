@@ -1,4 +1,3 @@
-/* courseDetail.css */
 
 .course-detail {
     max-width: 1200px;
@@ -30,11 +29,11 @@
     font-weight: 600;
     margin-bottom: 20px;
     color: #6d28d9;
-    text-shadow: 0 0 10px rgba(109, 40, 217, 0.7);
+    text-shadow: 0 0 10px rgba(108, 40, 217, 0.144);
   }
   
   .module-item {
-    background: rgba(255, 255, 255, 0.1);
+    background: икrgba(25, 17, 63, 0.308);
     backdrop-filter: blur(10px);
     border-radius: 12px;
     padding: 20px;
@@ -42,11 +41,7 @@
     transition: all 0.3s ease;
   }
   
-  .module-item:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 123, 255, 0.4);
-  }
+
   
   .module-item h4 {
     font-size: 20px;
@@ -86,11 +81,7 @@
     margin-right: 10px;
   }
   
-  .course-detail button:hover {
-    background: linear-gradient(135deg, #00bfff, #007bff);
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
-  }
-  
+
   .course-detail button:active {
     transform: scale(0.95);
   }
@@ -148,7 +139,9 @@
     .course-detail {
       padding: 20px;
     }
-  
+  .course-img{
+    max-width: 300px;
+  }
     .course-detail h2 {
       font-size: 28px;
     }
@@ -167,3 +160,106 @@
     }
   }
   
+/* Добавьте эти стили в ваш CSS файл */
+
+/* Стили для вопросов */
+.question-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+
+
+.question-item h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #6d28d9;
+}
+
+/* Стили для ответов */
+.option-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+
+.option-item.correct {
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid green;
+}
+
+.option-item.incorrect {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid red;
+}
+
+/* Стили для текстовых ответов */
+.text-answer {
+  margin-top: 10px;
+}
+
+.text-answer input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.text-answer button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #007bff, #00bfff);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+/* Стили для итогового теста */
+.final-test {
+  margin-top: 30px;
+}
+
+.final-test h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #6d28d9;
+}
+
+.final-test .question-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.final-test .question-item h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #6d28d9;
+}
+
+.final-test .question-item ul {
+  list-style: none;
+  padding: 0;
+}
+
+.final-test .question-item ul li {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 5px;
+}
