@@ -21,20 +21,20 @@ export default function Dashboard() {
   useEffect(() => {
     if (user._id) {
       axios
-        .get(`http://localhost:4444/userCourse/${user._id}`)
+        .get(`http://89.169.39.144:4444/userCourse/${user._id}`)
         .then((res) => {
           setUserCourses(res.data);
           setLoading(false);
         })
         .catch((err) => console.log(err));
         axios
-        .get(`http://localhost:4444/pushared/${user._id}`)
+        .get(`http://89.169.39.144:4444/pushared/${user._id}`)
         .then((res) => {
           setPushared(res.data);
         })
         .catch((err) => console.log(err));
         axios
-        .get(`http://localhost:4444/getNewBalace/${user._id}`)
+        .get(`http://89.169.39.144:4444/getNewBalace/${user._id}`)
         .then((res) => {
           setNewBalance(res.data);
           console.log(res.data);
@@ -42,7 +42,7 @@ export default function Dashboard() {
         })
         .catch((err) => console.log(err));
         axios
-        .get(`http://localhost:4444/allHysoryBalance/${user._id}`)
+        .get(`http://89.169.39.144:4444/allHysoryBalance/${user._id}`)
         .then((res) => {
           setAllHistoryBalance(res.data);
           console.log(res.data);
@@ -70,10 +70,10 @@ export default function Dashboard() {
   const addUserBalance = ()=>{
  
     
-    axios.post(`http://localhost:4444/balance` , {action : 'plus' , id : user._id , sum : newBalance})
+    axios.post(`http://89.169.39.144:4444/balance` , {action : 'plus' , id : user._id , sum : newBalance})
     .then(res =>{
       dispatch(changeUserBalance(res.data))
-      axios.get(`http://localhost:4444/clearNewBalance/${user._id}`)
+      axios.get(`http://89.169.39.144:4444/clearNewBalance/${user._id}`)
       .then(res =>{
         setNewBalance(res.data)
         console.log(res.data);
@@ -88,7 +88,7 @@ export default function Dashboard() {
   }
   // Удаление курса 
   const handleDelete = (id)=>{
-    axios.delete(`http://localhost:4444/courseDelete/${id}`)
+    axios.delete(`http://89.169.39.144:4444/courseDelete/${id}`)
     .then(location.reload())
     .catch(err => console.log(err)
     )

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 export default function AllCourses(){
     const [courses , setCourses] = useState()
     useEffect(()=>{
-        axios.get('http://localhost:4444/course/')
+        axios.get('http://89.169.39.144:4444/course/')
         .then(res => {
             const filteredCourses = res.data.filter(course => course.accept !== false);
             setCourses(filteredCourses);
@@ -16,7 +16,7 @@ export default function AllCourses(){
     },[])
     const handleDelete = (id , userId)=>{
         
-        axios.delete(`http://localhost:4444/courseDelete/${id}` , {userId})
+        axios.delete(`http://89.169.39.144:4444/courseDelete/${id}` , {userId})
         .then(res=>console.log(res.data)
         )
         location.reload()

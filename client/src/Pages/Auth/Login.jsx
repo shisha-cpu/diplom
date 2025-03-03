@@ -20,7 +20,7 @@ export default function Login(){
             email,
             password
         }
-        axios.post('http://localhost:4444/login' , userData)
+        axios.post('http://89.169.39.144:4444/login' , userData)
         .then(res =>{
             dispatch(fetchUser(res.data))
                 console.log(res);

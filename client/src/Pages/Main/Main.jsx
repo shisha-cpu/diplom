@@ -30,7 +30,7 @@ export default function Main() {
     }, [dispatch]);
 
     useEffect(() => {
-    axios.get('http://localhost:4444/course/')
+    axios.get('http://89.169.39.144:4444/course/')
         .then(res => {
             const filteredCourses = res.data.filter(course => course.accept !== false);
             setCourses(filteredCourses);
@@ -40,7 +40,7 @@ export default function Main() {
         .catch(err => console.log(err));
 
         if (user.userInfo._id) {
-            axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
+            axios.get(`http://89.169.39.144:4444/pushared/${user.userInfo._id}`)
             .then(res =>{
                 setPushared(res.data)
                 
@@ -77,12 +77,12 @@ export default function Main() {
     
     useEffect(()=>{
         if (user.userInfo._id) {
-            axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
+            axios.get(`http://89.169.39.144:4444/pushared/${user.userInfo._id}`)
             .then(res =>{
                 setPushared(prevState => [...prevState, ...res.data]);  
                 
             })
-            axios.get(`http://localhost:4444/userCourse/${user.userInfo._id}`)
+            axios.get(`http://89.169.39.144:4444/userCourse/${user.userInfo._id}`)
             .then(res => {
                 setPushared(prevState => [...prevState, ...res.data]);  
             })
@@ -102,14 +102,14 @@ export default function Main() {
                 alert('На балансе недостаточно средств');
                 return;
             }
-            axios.post('http://localhost:4444/pushared', { userId: user.userInfo._id, courseId })
+            axios.post('http://89.169.39.144:4444/pushared', { userId: user.userInfo._id, courseId })
                 .then(res => console.log(res.data));
 
             setSelectedCourseId(courseId);
             setShouldNavigate(true);
 
             if (price > 0 && !isPusgared) {
-                axios.post('http://localhost:4444/balance', {
+                axios.post('http://89.169.39.144:4444/balance', {
                     action: 'minus',
                     id: user.userInfo._id,
                     sum: price,
@@ -130,7 +130,7 @@ export default function Main() {
         return <Navigate to={`/course/${selectedCourseId}`} />;
     }
     const courseDetal = (course)=>{
-        axios.get(`http://localhost:4444/course/${course._id}`)
+        axios.get(`http://89.169.39.144:4444/course/${course._id}`)
         .then(res => {setCourse(res.data)
             console.log(res.data);
         })

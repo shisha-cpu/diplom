@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 export default function AllUsers(){
     const [users , setUsers] = useState()
     useEffect(()=>{
-        axios.get('http://localhost:4444/users')
+        axios.get('http://89.169.39.144:4444/users')
         .then(res => {
             setUsers(res.data)
                    
@@ -18,7 +18,7 @@ export default function AllUsers(){
         
         const importName = prompt(` Для подтверждения Удаления пользователя ${user} введите его имя`)   
         if (importName == user ) {
-            axios.delete(`http://localhost:4444/user/${id}`)
+            axios.delete(`http://89.169.39.144:4444/user/${id}`)
             alert('Удалено ')
             location.reload()
             return

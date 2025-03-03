@@ -6,7 +6,7 @@ export default function NewCoursrs(){
 
 
     useEffect(() => {
-        axios.get('http://localhost:4444/course/')
+        axios.get('http://89.169.39.144:4444/course/')
             .then(res => {
                 const filteredCourses = res.data.filter(course => course.accept !== true);
                 setCourses(filteredCourses);
@@ -16,7 +16,7 @@ export default function NewCoursrs(){
 
     const handleDelete = (id , userId)=>{
         
-        axios.delete(`http://localhost:4444/courseDelete/${id}` , {userId})
+        axios.delete(`http://89.169.39.144:4444/courseDelete/${id}` , {userId})
         .then(res=>console.log(res.data)
         )
         location.reload()
@@ -24,7 +24,7 @@ export default function NewCoursrs(){
     }
     const handlePublic = (id )=>{
         
-        axios.post(`http://localhost:4444/public/${id}` )
+        axios.post(`http://89.169.39.144:4444/public/${id}` )
         .then(res=>console.log(res.data)
         )
         location.reload()

@@ -109,7 +109,7 @@ export default function Register() {
       skills: skills.map(skill => skill.value)
     };
     
-    axios.post('http://localhost:4444/register', userData)
+    axios.post('http://89.169.39.144:4444/register', userData)
       .then(res => {
         dispatch(fetchUser(res.data));
         localStorage.setItem('user', JSON.stringify(res.data));

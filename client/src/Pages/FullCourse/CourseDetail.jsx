@@ -20,23 +20,23 @@ export default function CourseDetail() {
   const [tetxAnswerBtn, setTextAnswerBtn] = useState(true);
 
   useEffect(() => {
-    axios.post(`http://localhost:4444/addView/${id}`)
+    axios.post(`http://89.169.39.144:4444/addView/${id}`)
       .catch(err => console.log(err));
   }, [id]);
 
   useEffect(() => {
-    axios.get(`http://localhost:4444/course/${id}`)
+    axios.get(`http://89.169.39.144:4444/course/${id}`)
       .then(res => {
         setCourse(res.data);
         setLoading(false);
       })
       .catch(err => console.log(err));
-    axios.get(`http://localhost:4444/comments/${id}`)
+    axios.get(`http://89.169.39.144:4444/comments/${id}`)
       .then(res => {
         setComments(res.data);
       });
     
-    axios.get(`http://localhost:4444/fovourite/${user._id}`)
+    axios.get(`http://89.169.39.144:4444/fovourite/${user._id}`)
       .then(res => {
         if (res.data.includes(id)) {
           setLikeStatus(true);
@@ -56,7 +56,7 @@ export default function CourseDetail() {
   }
 
   const addLike = () => {
-    axios.post(`http://localhost:4444/courseLike`, {
+    axios.post(`http://89.169.39.144:4444/courseLike`, {
       userId: user._id,
       courseId: course._id,
       action: 'plus',
@@ -66,7 +66,7 @@ export default function CourseDetail() {
   };
 
   const removeLike = () => {
-    axios.post(`http://localhost:4444/courseLike`, {
+    axios.post(`http://89.169.39.144:4444/courseLike`, {
       userId: user._id,
       courseId: course._id,
       action: 'minus',
@@ -77,7 +77,7 @@ export default function CourseDetail() {
 
   const handleComment = () => {
     location.reload();
-    axios.post('http://localhost:4444/comments', {
+    axios.post('http://89.169.39.144:4444/comments', {
       userId: user._id,
       courseId: course._id,
       text: commentText
@@ -104,7 +104,7 @@ export default function CourseDetail() {
   };
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:4444/courseDelete/${course._id}`)
+    axios.delete(`http://89.169.39.144:4444/courseDelete/${course._id}`)
       .then(() => navigate('/'))
       .catch(err => console.log(err));
   };
