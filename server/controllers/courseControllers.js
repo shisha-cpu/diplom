@@ -190,12 +190,13 @@ export const clwarNewBalance = async(req, res) => {
         res.status(500).send(err.message);
     }
 }
-export const deleteCourse = async(req, res) => {
+export const deleteCourse = async (req, res) => {
     try {
         const { id } = req.params;
-        const { userId } = req.body
+        const { userId } = req.body;
+
         if (!id) {
-            return res.status(404).send('ID не пришел');
+            return res.status(400).send('ID не пришел');
         }
 
         const course = await Course.findByIdAndDelete(id);
@@ -203,19 +204,35 @@ export const deleteCourse = async(req, res) => {
             return res.status(404).send('Курс не найден');
         }
 
-        const user = await User.findById(userId)
+        const user = await User.findById(userId);
         if (!user) {
-            res.status(404).json({ message: 'Пользователь не найден' })
+            return res.status(404).json({ message: 'Пользователь не найден' });
         }
+
         user.pushared = user.pushared.filter(item => item.toString() !== course._id.toString());
         await user.save();
         await User.updateOne({ _id: course.author }, { $pull: { courses: course._id } });
 
-        res.send('Курс успешно удален');
+        return res.send('Курс успешно удален')
     } catch (err) {
-        res.status(500).send(err.message);
+        return res.status(500).send(err.message); 
     }
 };
+
+
+export const publicCourse = async(req ,res ) =>{
+    const {id } = req.params
+    try {
+        const course = await Course.findById(id)
+        course.accept = true
+        await course.save()
+
+        res.send('Удалено')
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 export const AddView = async(req, res) => {
     try {
         const { id } = req.params

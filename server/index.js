@@ -17,10 +17,12 @@ app.use(cors())
 //авторизация
 app.post('/register'  , UserController.register)
 app.post('/login' , UserController.login )
-
+app.get('/users' ,UserController.users )
+app.delete('/user/:id' , UserController.deleteUser)
 //Курсы
 
 app.post('/course' ,CourseController.addCourse )
+app.post('/public/:id' ,CourseController.publicCourse )
 app.get('/course', CourseController.getCourse)
 app.get('/course/:id' , CourseController.getCourseById)
 app.delete('/courseDelete/:id' , CourseController.deleteCourse)

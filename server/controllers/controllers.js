@@ -3,23 +3,37 @@ import bcrypt from 'bcrypt'
 
 // Авторизация
 export const register = async (req, res) => {
-    const { name, email, password , skills } = req.body;
+    const { name, email, password, skills } = req.body;
+    if (!email) {
+        return res.status(400).json({ msg: 'Введите email' });
+    }
+    if (!password) {
+        return res.status(400).json({ msg: 'Введите пароль' });
+    }
+    if (!name) {
+        return res.status(400).json({ msg: 'Введите имя' });
+    }
 
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashPass = await bcrypt.hash(password, salt);
+    try {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ msg: 'Пользователь с таким email уже существует' });
+        }
+        const saltRounds = 10;
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashPass = await bcrypt.hash(password, salt);
 
-    try {   
         const userData = new User({
             name,
             email,
             password: hashPass,
             skills
         });
+
         const user = await userData.save();
         res.json(user);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json({ message: err.message });
     }
 };
 
@@ -27,17 +41,17 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email) {
-        return res.status(400).send('Введите email');
+        return res.status(400).json({msg : 'Введите email'})
     }
     if (!password) {
-        return res.status(400).send('Введите пароль');
+        return res.status(400).json({msg : 'Введите пароль '})
     }
 
     try {
         const user = await User.findOne({ email });
         
         if (!user) {
-            return res.status(404).send('Пользователь не найден');
+            return res.status(400).json({msg : 'Пользователь не найден '})
         }
 
         const isValidPass = await bcrypt.compare(password, user.password);
@@ -45,13 +59,32 @@ export const login = async (req, res) => {
         if (isValidPass) {
             res.send(user);
         } else {
-            return res.status(401).send('Пароль неверный');
+            return res.status(400).json({msg : 'Данные не верные '})
         }
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 
+export const users = async(req ,res ) =>{
+    try {
+        const users = await User.find()
+        res.send(users)
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+export const deleteUser = async(req ,res ) =>{
+    const {id } = req.params
+    try {
+        const user = await User.findByIdAndDelete(id)
+
+        res.send('Удалено')
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
 
 
 //Изменение баланса 

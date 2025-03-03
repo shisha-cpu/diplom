@@ -4,11 +4,13 @@ import mongoose from "mongoose";
 const questionSchema = new mongoose.Schema(
   {
     questionText: { type: String, required: true },
-    options: [{ type: String, required: true }], // Массив вариантов ответов
-    correctAnswer: { type: String, required: true }, // Правильный ответ
+    options: [{ type: String, required: false }], 
+    correctAnswer: { type: String, required: false }, 
+    type: { type: String, required: true, enum: ['multiple_choice', 'text'] } 
   },
   { _id: false }
 );
+
 
 const moduleSchema = new mongoose.Schema(
   {
@@ -16,8 +18,9 @@ const moduleSchema = new mongoose.Schema(
     content: { type: String, required: true },
     img: { type: String, required: false },
     questions: [questionSchema],
+    textQuestion : { type : String  }
   },
-  { _id: false } // чтобы не создавался отдельный id для каждого модуля
+  { _id: false } 
 );
 
 const commentSchema = new mongoose.Schema({
@@ -40,7 +43,9 @@ const courseSchema = new mongoose.Schema(
     author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     modules: [moduleSchema], 
     finalTest: [questionSchema], 
-    comments : [commentSchema]
+    comments : [commentSchema],
+    accept : {type : Boolean , default : false},
+
   },
   {
     timestamps: true,
