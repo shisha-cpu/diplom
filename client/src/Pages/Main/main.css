@@ -2,8 +2,7 @@
 
 .main {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+
     padding: 40px 20px;
     background: linear-gradient(135deg, #1a1a1a, #2c3e50);
     background-size: 400% 400%;
@@ -14,15 +13,19 @@
 }
 
 aside {
-    width: 100%;
-    max-width: 1200px;
+
+
     margin-bottom: 40px;
+
+
 }
 
 .filter-container {
     display: flex;
+    flex-direction: column;
     gap: 15px;
     margin-bottom: 30px;
+    max-width: 300px;
 }
 
 .filter-container input,
@@ -50,8 +53,10 @@ aside {
 }
 
 .courses {
+    margin:  0 auto;
     width: 100%;
     max-width: 1200px;
+    margin-left: 20px;
 }
 
 .recommended-courses,
@@ -196,6 +201,8 @@ aside {
       flex-direction: column;
     }
   }
+
+
 .modal {
     position: fixed;
     top: 0;
@@ -267,7 +274,61 @@ aside {
     display: flex;
     justify-content: space-between;
 }/* select.css */
+/* Стили для фильтра по тегам */
+.tags-filter {
+  margin-top: 20px;
+}
 
+.tags-filter h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tag:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+.tag.selected {
+  background: linear-gradient(135deg, #007bff, #00bfff);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .tag {
+      padding: 6px 12px;
+      font-size: 12px;
+  }
+
+  .tags-filter h3 {
+      font-size: 16px;
+  }
+}
 .select-container {
     position: relative;
     width: 100%;
@@ -365,4 +426,127 @@ option:hover {
 option:checked {
 
     color: #0a0a0a; /* Темный текст */
+}
+aside {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(15px); 
+  border-radius: 16px; 
+
+  padding: 20px; 
+  border: 1px solid rgba(0, 123, 255, 0.3); 
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.2); 
+}
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px; /* Отступы внутри */
+  max-width: 100%;
+}
+
+.filter-container input,
+.filter-container select {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.filter-container input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.filter-container input:focus,
+.filter-container select:focus {
+  background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+.tags-filter {
+  margin-top: 20px;
+}
+
+.tags-filter h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tag:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+.tag.selected {
+  background: linear-gradient(135deg, #007bff, #00bfff);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .main {
+      flex-direction: column;
+      padding: 20px 10px;
+  }
+
+  aside {
+      max-width: 100%;
+      margin-bottom: 20px;
+  }
+
+  .filter-container {
+      max-width: 100%;
+  }
+
+  .filter-container input,
+  .filter-container select {
+      font-size: 14px;
+      padding: 10px 15px;
+  }
+
+  .tags-filter h3 {
+      font-size: 16px;
+  }
+
+  .tag {
+      padding: 6px 12px;
+      font-size: 12px;
+  }
+
+  .courses {
+      margin-left: 0;
+  }
 }

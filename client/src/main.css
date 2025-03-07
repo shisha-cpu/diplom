@@ -22,4 +22,6 @@ hr {
       box-shadow: 0 0 20px #f0f, 0 0 30px #0ff, 0 0 40px #f0f !important;
     }
   }
-  
+.error-text{
+  color: red;
+}

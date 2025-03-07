@@ -1,5 +1,5 @@
 import React from "react";
-import "./card.scss"; // Подключение стилей
+import "./card.scss"; 
 
 const Card = (props) => {
   return (
