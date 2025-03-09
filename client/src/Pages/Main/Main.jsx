@@ -96,6 +96,100 @@ export default function Main() {
                 : [...prevTags, tag]
         );
     };
+    useEffect(()=>{
+      if (user.userInfo._id) {
+          axios.get(`http://89.169.39.144:4444/pushared/${user.userInfo._id}`)
+          .then(res =>{
+              setPushared(prevState => [...prevState, ...res.data]);  
+              
+          })
+          axios.get(`http://89.169.39.144:4444/userCourse/${user.userInfo._id}`)
+          .then(res => {
+              setPushared(prevState => [...prevState, ...res.data]);  
+          })
+          console.log(user);
+          if (user.userInfo.skills.length > 0) {
+              setUserSkills(user.userInfo.skills)
+          }
+      }
+ 
+  },[user.userInfo._id])
+  useEffect(()=>{
+    if (user.userInfo._id) {
+        axios.get(`http://89.169.39.144:4444/pushared/${user.userInfo._id}`)
+        .then(res =>{
+            setPushared(prevState => [...prevState, ...res.data]);  
+            
+        })
+        axios.get(`http://89.169.39.144:4444/userCourse/${user.userInfo._id}`)
+        .then(res => {
+            setPushared(prevState => [...prevState, ...res.data]);  
+        })
+        console.log(user);
+        if (user.userInfo.skills.length > 0) {
+            setUserSkills(user.userInfo.skills)
+        }
+    }
+
+},[user.userInfo._id])
+const handleClick = (courseId, price, isPusgared) => {
+
+
+
+    if (1==1) {
+        if (price > 0 && user.userInfo.balance < price) {
+            alert('На балансе недостаточно средств');
+            return;
+        }
+        axios.post('http://89.169.39.144:4444/pushared', { userId: user.userInfo._id, courseId })
+            .then(res => console.log(res.data));
+
+        setSelectedCourseId(courseId);
+        setShouldNavigate(true);
+
+        if (price > 0 && !isPusgared) {
+            axios.post('http://89.169.39.144:4444/balance', {
+                action: 'minus',
+                id: user.userInfo._id,
+                sum: price,
+            })
+                .then((res) => {
+                    dispatch(changeUserBalance(res.data));
+                })
+                .catch((err) => console.log(err));
+        }
+    }
+};
+
+
+
+console.log(courses);
+
+if (shouldNavigate && selectedCourseId) {
+    return <Navigate to={`/course/${selectedCourseId}`} />;
+}
+const courseDetal = (course)=>{
+    axios.get(`http://89.169.39.144:4444/course/${course._id}`)
+    .then(res => {setCourse(res.data)
+        console.log(res.data);
+    })
+}
+
+const openModal = (course) => {
+    setSelectedCourse(course);
+    console.log(course);
+    
+    setModalVisible(true);
+};
+
+const closeModal = () => {
+    setSelectedCourse(null);
+    setModalVisible(false);
+};
+const handleConfirm = (bool) => {
+    setConfirmVisible(false);
+    boolRef.current = bool; 
+};
 
     return (
         <div className="main">
@@ -144,95 +238,104 @@ export default function Main() {
                 </div>
             </aside>
 
-            {loading ? (
+       {loading ? (
                 <h3>Загрузка...</h3>
             ) : (
                 <div className="courses">
-                    {userSlikkslls.length > 0 && courses.some(course =>
-                        Array.isArray(course.tags) &&
-                        course.tags.some(tag =>
+                {userSlikkslls.length > 0 && courses.some(course => 
+                  Array.isArray(course.tags) && 
+                  course.tags.some(tag => 
+                    userSlikkslls.map(skill => skill.toLowerCase()).includes(tag.toLowerCase())
+                  )
+                ) && (
+                  <div className="recommended-courses">
+                    <h2>Рекомендованные курсы</h2>
+                    <div className="courses-grid">
+                      {courses
+                        .filter((course) =>
+                          course.tags.some((tag) =>
                             userSlikkslls.map(skill => skill.toLowerCase()).includes(tag.toLowerCase())
+                          )
                         )
-                    ) && (
-                        <div className="recommended-courses">
-                            <h2>Рекомендованные курсы</h2>
-                            <div className="courses-grid">
-                                {courses
-                                    .filter((course) =>
-                                        course.tags.some((tag) =>
-                                            userSlikkslls.map(skill => skill.toLowerCase()).includes(tag.toLowerCase())
-                                        )
-                                    )
-                                    .map((course, id) => {
-                                        let isPusgared = pushared.some(
-                                            (pushed) =>
-                                                pushed._id.toString() ===
-                                                course._id.toString()
-                                        );
-
-                                        return (
-                                            <div key={id} className="course">
-                                                <h3>{course.title}</h3>
-                                                <img src={course.img} alt="" />
-                                                {user.userInfo.name && (
-                                                    <div className="course-btns">
-                                                        <button onClick={() => handleClick(course._id, course.price, pushared)}>
-                                                            {isPusgared ? 'Открыть' : course.price > 0 ? `Купить за ${course.price}` : 'Пройти бесплатно'}
-                                                        </button>
-                                                        <button onClick={() => openModal(course)}>Подробнее</button>
-                                                    </div>
-                                                )}
-                                                <div className="card-views">
-                                                    <h3>👀 {course.views}</h3>
-                                                    <h3>❤️ {course.likes}</h3>
-                                                    <h3>💬 {course.comments ? course.comments.length : 0}</h3>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
+                        .map((course, id) => {
+                          let isPusgared = pushared.some(
+                            (pushed) =>
+                              pushed._id.toString() ===
+                              course._id.toString()
+                          );
+              
+                          return (
+                            <div key={id} className="course">
+                              <h3>{course.title}</h3>
+                              <img src={course.img} alt="" />
+                              {user.userInfo.name && (
+                                <div className="course-btns">
+                                  <button onClick={() => handleClick(course._id , course.price , pushared)}>
+                                    {isPusgared ? 'Открыть' : course.price > 0 ? `Купить за ${course.price}` : 'Пройти бесплатно'}
+                                  </button>
+                                  <button onClick={() => openModal(course)}>Подробнее</button>
+                                </div>
+                              )}
+                              <div className="card-views">
+                                <h3>👀 {course.views}</h3>
+                                <h3>❤️ {course.likes}</h3>
+                                <h3>💬 {course.comments ? course.comments.length : 0}</h3>
+                              </div>
                             </div>
-                        </div>
-                    )}
-                    {courses.length > 0 && (
-                        <div className="latest-courses">
-                            <h2>Последние курсы</h2>
-                            <div className="courses-grid">
-                                {courses.map((course, id) => {
-                                    let isPusgared = pushared.some(
-                                        (pushed) =>
-                                            pushed._id.toString() ===
-                                            course._id.toString()
-                                    );
-
-                                    return (
-                                        <div key={id} className="course">
-                                            <h3>{course.title}</h3>
-                                            <img src={course.img} alt="" />
-                                            {user.userInfo.name && (
-                                                <div className="course-btns">
-                                                    <button onClick={() => handleClick(course._id, course.price, pushared)}>
-                                                        {isPusgared ? 'Открыть' : course.price > 0 ? `Купить за ${course.price}` : 'Пройти бесплатно'}
-                                                    </button>
-                                                    <button onClick={() => openModal(course)}>Подробнее</button>
-                                                </div>
-                                            )}
-                                            <div className="card-views">
-                                                <h3>👀 {course.views}</h3>
-                                                <h3>❤️ {course.likes}</h3>
-                                                <h3>💬 {course.comments ? course.comments.length : 0}</h3>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                          );
+                        })}
+                    </div>
+                  </div>
+                )}
+                {courses.length > 0 && (
+                  <div className="latest-courses">
+                    <h2>Последние курсы</h2>
+                    <div className="courses-grid">
+                      {courses.map((course, id) => {
+                        let isPusgared = pushared.some(
+                          (pushed) =>
+                            pushed._id.toString() ===
+                            course._id.toString()
+                        );
+              
+                        return (
+                          <div key={id} className="course">
+                            <h3>{course.title}</h3>
+                            <img src={course.img} alt="" />
+                            {user.userInfo.name && (
+                              <div className="course-btns">
+                                <button onClick={() => handleClick(course._id , course.price , pushared)}>
+                                  {isPusgared ? 'Открыть' : course.price > 0 ? `Купить за ${course.price}` : 'Пройти бесплатно'}
+                                </button>
+                                <button onClick={() => openModal(course)}>Подробнее</button>
+                              </div>
+                            )}
+                            <div className="card-views">
+                              <h3>👀 {course.views}</h3>
+                              <h3>❤️ {course.likes}</h3>
+                              <h3>💬 {course.comments ? course.comments.length : 0}</h3>
                             </div>
-                        </div>
-                    )}
-                </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+              
             )}
-
+    
             {modalVisible && (
                 <Modal course={selectedCourse} onClose={closeModal} />
             )}
+                       {confirmVisible && (
+    <ConfirmModal
+        message="Вы уверены?"
+        onConfirm={() => handleConfirm(true)}
+        onCancel={() => handleConfirm(false)}
+        isOpen = {confirmVisible}
+    />
+)}
             {confirmVisible && (
                 <ConfirmModal
                     message="Вы уверены?"
