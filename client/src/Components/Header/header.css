@@ -67,7 +67,7 @@ header {
 }
 
 .nav-bar a:hover {
-  color: rgb(0,181,255);
+  color: rgb(0, 183, 255);
 }
 
 .nav-bar a:hover::after {
@@ -96,7 +96,7 @@ header {
 }
 
 .auyh-bar a:hover {
-  color: rgb(84, 233, 143);
+  color: rgb(0, 183, 255);
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }

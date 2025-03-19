@@ -1,165 +1,171 @@
-
 .course-detail {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    background: linear-gradient(135deg, #1a1a2e, #2c3e50);
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  }
-  
-  .course-detail h2 {
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: #6d28d9;
-    text-shadow: 0 0 10px rgba(109, 40, 217, 0.7);
-  }
-  
-  .course-detail p {
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 15px;
-  }
-  
-  .course-detail h3 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #6d28d9;
-    text-shadow: 0 0 10px rgba(108, 40, 217, 0.144);
-  }
-  
-  .module-item {
-    background: икrgba(25, 17, 63, 0.308);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-  }
-  
-
-  
-  .module-item h4 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #6d28d9;
-  }
-  
-  .module-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    margin-bottom: 10px;
-  }
-  
-  .module-item ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .module-item ul li {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 5px;
-  }
-  
-  .course-detail button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #007bff, #00bfff);
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    margin-right: 10px;
-  }
-  
-
-  .course-detail button:active {
-    transform: scale(0.95);
-  }
-  
-  .course-info-card{
-    margin:  0 auto;
-    display: flex;
-   justify-content: space-between;
-
-   max-width: 500px;
-  }
-  .course-info-card p {
-       font-size: 18px 
-  }
-  .course-delete{
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #ff416c, #ff4b2b) !important;
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-right: 10px;
+  max-width: 1200px;
+  margin-top: 20px !important;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #313753, #2c3e50);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
-.course-delete:hover{
-    background: linear-gradient(135deg, #ff4b2b, #ff416c);
-    box-shadow: 0 0 15px rgba(255, 75, 43, 0.7) !important;
+
+.course-detail h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #fff; /* Изменено на белый цвет */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Добавлена тень */
 }
-.option-item{
-    cursor: pointer;
+
+.course-detail p {
+  font-size: 18px; /* Увеличен размер шрифта */
+  color: rgba(255, 255, 255, 0.9); /* Увеличен контраст */
+  margin-bottom: 15px;
+  line-height: 1.6; /* Увеличен межстрочный интервал */
 }
+
+.course-detail h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #fff; /* Изменено на белый цвет */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Добавлена тень */
+}
+
+.module-item {
+  background: rgba(25, 17, 63, 0.5); /* Увеличен контраст фона */
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.module-item h4 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #fff; /* Изменено на белый цвет */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Добавлена тень */
+}
+
+.module-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.module-item ul {
+  list-style: none;
+  padding: 0;
+}
+
+.module-item ul li {
+  font-size: 16px; /* Увеличен размер шрифта */
+  color: rgba(255, 255, 255, 0.9); /* Увеличен контраст */
+  margin-bottom: 5px;
+}
+
+.course-detail button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #007bff, #00bfff);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  margin-right: 10px;
+}
+
+.course-detail button:active {
+  transform: scale(0.95);
+}
+
+.course-info-card {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+}
+
+.course-info-card p {
+  font-size: 18px;
+}
+
+.course-delete {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b) !important;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+}
+
+.course-delete:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  box-shadow: 0 0 15px rgba(255, 75, 43, 0.7) !important;
+}
+
+.option-item {
+  cursor: pointer;
+}
+
 .correct {
-    color: green !important;
-    font-weight: bold;
-  }
-  
-  .incorrect {
-    color: red !important;
-    font-weight: bold;
-  }
-  
-.course-img{
-    max-width: 500px;
-    margin:  0 auto;
-    text-align: center;
-    display: flex;
-    flex-direction: center;
-    margin-bottom: 15px;
-    border-radius: 10px;   
+  color: green !important;
+  font-weight: bold;
 }
-  /* Адаптивность */
-  @media (max-width: 768px) {
-    .course-detail {
+
+.incorrect {
+  color: red !important;
+  font-weight: bold;
+}
+
+.course-img {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: center;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .course-detail {
       padding: 20px;
-    }
-  .course-img{
-    max-width: 300px;
   }
-    .course-detail h2 {
+
+  .course-img {
+      max-width: 300px;
+  }
+
+  .course-detail h2 {
       font-size: 28px;
-    }
-  
-    .course-detail h3 {
+  }
+
+  .course-detail h3 {
       font-size: 20px;
-    }
-  
-    .course-detail p {
-      font-size: 14px;
-    }
-  
-    .course-detail button {
+  }
+
+  .course-detail p {
+      font-size: 16px; /* Увеличен размер шрифта для мобильных устройств */
+  }
+
+  .course-detail button {
       font-size: 14px;
       margin-bottom: 10px;
-    }
   }
-  
+}
+
 /* Добавьте эти стили в ваш CSS файл */
 
 /* Стили для вопросов */
@@ -171,12 +177,11 @@
   transition: all 0.3s ease;
 }
 
-
-
 .question-item h4 {
   font-size: 18px;
   margin-bottom: 10px;
-  color: #6d28d9;
+  color: #fff; /* Изменено на белый цвет */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Добавлена тень */
 }
 
 /* Стили для ответов */
@@ -188,8 +193,6 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
-
 
 .option-item.correct {
   background: rgba(0, 255, 0, 0.1);
@@ -228,7 +231,6 @@
   transition: all 0.3s ease;
 }
 
-
 /* Стили для итогового теста */
 .final-test {
   margin-top: 30px;
@@ -237,7 +239,8 @@
 .final-test h3 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #6d28d9;
+  color: #fff; /* Изменено на белый цвет */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Добавлена тень */
 }
 
 .final-test .question-item {
@@ -250,7 +253,8 @@
 .final-test .question-item h4 {
   font-size: 18px;
   margin-bottom: 10px;
-  color: #6d28d9;
+  color: #fff; /* Изменено на белый цвет */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Добавлена тень */
 }
 
 .final-test .question-item ul {
@@ -259,7 +263,112 @@
 }
 
 .final-test .question-item ul li {
+  font-size: 16px; /* Увеличен размер шрифта */
+  color: rgba(255, 255, 255, 0.9); /* Увеличен контраст */
+  margin-bottom: 5px;
+}
+
+.course-comment {
+  margin-top: 40px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.course-comment h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.comment-imput {
+  width: 70%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 15px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.comment-imput::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+
+}
+
+.comment-imput:focus {
+  border-color: #6d28d9;
+}
+
+.course-comment button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.course-comment button:hover {
+  background: linear-gradient(135deg, #4c1d95, #6d28d9);
+  box-shadow: 0 0 15px rgba(109, 40, 217, 0.7);
+}
+
+.comment-list {
+  margin-top: 20px;
+}
+
+.comment-author {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 5px;
+}
+
+.this-comment-author {
+  font-size: 14px;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.commetn-text {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 15px;
+  padding-left: 10px;
+  border-left: 3px solid #000000;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .course-comment {
+      padding: 15px;
+  }
+
+  .course-comment h3 {
+      font-size: 20px;
+  }
+
+  .comment-imput {
+      font-size: 14px;
+      padding: 10px;
+  }
+
+  .course-comment button {
+      font-size: 14px;
+      padding: 10px 20px;
+  }
+
+  .commetn-text {
+      font-size: 14px;
+  }
 }

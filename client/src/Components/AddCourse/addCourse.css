@@ -198,4 +198,86 @@
     .addCourse button {
       font-size: 14px;
     }
-  }
+  }/* addCourse.css */
+
+/* Стили для react-select */
+.addCourse .basic-multi-select {
+  width: 100%;
+  color: #333;
+}
+
+.addCourse .basic-multi-select .select__control {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 12px;
+  min-height: 48px;
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.addCourse .basic-multi-select .select__control--is-focused {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+  border: 1px solid rgba(0, 123, 255, 0.5);
+}
+
+.addCourse .basic-multi-select .select__multi-value {
+  background: rgba(0, 123, 255, 0.178);
+  border-radius: 8px;
+}
+
+.addCourse .basic-multi-select .select__multi-value__label {
+  color: #fff;
+  font-size: 14px;
+}
+
+.addCourse .basic-multi-select .select__multi-value__remove {
+  color: #fff;
+  cursor: pointer;
+}
+
+.addCourse .basic-multi-select .select__menu {
+  background: rgba(0, 33, 48, 0.842);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.addCourse .basic-multi-select .select__option {
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addCourse .basic-multi-select .select__option--is-focused {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.addCourse .basic-multi-select .select__option--is-selected {
+  background: rgba(0, 123, 255, 0.5);
+}
+
+.addCourse .basic-multi-select .select__placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.addCourse .basic-multi-select .select__single-value {
+  color: #fff;
+}
+
+.addCourse .basic-multi-select .select__indicator-separator {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.addCourse .basic-multi-select .select__dropdown-indicator {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.addCourse .basic-multi-select .select__clear-indicator {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.addCourse .basic-multi-select .select__input {
+  color: #fff;
+}

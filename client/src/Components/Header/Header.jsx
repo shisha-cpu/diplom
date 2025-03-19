@@ -12,14 +12,14 @@ export default function Header(){
     
     const removeUser = ()=>{
         dispatch(clearUser())
-        console.log(user.userInfo);
+   
         
     }
 
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user')
-        console.log(storedUser);
+
         
         if (storedUser) {
             dispatch(fetchUser(JSON.parse(storedUser)))

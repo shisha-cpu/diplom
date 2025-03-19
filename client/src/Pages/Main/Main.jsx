@@ -107,7 +107,7 @@ export default function Main() {
           .then(res => {
               setPushared(prevState => [...prevState, ...res.data]);  
           })
-          console.log(user);
+
           if (user.userInfo.skills.length > 0) {
               setUserSkills(user.userInfo.skills)
           }
@@ -125,7 +125,7 @@ export default function Main() {
         .then(res => {
             setPushared(prevState => [...prevState, ...res.data]);  
         })
-        console.log(user);
+
         if (user.userInfo.skills.length > 0) {
             setUserSkills(user.userInfo.skills)
         }
@@ -163,7 +163,6 @@ const handleClick = (courseId, price, isPusgared) => {
 
 
 
-console.log(courses);
 
 if (shouldNavigate && selectedCourseId) {
     return <Navigate to={`/course/${selectedCourseId}`} />;
@@ -171,13 +170,13 @@ if (shouldNavigate && selectedCourseId) {
 const courseDetal = (course)=>{
     axios.get(`http://89.169.39.144:4444/course/${course._id}`)
     .then(res => {setCourse(res.data)
-        console.log(res.data);
+
     })
 }
 
 const openModal = (course) => {
     setSelectedCourse(course);
-    console.log(course);
+ ;
     
     setModalVisible(true);
 };

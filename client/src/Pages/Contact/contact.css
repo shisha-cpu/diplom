@@ -46,7 +46,7 @@
   
   .contact-card-icon {
     font-size: 36px;
-    color: #6d28d9;
+    color: #ffffff;
     margin-bottom: 20px;
   }
   
@@ -54,7 +54,7 @@
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 10px;
-    color: #6d28d9;
+    color: #ffffff;
   }
   
   .contact-card-text {
@@ -79,7 +79,7 @@
     font-weight: 700;
     margin-bottom: 20px;
     text-align: center;
-    color: #6d28d9;
+    color: #ffffff;
   }
   
   .contact-form input,

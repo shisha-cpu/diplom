@@ -16,7 +16,7 @@
   position: relative;
   width: 350px;
   padding: 3em;
-  color: #fff;
+  color: #fff !important;
   transform: rotateY(30deg) rotateX(15deg);
   transform-style: preserve-3d;
   transition: transform 1s;
@@ -26,6 +26,7 @@
   }
 }
 .card-title{
+  color: #fff !important;
   font-size: 30px;
   font-weight: 600;
 }
