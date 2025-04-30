@@ -71,7 +71,7 @@
   padding: 12px 24px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, #007bff, #00bfff);
+  background: linear-gradient(135deg, #0c66c7, #00bfff);
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -79,6 +79,10 @@
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   margin-right: 10px;
+}
+.course-detail button:hover {
+  background: linear-gradient(135deg, #05488f, #03a5db);
+  transform: scale(0.98);
 }
 
 .course-detail button:active {

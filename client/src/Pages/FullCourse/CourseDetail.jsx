@@ -63,7 +63,7 @@ export default function CourseDetail() {
     }));
   };
   const addLike = () => {
-    axios.post(`http://localhost:4444/courseLike`, {
+    axios.post(`http://89.169.39.144:4444/courseLike`, {
       userId: user._id,
       courseId: course._id,
       action: 'plus',
