@@ -73,7 +73,7 @@ export default function CourseDetail() {
   };
 
   const removeLike = () => {
-    axios.post(`http://localhost:4444/courseLike`, {
+    axios.post(`http://89.169.39.144:4444/courseLike`, {
       userId: user._id,
       courseId: course._id,
       action: 'minus',
@@ -83,18 +83,27 @@ export default function CourseDetail() {
   };
 
   const handleComment = () => {
-
     axios.post('http://89.169.39.144:4444/comments', {
       userId: user._id,
       courseId: course._id,
       text: commentText
     })
     .then(res => {
+      const newComment = {
+        _id: res.data._id,
+        text: commentText,
+        user: {
+          name: user.name
+        }
+      };
+      setComments(prev => [...prev, newComment]); 
       setCommentText('');
-      alert('Успешно отправлено');
-      location.reload();
+    })
+    .catch(err => {
+      console.error('Ошибка при отправке комментария', err);
     });
   };
+  
   const handleFinalTestTextAnswer = (questionIndex, userAnswer, correctAnswer) => {
     const isCorrect = userAnswer === correctAnswer;
     setFinalTestResults(prev => ({
