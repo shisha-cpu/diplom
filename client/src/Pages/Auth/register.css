@@ -139,4 +139,52 @@ input[type="submit"]:hover {
     color: red;
     font-size: 20px;
     font-weight: 600;
+}/* Мобильная адаптивность для register.css */
+@media (max-width: 480px) {
+  section {
+    padding: 15px;
+  }
+
+  .auth-container {
+    padding: 30px 20px;
+    max-width: 85%;
+    margin-top: 49px;
+    border-radius: 15px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .auth-logo {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  form {
+    gap: 15px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  .basic-multi-select {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  input[type="submit"] {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  /* Уменьшим высоту react-select */
+  .basic-multi-select .select__control {
+    min-height: 40px;
+  }
+
+  /* Ошибки */
+  .err {
+    font-size: 18px;
+  }
 }

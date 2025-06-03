@@ -1,25 +1,55 @@
-import React, { useState } from "react";
-import qrCode from "./qrcode.jpg"; // Добавь сюда фото QR-кода
-import './Balance.css'
+import React, { useState } from 'react';
+import './Balance.css';
+import { useSelector } from 'react-redux';
+
 const Balance = () => {
   const [selectedPackage, setSelectedPackage] = useState(null);
+  const user = useSelector(state => state.user.userInfo)
+console.log(user);
 
+
+  const userId = user._id;
+
+  
   const packages = [
     { points: 100, price: 50 },
     { points: 500, price: 300 },
     { points: 1000, price: 500 },
   ];
 
-  const handlePurchase = (pkg) => {
+  const handlePurchase = async (pkg) => {
     setSelectedPackage(pkg);
+
+    try {
+      const res = await fetch('http://localhost:4444/api/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          value: pkg.price,
+          userId: userId,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Ошибка при получении ссылки на оплату');
+        setSelectedPackage(null);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Ошибка при создании платежа');
+      setSelectedPackage(null);
+    }
   };
 
   return (
     <div className="balance-container">
       <h2 className="balance-title">Пополнение баланса</h2>
-      <p className="balance-info">
-
-      </p>
 
       <div className="packages">
         {packages.map((pkg, index) => (
@@ -30,17 +60,6 @@ const Balance = () => {
           </div>
         ))}
       </div>
-
-      {selectedPackage && (
-        <div className="qr-modal">
-          <div className="qr-content">
-            <h3>Оплатите {selectedPackage.price}₽</h3>
-            <p>Баллы поступая в течении 5 минут после оплаты </p>
-            <img src={qrCode} alt="QR-код для оплаты" className="qr-image" />
-            <button className="close-btn" onClick={() => setSelectedPackage(null)}>Закрыть</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

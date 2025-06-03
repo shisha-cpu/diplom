@@ -190,6 +190,21 @@ export const clwarNewBalance = async(req, res) => {
         res.status(500).send(err.message);
     }
 }
+// controllers/controllers.js
+
+export const getBalance = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'Пользователь не найден' });
+    res.json({ balance: user.balance });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Ошибка при получении баланса' });
+  }
+};
+
 export const deleteCourse = async (req, res) => {
     try {
         const { id } = req.params;

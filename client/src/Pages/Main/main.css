@@ -1,8 +1,7 @@
-/* main.css */
 
 .main {
     display: flex;
-
+    justify-content: center;
     padding: 40px 20px;
     background: linear-gradient(135deg, #1a1a1a, #2c3e50);
     background-size: 400% 400%;
@@ -10,6 +9,10 @@
     min-height: 100vh;
     color: #fff;
     font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 2100px; 
+    margin: 0 auto; 
 }
 
 aside {
@@ -51,14 +54,11 @@ aside {
     background: linear-gradient(135deg, #1a1a1a, #2c3e50);
     box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
 }
-
 .courses {
-    margin:  0 auto;
-    width: 100%;
-    max-width: 1200px;
+    flex: 1;
     margin-left: 20px;
+    max-width: calc(100% - 320px); /* Учитываем ширину aside */
 }
-
 .recommended-courses,
 .latest-courses {
     margin-bottom: 50px;
@@ -517,16 +517,23 @@ aside {
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
-  .main {
-      flex-direction: column;
-      padding: 20px 10px;
-  }
-
-  aside {
-      max-width: 100%;
-      margin-bottom: 20px;
-  }
-
+    .main {
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+    
+    .courses {
+        margin-left: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    aside {
+        width: 100%;
+        max-width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
   .filter-container {
       max-width: 100%;
   }

@@ -190,4 +190,6 @@
     flex-wrap: wrap;
     max-width: 90svw;
  justify-content: center;
+
+ margin:  0 auto;
   }

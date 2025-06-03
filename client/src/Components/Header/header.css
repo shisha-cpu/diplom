@@ -166,3 +166,242 @@ header {
     text-align: center;
   }
 }
+.desktop-only {
+  display: flex;
+}
+.burger , .mobile-menu{
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  .burger {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.burger::before,
+.burger::after,
+.burger div {
+  content: "";
+  display: block;
+  height: 3px;
+
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.burger::before {
+  top: 0;
+  width: 100%;
+}
+
+.burger::after {
+  bottom: 0;
+  width: 100%;
+}
+
+.burger div {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Используем 3 псевдоэлемента или div для линий */
+
+.burger {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.burger span {
+  display: block;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.burger span:nth-child(1) {
+  width: 100%;
+}
+.burger span:nth-child(2) {
+  width: 100%;
+}
+.burger span:nth-child(3) {
+  width: 100%;
+}
+
+/* Состояние open: превращаем в крестик */
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Исправим — сделаем бургер с тремя span внутри */
+
+.burger {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.burger span {
+  display: block;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Меню */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -80%;
+  width: 80%;
+  height: 100vh;
+  background: rgba(30, 30, 47, 0.95);
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.5);
+  padding: 60px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.3s ease;
+  z-index: 1050;
+  overflow-y: auto;
+}
+
+/* Меню открыто */
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mobile-menu ul li {
+  color: white;
+  font-size: 18px;
+}
+
+.mobile-menu ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.mobile-menu ul li a:hover {
+  color: rgb(0, 183, 255);
+}
+
+/* Кнопка выйти */
+.mobile-menu button {
+  background: linear-gradient(45deg, #f54747, #ff1a1a);
+  border: none;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.mobile-menu button:hover {
+  background: linear-gradient(45deg, #cc0000, #ff3333);
+  transform: scale(1.05);
+}
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%; /* полностью скрываем меню за экраном */
+  width: 80%;
+  height: 100vh;
+  background: rgba(30, 30, 47, 0.95);
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.5);
+  padding: 60px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.3s ease;
+  z-index: 1050;
+  overflow-y: auto;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.burger {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.burger span {
+  display: block;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+  transform-origin: center;
+}
+
+/* Анимация при открытии меню (кнопка превращается в крест) */
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+}

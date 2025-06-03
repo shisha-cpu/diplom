@@ -11,10 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@a2seven/yoo-checkout": "^1.1.4",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "mongoose": "^8.6.1",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "path": "^0.12.7",
+    "url": "^0.11.4",
+    "uuid": "^11.1.0"
   }
 }
