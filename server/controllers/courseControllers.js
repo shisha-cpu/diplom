@@ -126,6 +126,8 @@ export const getUserCourses = async(req, res) => {
 export const changeLikes = async(req, res) => {
     try {
         const { userId, courseId, action } = req.body 
+
+        
         const user = await User.findOne({ _id: userId });
         if (!user) {
             res.status(404).json({ message: 'Пользователь не найден' })

@@ -177,7 +177,7 @@ const handleClick = async (courseId, price, course) => {
 
 
 if (shouldNavigate && selectedCourseId) {
-    return <Navigate to={`/course/${selectedCourseId}`} />;
+    return <Navigate to={`/course>/${selectedCourseId}`} />;
 }
 const courseDetal = (course)=>{
     axios.get(`http://89.169.39.144:4444/course/${course._id}`)

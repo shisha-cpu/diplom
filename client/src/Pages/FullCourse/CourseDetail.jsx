@@ -62,26 +62,27 @@ export default function CourseDetail() {
       [questionIndex]: isCorrect ? 'Верно' : 'Ошибка'
     }));
   };
-  const addLike = () => {
-    axios.post(`http://89.169.39.144:4444/courseLike`, {
-      userId: user._id,
-      courseId: course._id,
-      action: 'plus',
-    }).then(() => {
-      setLikeStatus(true);
-    }).catch(err => console.log(err));
-  };
+const addLike = () => {
+  axios.post(`http://89.169.39.144:4444/courseLike`, {
+    userId: user._id,
+    courseId: course._id,
+    action: 'plus',
+  }).then((res) => {
+    setLikeStatus(true);
+    setCourse(prev => ({...prev, likes: prev.likes + 1})); // Добавьте эту строку
+  }).catch(err => console.log(err));
+};
 
-  const removeLike = () => {
-    axios.post(`http://89.169.39.144:4444/courseLike`, {
-      userId: user._id,
-      courseId: course._id,
-      action: 'minus',
-    }).then(() => {
-      setLikeStatus(false);
-    }).catch(err => console.log(err));
-  };
-
+const removeLike = () => {
+  axios.post(`http://89.169.39.144:4444/courseLike`, {
+    userId: user._id,
+    courseId: course._id,
+    action: 'minus',
+  }).then((res) => {
+    setLikeStatus(false);
+    setCourse(prev => ({...prev, likes: prev.likes - 1})); // Добавьте эту строку
+  }).catch(err => console.log(err));
+};
   const handleComment = () => {
     axios.post('http://89.169.39.144:4444/comments', {
       userId: user._id,
