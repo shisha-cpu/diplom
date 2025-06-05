@@ -72,7 +72,7 @@ console.log('userId' , userId);
       },
       confirmation: {
         type: 'redirect',
-        return_url: 'http://localhost:5173/',
+        return_url: 'http://89.169.39.144:4444/',
       },
       capture: true,
       description: `Пополнение баланса пользователем ${userId}`,
