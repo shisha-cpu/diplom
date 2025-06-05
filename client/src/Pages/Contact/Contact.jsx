@@ -13,30 +13,34 @@ const Contact = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  // Формируем текст сообщения без кодирования (кодирование будет в теле запроса)
+  const text = `Новое сообщение:\n👤 Имя: ${formData.name}\n✉ Email: ${formData.email}\n💬 Сообщение: ${formData.message}`;
+  
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        chat_id: CHAT_ID, 
+        text: text,
+        parse_mode: "HTML" // опционально, если хотите использовать HTML-разметку
+      }),
+    });
     
-    // Кодирование текста сообщения
-    const text = `Новое сообщение:\n👤 Имя: ${encodeURIComponent(formData.name)}\n✉ Email: ${encodeURIComponent(formData.email)}\n💬 Сообщение: ${encodeURIComponent(formData.message)}`;
-    
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: CHAT_ID, text }),
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Ошибка при отправке: ${response.statusText}`);
-      }
-      
-      alert("Сообщение отправлено!");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      console.error(error);
-      alert("Ошибка отправки сообщения!");
+    if (!response.ok) {
+      throw new Error(`Ошибка при отправке: ${response.statusText}`);
     }
-  };
+    
+    alert("Сообщение отправлено!");
+    setFormData({ name: "", email: "", message: "" });
+  } catch (error) {
+    console.error(error);
+    alert("Ошибка отправки сообщения!");
+  }
+};
   
   
 

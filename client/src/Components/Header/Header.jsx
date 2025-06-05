@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react'
 import logo from '../../img/logo.png'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { fetchUser } from '../../store/slices/userSlice'
+import { fetchUser  , clearUser } from '../../store/slices/userSlice'
 export default function Header() {
         const dispatch = useDispatch()
 
     
     const removeUser = ()=>{
         dispatch(clearUser())
-   
+        location.reload()
         
     }
 
@@ -39,7 +39,7 @@ export default function Header() {
             setUser(parsedUser)
 
             // Запрос баланса
-            axios.get(`http://localhost:4444/balance/${parsedUser._id}`)
+            axios.get(`http://89.169.39.144:4444/balance/${parsedUser._id}`)
                 .then(res => {
              
                     

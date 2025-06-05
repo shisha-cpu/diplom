@@ -34,23 +34,25 @@ export const userGetCourse = async(req, res) => {
             return res.status(404).json({ message: 'Курс не найден' });
         }
 
-        if (user.purchased.length > 0) {
-            let isCoursePurchased = false;
-            for (let i = 0; i < user.purchased.length; i++) {
-                if (user.purchased[i]._id.equals(course._id) && userId !== course.author) {
-                    isCoursePurchased = true;
-                    break;
-                }
-            }
-
-            if (!isCoursePurchased) {
-                user.purchased.push(course);
-            }
-        } else {
-            user.purchased.push(course);
+        // Проверяем, не куплен ли уже курс
+        const isPurchased = user.purchased.some(p => p._id.equals(course._id));
+        if (isPurchased) {
+            return res.status(400).json({ message: 'Курс уже куплен' });
         }
 
+        // Если курс платный, проверяем баланс
+        if (course.price > 0) {
+            if (user.balance.balance < course.price) {
+                return res.status(400).json({ message: 'Недостаточно средств' });
+            }
+            // Списываем средства
+            user.balance.balance -= course.price;
+        }
+
+        // Добавляем курс
+        user.purchased.push(course);
         await user.save();
+        
         res.json(user.purchased);
 
     } catch (err) {

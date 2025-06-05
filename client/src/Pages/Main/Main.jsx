@@ -132,32 +132,44 @@ export default function Main() {
     }
 
 },[user.userInfo._id])
-const handleClick = (courseId, price, isPusgared) => {
+const handleClick = async (courseId, price, course) => {
+    // Проверяем, куплен ли уже курс
+    const isPurchased = pushared.some(pushed => pushed._id.toString() === courseId.toString());
+    
+    if (isPurchased) {
+        setSelectedCourseId(courseId);
+        setShouldNavigate(true);
+        return;
+    }
 
+    if (price > 0 && user.userInfo.balance < price) {
+        alert('На балансе недостаточно средств');
+        return;
+    }
 
-
-    if (1==1) {
-        if (price > 0 && user.userInfo.balance < price) {
-            alert('На балансе недостаточно средств');
-            return;
+    try {
+        // Сначала списываем средства
+        if (price > 0) {
+            const balanceResponse = await axios.post('http://89.169.39.144:4444/balance', {
+                action: 'minus',
+                id: user.userInfo._id,
+                sum: price,
+            });
+            dispatch(changeUserBalance(balanceResponse.data));
         }
-        axios.post('http://89.169.39.144:4444/pushared', { userId: user.userInfo._id, courseId })
-            .then(res => console.log(res.data));
+
+        // Затем добавляем курс
+        await axios.post('http://89.169.39.144:4444/pushared', { 
+            userId: user.userInfo._id, 
+            courseId 
+        });
 
         setSelectedCourseId(courseId);
         setShouldNavigate(true);
 
-        if (price > 0 && !isPusgared) {
-            axios.post('http://89.169.39.144:4444/balance', {
-                action: 'minus',
-                id: user.userInfo._id,
-                sum: price,
-            })
-                .then((res) => {
-                    dispatch(changeUserBalance(res.data));
-                })
-                .catch((err) => console.log(err));
-        }
+    } catch (err) {
+        console.error('Ошибка при покупке курса:', err);
+        alert('Произошла ошибка при покупке курса');
     }
 };
 

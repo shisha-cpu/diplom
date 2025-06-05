@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../../store/slices/userSlice";
 import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import './register.css'
 export default function Register() {
@@ -14,7 +15,7 @@ export default function Register() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const [redirect, setRedirect] = useState(false);
-
+ const navigate = useNavigate();
   useEffect(() => {
     const allSkills = [
       { label: 'Рисование', value: 'Рисование' },
@@ -219,8 +220,14 @@ export default function Register() {
     }
   };
 
-  const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (skills.length === 0) {
+      setError('Пожалуйста, выберите хотя бы один навык');
+      return;
+    }
+
     const userData = {
       email,
       password,
@@ -228,18 +235,26 @@ export default function Register() {
       skills: skills.map(skill => skill.value)
     };
     
-    axios.post('http://89.169.39.144:4444/register', userData)
-      .then(res => {
-        dispatch(fetchUser(res.data));
-        localStorage.setItem('user', JSON.stringify(res.data));
-        setRedirect(true);
-      })
-      .catch(err => console.log(err));
+    try {
+      const res = await axios.post('http://89.169.39.144:4444/register', userData);
+      
+      dispatch(fetchUser(res.data));
+      localStorage.setItem('user', JSON.stringify(res.data));
+      
+      // Редирект на главную страницу
+      navigate("/");
+      
+      // Перезагрузка страницы после небольшой задержки
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+      
+    } catch (err) {
+      setError(err.response?.data?.message || 'Ошибка регистрации');
+      console.error(err);
+    }
   };
 
-  if (redirect) {
-    return <Navigate to='/' />;
-  }
 
   return (
     <section>

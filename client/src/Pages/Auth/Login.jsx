@@ -2,14 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../../store/slices/userSlice";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
     const dispatch = useDispatch();
-    const [redirect, setRedirect] = useState(false);
+    const navigate = useNavigate();
     const [err, setErr] = useState("");
 
     const validate = () => {
@@ -32,25 +32,30 @@ export default function Login() {
         return Object.keys(tempErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validate()) return;
 
         const userData = { email, password };
 
-        axios
-            .post("http://89.169.39.144:4444/login", userData)
-            .then((res) => {
-                dispatch(fetchUser(res.data));
-                setRedirect(true);
-                localStorage.setItem("user", JSON.stringify(res.data));
-            })
-            .catch((err) => setErr(err.response?.data?.msg || "Ошибка входа"));
+        try {
+            const res = await axios.post("http://89.169.39.144:4444/login", userData);
+            
+            dispatch(fetchUser(res.data));
+            localStorage.setItem("user", JSON.stringify(res.data));
+            
+            // Редирект на главную страницу
+            navigate("/");
+            
+            // Перезагрузка страницы после небольшой задержки
+            setTimeout(() => {
+                window.location.reload();
+            }, 100);
+            
+        } catch (err) {
+            setErr(err.response?.data?.msg || "Ошибка входа");
+        }
     };
-
-    if (redirect) {
-        return <Navigate to="/" />;
-    }
 
     return (
         <section>

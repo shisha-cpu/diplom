@@ -325,7 +325,7 @@ const customStyles = {
 
       {isAuthor && (
         <>
-          <button>Редактировать</button>
+ 
           <button onClick={redirectToStat} className="course-stat">Статистика</button>
           <button onClick={handleDelete} className="course-delete">Удалить</button>
         </>
