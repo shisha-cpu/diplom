@@ -236,7 +236,7 @@ const handleSubmit = async (e) => {
     };
     
     try {
-      const res = await axios.post('http://89.169.39.144:4444/register', userData);
+      const res = await axios.post('https://edventuralearn.ru/register', userData);
       
       dispatch(fetchUser(res.data));
       localStorage.setItem('user', JSON.stringify(res.data));

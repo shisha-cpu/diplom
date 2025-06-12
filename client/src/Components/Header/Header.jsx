@@ -39,7 +39,7 @@ export default function Header() {
             setUser(parsedUser)
 
             // Запрос баланса
-            axios.get(`http://89.169.39.144:4444/balance/${parsedUser._id}`)
+            axios.get(`https://edventuralearn.ru/balance/${parsedUser._id}`)
                 .then(res => {
              
                     

@@ -9,7 +9,7 @@ export default function AllCourses() {
     const [loading, setLoading] = useState(true)
     
     useEffect(() => {
-        axios.get('http://89.169.39.144:4444/course/')
+        axios.get('https://edventuralearn.ru/course/')
             .then(res => {
                 const filteredCourses = res.data.filter(course => course.accept !== false)
                 setCourses(filteredCourses)
@@ -24,7 +24,7 @@ export default function AllCourses() {
     const handleDelete = (id, userId) => {
         if (!window.confirm('Вы уверены, что хотите удалить этот курс?')) return
         
-        axios.delete(`http://89.169.39.144:4444/courseDelete/${id}`, { userId })
+        axios.delete(`https://edventuralearn.ru/courseDelete/${id}`, { userId })
             .then(() => {
                 setCourses(prev => prev.filter(course => course._id !== id))
                 alert('Курс успешно удален')

@@ -21,23 +21,23 @@ export default function CourseDetail() {
   const [finalTestAnswers, setFinalTestAnswers] = useState({});
   const [finalTestResults, setFinalTestResults] = useState({});
   useEffect(() => {
-    axios.post(`http://89.169.39.144:4444/addView/${id}`)
+    axios.post(`https://edventuralearn.ru/addView/${id}`)
       .catch(err => console.log(err));
   }, [id]);
 
   useEffect(() => {
-    axios.get(`http://89.169.39.144:4444/course/${id}`)
+    axios.get(`https://edventuralearn.ru/course/${id}`)
       .then(res => {
         setCourse(res.data);
         setLoading(false);
       })
       .catch(err => console.log(err));
-    axios.get(`http://89.169.39.144:4444/comments/${id}`)
+    axios.get(`https://edventuralearn.ru/comments/${id}`)
       .then(res => {
         setComments(res.data);
       });
     
-    axios.get(`http://89.169.39.144:4444/fovourite/${user._id}`)
+    axios.get(`https://edventuralearn.ru/fovourite/${user._id}`)
       .then(res => {
         if (res.data.includes(id)) {
           setLikeStatus(true);
@@ -63,7 +63,7 @@ export default function CourseDetail() {
     }));
   };
 const addLike = () => {
-  axios.post(`http://89.169.39.144:4444/courseLike`, {
+  axios.post(`https://edventuralearn.ru/courseLike`, {
     userId: user._id,
     courseId: course._id,
     action: 'plus',
@@ -74,7 +74,7 @@ const addLike = () => {
 };
 
 const removeLike = () => {
-  axios.post(`http://89.169.39.144:4444/courseLike`, {
+  axios.post(`https://edventuralearn.ru/courseLike`, {
     userId: user._id,
     courseId: course._id,
     action: 'minus',
@@ -84,7 +84,7 @@ const removeLike = () => {
   }).catch(err => console.log(err));
 };
   const handleComment = () => {
-    axios.post('http://89.169.39.144:4444/comments', {
+    axios.post('https://edventuralearn.ru/comments', {
       userId: user._id,
       courseId: course._id,
       text: commentText
@@ -128,7 +128,7 @@ const removeLike = () => {
   };
 
   const handleDelete = () => {
-    axios.delete(`http://89.169.39.144:4444/courseDelete/${course._id}`)
+    axios.delete(`https://edventuralearn.ru/courseDelete/${course._id}`)
       .then(() => navigate('/'))
       .catch(err => console.log(err));
   };

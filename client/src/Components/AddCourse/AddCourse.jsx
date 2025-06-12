@@ -233,7 +233,7 @@ export default function AddCourse() {
     console.log(courseData);
     
     axios
-      .post("http://89.169.39.144:4444/course", {
+      .post("https://edventuralearn.ru/course", {
         courseData,
         userId: user._id,
       })
