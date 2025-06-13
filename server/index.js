@@ -72,7 +72,7 @@ console.log('userId' , userId);
       },
       confirmation: {
         type: 'redirect',
-        return_url: 'http://89.169.39.144:4444/',
+        return_url: 'https://edventuralearn.ru/',
       },
       capture: true,
       description: `Пополнение баланса пользователем ${userId}`,
