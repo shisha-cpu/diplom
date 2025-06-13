@@ -250,8 +250,11 @@ const handleConfirm = (bool) => {
             </aside>
 
        {loading ? (
-                <h3>Загрузка...</h3>
-            ) : (
+                    <div className="loading-container">
+                        <div className="loading-spinner"></div>
+                        <div className="loading-text">Загрузка курсов...</div>
+                    </div>
+                ) : (
                 <div className="courses">
                 {userSlikkslls.length > 0 && courses.some(course => 
                   Array.isArray(course.tags) && 
@@ -278,7 +281,17 @@ const handleConfirm = (bool) => {
                           return (
                             <div key={id} className="course">
                               <h3>{course.title}</h3>
-                              <img src={course.img} alt="" />
+                              <div className="card-image">
+                                <img 
+                                    src={course.img} 
+                                    alt={course.title}
+                                    loading="lazy"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = 'https://via.placeholder.com/300x200?text=Course+Image';
+                                    }}
+                                />
+                              </div>
                               {user.userInfo.name && (
                                 <div className="course-btns">
                                   <button onClick={() => handleClick(course._id , course.price , pushared)}>
@@ -312,7 +325,17 @@ const handleConfirm = (bool) => {
                         return (
                           <div key={id} className="course">
                             <h3>{course.title}</h3>
-                            <img src={course.img} alt="" />
+                            <div className="card-image">
+                              <img 
+                                src={course.img} 
+                                alt={course.title}
+                                loading="lazy"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = 'https://via.placeholder.com/300x200?text=Course+Image';
+                                }}
+                              />
+                            </div>
                             {user.userInfo.name && (
                               <div className="course-btns">
                                 <button onClick={() => handleClick(course._id , course.price , pushared)}>

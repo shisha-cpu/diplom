@@ -42,65 +42,65 @@ export default function AllUsers() {
         return new Date(dateString).toLocaleDateString('ru-RU', options)
     }
 
-    if (loading) return <div className="loading">Загрузка пользователей...</div>
+    if (loading) return <div className="all-users-loading">Загрузка пользователей...</div>
 
     return (
-        <div className="users-container">
+        <div className="all-users-container">
             <h1>Пользователи ({users.length})</h1>
             
-            <div className="user-cards">
+            <div className="all-users-cards">
                 {users.map((user) => (
-                    <div className="user-card" key={user._id}>
-                        <div className="user-card-header">
-                            <div className="user-avatar">
+                    <div className="all-users-card" key={user._id}>
+                        <div className="all-users-card-header">
+                            <div className="all-users-avatar">
                                 <FiUser size={20} />
                             </div>
-                            <div className="user-info">
+                            <div className="all-users-info">
                                 <h3>{user.name}</h3>
                                 <p>{user.email}</p>
                             </div>
                         </div>
                         
-                        <div className="user-stats">
-                            <div className="stat-item">
-                                <FiDollarSign className="stat-icon" />
+                        <div className="all-users-stats">
+                            <div className="all-users-stat-item">
+                                <FiDollarSign className="all-users-stat-icon" />
                                 <span>Баланс: {user.balance?.balance || 0} ₽</span>
                             </div>
                             
-                            <div className="stat-item">
-                                <FiBook className="stat-icon" />
+                            <div className="all-users-stat-item">
+                                <FiBook className="all-users-stat-icon" />
                                 <span>Курсов: {user.courses?.length || 0}</span>
                             </div>
                             
-                            <div className="stat-item">
-                                <FiHeart className="stat-icon" />
+                            <div className="all-users-stat-item">
+                                <FiHeart className="all-users-stat-icon" />
                                 <span>Избранное: {user.fovourite?.length || 0}</span>
                             </div>
                             
-                            <div className="stat-item">
-                                <FiShoppingCart className="stat-icon" />
+                            <div className="all-users-stat-item">
+                                <FiShoppingCart className="all-users-stat-icon" />
                                 <span>Покупок: {user.purchased?.length || 0}</span>
                             </div>
                             
-                            <div className="stat-item">
-                                <FiClock className="stat-icon" />
+                            <div className="all-users-stat-item">
+                                <FiClock className="all-users-stat-icon" />
                                 <span>Зарегистрирован: {formatDate(user.createdAt)}</span>
                             </div>
                         </div>
                         
                         {user.skills?.length > 0 && (
-                            <div className="user-skills">
+                            <div className="all-users-skills">
                                 <h4>Навыки:</h4>
-                                <div className="skills-list">
+                                <div className="all-users-skills-list">
                                     {user.skills.map((skill, index) => (
-                                        <span key={index} className="skill-tag">{skill}</span>
+                                        <span key={index} className="all-users-skill-tag">{skill}</span>
                                     ))}
                                 </div>
                             </div>
                         )}
                         
                         <button 
-                            className="delete-btn"
+                            className="all-users-delete-btn"
                             onClick={() => handleDelete(user.name, user._id)}
                         >
                             <FiTrash2 /> Удалить

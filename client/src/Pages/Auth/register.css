@@ -7,11 +7,12 @@ section {
     min-height: 100vh;
     background: linear-gradient(135deg, #1a1a1a, #2c3e50);
     padding: 20px;
+    padding-top: 50px;
     font-family: 'Poppins', sans-serif;
 }
 
 .auth-container {
-    margin:  0 auto;
+    margin: 0 auto;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -36,17 +37,23 @@ form {
     gap: 20px;
 }
 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+
 label {
     font-size: 16px;
     color: #fff;
-    text-align: left;
     margin-bottom: 5px;
 }
 
 input[type="text"],
 input[type="password"] {
     padding: 12px 20px;
-    border: none;
+    border: 2px solid transparent;
     border-radius: 12px;
     font-size: 16px;
     background: rgba(255, 255, 255, 0.1);
@@ -59,6 +66,28 @@ input[type="text"]:focus,
 input[type="password"]:focus {
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+.input-error {
+    border-color: #ff4444 !important;
+    background: rgba(255, 68, 68, 0.1) !important;
+}
+
+.error-message {
+    color: #ff4444;
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: left;
+    animation: fadeIn 0.3s ease;
+}
+
+.global-error {
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid #ff4444;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 input[type="submit"] {
@@ -82,36 +111,26 @@ input[type="submit"]:hover {
 /* Стили для react-select */
 .basic-multi-select {
     width: 100%;
-    color: #333;
+    margin-bottom: 1rem;
 }
 
 .basic-multi-select .select__control {
     background: rgba(255, 255, 255, 0.1);
-    border: none;
+    border: 2px solid transparent;
     border-radius: 12px;
     min-height: 48px;
     box-shadow: none;
     transition: all 0.3s ease;
 }
 
+.basic-multi-select .select__control:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
 .basic-multi-select .select__control--is-focused {
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
-}
-
-.basic-multi-select .select__multi-value {
-    background: rgba(0, 123, 255, 0.2);
-    border-radius: 8px;
-}
-
-.basic-multi-select .select__multi-value__label {
-    color: #fff;
-    font-size: 14px;
-}
-
-.basic-multi-select .select__multi-value__remove {
-    color: #fff;
-    cursor: pointer;
 }
 
 .basic-multi-select .select__menu {
@@ -135,11 +154,59 @@ input[type="submit"]:hover {
 .basic-multi-select .select__option--is-selected {
     background: rgba(0, 123, 255, 0.5);
 }
-.err{
-    color: red;
-    font-size: 20px;
-    font-weight: 600;
-}/* Мобильная адаптивность для register.css */
+
+.basic-multi-select .select__multi-value {
+    background: rgba(0, 123, 255, 0.2);
+    border-radius: 8px;
+}
+
+.basic-multi-select .select__multi-value__label {
+    color: #fff;
+    font-size: 14px;
+}
+
+.basic-multi-select .select__multi-value__remove {
+    color: #fff;
+    cursor: pointer;
+}
+
+.basic-multi-select .select__multi-value__remove:hover {
+    background: rgba(255, 68, 68, 0.5);
+    color: #fff;
+}
+
+.basic-multi-select .select__placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.basic-multi-select .select__input {
+    color: #fff;
+}
+
+.basic-multi-select .select__indicator-separator {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.basic-multi-select .select__dropdown-indicator {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.basic-multi-select .select__dropdown-indicator:hover {
+    color: #fff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Мобильная адаптивность для register.css */
 @media (max-width: 480px) {
   section {
     padding: 15px;
@@ -184,7 +251,7 @@ input[type="submit"]:hover {
   }
 
   /* Ошибки */
-  .err {
-    font-size: 18px;
+  .error-message {
+    font-size: 12px;
   }
 }

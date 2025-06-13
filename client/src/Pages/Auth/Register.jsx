@@ -6,16 +6,20 @@ import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import './register.css'
+
 export default function Register() {
   const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [skills, setSkills] = useState([]);
   const [skillOptions, setSkillOptions] = useState([]);
+  const [error, setError] = useState('');
+  const [validationErrors, setValidationErrors] = useState({});
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const [redirect, setRedirect] = useState(false);
- const navigate = useNavigate();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const allSkills = [
       { label: 'Рисование', value: 'Рисование' },
@@ -220,11 +224,45 @@ export default function Register() {
     }
   };
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
+  const validateForm = () => {
+    const errors = {};
     
+    // Проверка имени пользователя
+    if (!username.trim()) {
+      errors.username = 'Имя пользователя обязательно';
+    } else if (username.length < 3) {
+      errors.username = 'Имя пользователя должно содержать минимум 3 символа';
+    }
+
+    // Проверка email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim()) {
+      errors.email = 'Email обязателен';
+    } else if (!emailRegex.test(email)) {
+      errors.email = 'Введите корректный email';
+    }
+
+    // Проверка пароля
+    if (!password) {
+      errors.password = 'Пароль обязателен';
+    } else if (password.length < 6) {
+      errors.password = 'Пароль должен содержать минимум 6 символов';
+    }
+
+    // Проверка навыков
     if (skills.length === 0) {
-      setError('Пожалуйста, выберите хотя бы один навык');
+      errors.skills = 'Выберите хотя бы один навык';
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    if (!validateForm()) {
       return;
     }
 
@@ -241,48 +279,87 @@ const handleSubmit = async (e) => {
       dispatch(fetchUser(res.data));
       localStorage.setItem('user', JSON.stringify(res.data));
       
-      // Редирект на главную страницу
       navigate("/");
       
-      // Перезагрузка страницы после небольшой задержки
       setTimeout(() => {
         window.location.reload();
       }, 100);
-      
     } catch (err) {
-      setError(err.response?.data?.message || 'Ошибка регистрации');
-      console.error(err);
+      if (err.response) {
+        setError(err.response.data.message || 'Ошибка при регистрации');
+      } else {
+        setError('Произошла ошибка при подключении к серверу');
+      }
     }
   };
-
 
   return (
     <section>
       <div className="auth-container">
-        <h2 className="auth-logo">Регистрация</h2>
+        <h1 className="auth-logo">Регистрация</h1>
         <form onSubmit={handleSubmit}>
-          <label>Имя:</label>
-          <input type="text" onChange={e => setUserName(e.target.value)} required />
-          
-          <label>Email:</label>
-          <input type="text" onChange={e => setEmail(e.target.value)} required />
-          
-          <label>Пароль:</label>
-          <input type="password" onChange={e => setPassword(e.target.value)} required />
-          
-          <label>Выберите навыки (макс. 3):</label>
-          <Select
-            isMulti
-            name="skills"
-            options={skillOptions}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            onChange={handleSkillChange}
-            value={skills}
-            placeholder="Начните вводить навык"
-            maxMenuHeight={150}
-          />
-          
+          <div className="form-group">
+            <label htmlFor="username">Имя пользователя</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={e => setUserName(e.target.value)}
+              className={validationErrors.username ? 'input-error' : ''}
+            />
+            {validationErrors.username && (
+              <div className="error-message">{validationErrors.username}</div>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              className={validationErrors.email ? 'input-error' : ''}
+            />
+            {validationErrors.email && (
+              <div className="error-message">{validationErrors.email}</div>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Пароль</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              className={validationErrors.password ? 'input-error' : ''}
+            />
+            {validationErrors.password && (
+              <div className="error-message">{validationErrors.password}</div>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="skills">Навыки (максимум 3)</label>
+            <Select
+              isMulti
+              name="skills"
+              options={skillOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              value={skills}
+              onChange={handleSkillChange}
+              maxMenuHeight={150}
+              placeholder="Начните вводить навык"
+            />
+            {validationErrors.skills && (
+              <div className="error-message">{validationErrors.skills}</div>
+            )}
+          </div>
+
+          {error && <div className="error-message global-error">{error}</div>}
+
           <input type="submit" value="Зарегистрироваться" />
         </form>
       </div>

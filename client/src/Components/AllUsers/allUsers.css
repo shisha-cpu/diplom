@@ -1,136 +1,148 @@
-.users-container {
+/* allUsers.css */
+
+.all-users-container {
     padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.users-container h1 {
+.all-users-container h1 {
     color: #1e293b;
     margin-bottom: 24px;
     font-size: 1.8rem;
+    font-weight: 600;
 }
 
-.user-cards {
+.all-users-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 24px;
 }
 
-.user-card {
-    background: white;
+.all-users-card {
+    background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     padding: 20px;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.user-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+.all-users-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.06);
 }
 
-.user-card-header {
+.all-users-card-header {
     display: flex;
     align-items: center;
     margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e2e8f0;
 }
 
-.user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+.all-users-avatar {
+    width: 48px;
+    height: 48px;
     background-color: #3b82f6;
-    color: white;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 12px;
+    color: white;
+    margin-right: 16px;
 }
 
-.user-info h3 {
+.all-users-info h3 {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #1e293b;
+    font-weight: 600;
 }
 
-.user-info p {
+.all-users-info p {
     margin: 4px 0 0;
-    font-size: 0.85rem;
     color: #64748b;
+    font-size: 0.9rem;
 }
 
-.user-stats {
+.all-users-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
     margin-bottom: 16px;
 }
 
-.stat-item {
+.all-users-stat-item {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
     color: #475569;
+    font-size: 0.9rem;
 }
 
-.stat-icon {
+.all-users-stat-icon {
     margin-right: 8px;
-    color: #64748b;
-    min-width: 20px;
+    color: #3b82f6;
 }
 
-.user-skills {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid #e2e8f0;
+.all-users-skills {
+    margin-bottom: 16px;
 }
 
-.user-skills h4 {
-    margin: 0 0 8px 0;
-    font-size: 0.9rem;
-    color: #475569;
+.all-users-skills h4 {
+    color: #1e293b;
+    margin: 0 0 8px;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
-.skills-list {
+.all-users-skills-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
 }
 
-.skill-tag {
+.all-users-skill-tag {
     background-color: #e2e8f0;
     color: #475569;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.85rem;
 }
 
-.delete-btn {
+.all-users-delete-btn {
     width: 100%;
-    margin-top: 16px;
     padding: 8px 16px;
-    background-color: #fee2e2;
-    color: #dc2626;
+    background-color: #ef4444;
+    color: white;
     border: none;
     border-radius: 6px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
 }
 
-.delete-btn:hover {
-    background-color: #fecaca;
+.all-users-delete-btn:hover {
+    background-color: #dc2626;
 }
 
-.loading {
-    padding: 20px;
-    text-align: center;
+.all-users-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
     color: #64748b;
+    font-size: 1.1rem;
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .user-cards {
+    .all-users-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .all-users-stats {
         grid-template-columns: 1fr;
     }
 }

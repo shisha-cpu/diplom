@@ -12,67 +12,67 @@ export default function AdminPanel(){
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     
     return(
-        <div className="admin-container">
+        <div className="admin-panel-container">
             {/* Боковое меню */}
-            <div className={`admin-sidebar ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-                <div className="sidebar-header">
+            <div className={`admin-panel-sidebar ${mobileMenuOpen ? 'admin-panel-mobile-open' : ''}`}>
+                <div className="admin-panel-sidebar-header">
                     <h2>Админ-панель</h2>
-                    <button className="mobile-close-btn" onClick={() => setMobileMenuOpen(false)}>
+                    <button className="admin-panel-mobile-close-btn" onClick={() => setMobileMenuOpen(false)}>
                         <FiX size={24} />
                     </button>
                 </div>
                 
-                <nav className="sidebar-nav">
+                <nav className="admin-panel-sidebar-nav">
                     <button 
-                        className={`nav-item ${dataState === 'user' ? 'active' : ''}`}
+                        className={`admin-panel-nav-item ${dataState === 'user' ? 'admin-panel-active' : ''}`}
                         onClick={() => {
                             setDataState('user')
                             setMobileMenuOpen(false)
                         }}
                     >
-                        <FiUsers className="nav-icon" />
+                        <FiUsers className="admin-panel-nav-icon" />
                         <span>Пользователи</span>
                     </button>
                     
                     <button 
-                        className={`nav-item ${dataState === 'new' ? 'active' : ''}`}
+                        className={`admin-panel-nav-item ${dataState === 'new' ? 'admin-panel-active' : ''}`}
                         onClick={() => {
                             setDataState('new')
                             setMobileMenuOpen(false)
                         }}
                     >
-                        <FiPlusCircle className="nav-icon" />
+                        <FiPlusCircle className="admin-panel-nav-icon" />
                         <span>Новые курсы</span>
                     </button>
                     
                     <button 
-                        className={`nav-item ${dataState === 'se' ? 'active' : ''}`}
+                        className={`admin-panel-nav-item ${dataState === 'se' ? 'admin-panel-active' : ''}`}
                         onClick={() => {
                             setDataState('se')
                             setMobileMenuOpen(false)
                         }}
                     >
-                        <FiBook className="nav-icon" />
+                        <FiBook className="admin-panel-nav-icon" />
                         <span>Существующие курсы</span>
                     </button>
                 </nav>
                 
-                <div className="user-info">
-                    <div className="user-avatar">
+                <div className="admin-panel-user-info">
+                    <div className="admin-panel-user-avatar">
                         {user?.name?.charAt(0).toUpperCase()}
                     </div>
-                    <div className="user-details">
-                        <p className="user-name">{user?.name}</p>
-                        <p className="user-role">Администратор</p>
+                    <div className="admin-panel-user-details">
+                        <p className="admin-panel-user-name">{user?.name}</p>
+                        <p className="admin-panel-user-role">Администратор</p>
                     </div>
                 </div>
             </div>
             
             {/* Основной контент */}
-            <div className="admin-content">
-                <div className="content-header">
+            <div className="admin-panel-content">
+                <div className="admin-panel-content-header">
                     <button 
-                        className="mobile-menu-btn"
+                        className="admin-panel-mobile-menu-btn"
                         onClick={() => setMobileMenuOpen(true)}
                     >
                         <FiMenu size={24} />
@@ -81,7 +81,7 @@ export default function AdminPanel(){
                          dataState === 'new' ? 'Новые курсы' : 'Все курсы'}</h1>
                 </div>
                 
-                <div className="content-wrapper">
+                <div className="admin-panel-content-wrapper">
                     {dataState === 'user' ? <AllUsers /> : 
                      dataState === 'new' ? <NewCoursrs /> : <AllCourses />}
                 </div>
