@@ -42,10 +42,13 @@ export default function Login() {
         const userData = { email, password };
 
         try {
-            const res = await axios.post("https://edventuralearn.ru/login", userData);
+            const res = await axios.post("http://localhost:4444/login", userData);
             
-            dispatch(fetchUser(res.data));
-            localStorage.setItem("user", JSON.stringify(res.data));
+            // Сохраняем токен в localStorage
+            localStorage.setItem("token", res.data.token);
+            
+            dispatch(fetchUser(res.data.user));
+            localStorage.setItem("user", JSON.stringify(res.data.user));
             
             navigate("/");
             

@@ -500,3 +500,64 @@ aside {
     }
 }
 
+.sort-select-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.sort-select-container select {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.sort-select-container select:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+.sort-select-container select:focus {
+    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+.sort-select-container::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #fff;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+    font-size: 12px;
+}
+
+.sort-select-container:hover::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.sort-select-container select option {
+    background: #2c3e50;
+    color: #fff;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .sort-select-container select {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+

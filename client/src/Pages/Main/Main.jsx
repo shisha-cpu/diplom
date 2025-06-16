@@ -34,7 +34,7 @@ export default function Main() {
     }, [dispatch]);
 
     useEffect(() => {
-        axios.get('https://edventuralearn.ru/course/')
+        axios.get('http://localhost:4444/course/')
             .then(res => {
                 const filteredCourses = res.data.filter(course => course.accept !== false);
                 setCourses(filteredCourses);
@@ -48,7 +48,7 @@ export default function Main() {
             .catch(err => console.log(err));
 
         if (user.userInfo._id) {
-            axios.get(`https://edventuralearn.ru/pushared/${user.userInfo._id}`)
+            axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
                 .then(res => {
                     setPushared(res.data);
                 });
@@ -98,12 +98,12 @@ export default function Main() {
     };
     useEffect(()=>{
       if (user.userInfo._id) {
-          axios.get(`https://edventuralearn.ru/pushared/${user.userInfo._id}`)
+          axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
           .then(res =>{
               setPushared(prevState => [...prevState, ...res.data]);  
               
           })
-          axios.get(`https://edventuralearn.ru/userCourse/${user.userInfo._id}`)
+          axios.get(`http://localhost:4444/userCourse/${user.userInfo._id}`)
           .then(res => {
               setPushared(prevState => [...prevState, ...res.data]);  
           })
@@ -116,12 +116,12 @@ export default function Main() {
   },[user.userInfo._id])
   useEffect(()=>{
     if (user.userInfo._id) {
-        axios.get(`https://edventuralearn.ru/pushared/${user.userInfo._id}`)
+        axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
         .then(res =>{
             setPushared(prevState => [...prevState, ...res.data]);  
             
         })
-        axios.get(`https://edventuralearn.ru/userCourse/${user.userInfo._id}`)
+        axios.get(`http://localhost:4444/userCourse/${user.userInfo._id}`)
         .then(res => {
             setPushared(prevState => [...prevState, ...res.data]);  
         })
@@ -150,7 +150,7 @@ const handleClick = async (courseId, price, course) => {
     try {
         // Сначала списываем средства
         if (price > 0) {
-            const balanceResponse = await axios.post('https://edventuralearn.ru/balance', {
+            const balanceResponse = await axios.post('http://localhost:4444/balance', {
                 action: 'minus',
                 id: user.userInfo._id,
                 sum: price,
@@ -158,8 +158,8 @@ const handleClick = async (courseId, price, course) => {
             dispatch(changeUserBalance(balanceResponse.data));
         }
 
-        // Затем добавляем курс
-        await axios.post('https://edventuralearn.ru/pushared', { 
+        // Затем добавляем курс и переводим баллы автору
+        await axios.post('http://localhost:4444/pushared', { 
             userId: user.userInfo._id, 
             courseId 
         });
@@ -180,7 +180,7 @@ if (shouldNavigate && selectedCourseId) {
     return <Navigate to={`/course>/${selectedCourseId}`} />;
 }
 const courseDetal = (course)=>{
-    axios.get(`https://edventuralearn.ru/course/${course._id}`)
+    axios.get(`http://localhost:4444/course>/${course._id}`)
     .then(res => {setCourse(res.data)
 
     })
@@ -223,14 +223,16 @@ const handleConfirm = (bool) => {
                         }}
                     />
 
-                    <select onChange={(e) => setSortType(e.target.value)}>
-                        <option value="">Сортировать по</option>
-                        <option value="views">По популярности (просмотры)</option>
-                        <option value="likes">По лайкам</option>
-                        <option value="priceLow">По цене (сначала дешевые)</option>
-                        <option value="priceHigh">По цене (сначала дорогие)</option>
-                        <option value="free">Бесплатные курсы</option>
-                    </select>
+                    <div className="sort-select-container">
+                        <select onChange={(e) => setSortType(e.target.value)}>
+                            <option value="">Сортировать по</option>
+                            <option value="views">По популярности (просмотры)</option>
+                            <option value="likes">По лайкам</option>
+                            <option value="priceLow">По цене (сначала дешевые)</option>
+                            <option value="priceHigh">По цене (сначала дорогие)</option>
+                            <option value="free">Бесплатные курсы</option>
+                        </select>
+                    </div>
 
                     <div className="tags-filter">
                         <h3>Фильтр по тегам:</h3>

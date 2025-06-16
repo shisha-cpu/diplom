@@ -9,7 +9,7 @@ export default function AllUsers() {
     const [loading, setLoading] = useState(true)
     
     useEffect(() => {
-        axios.get('https://edventuralearn.ru/users')
+        axios.get('http://localhost:4444/users')
             .then(res => {
                 setUsers(res.data)
                 setLoading(false)
@@ -23,7 +23,7 @@ export default function AllUsers() {
     const handleDelete = (user, id) => {
         const importName = prompt(`Для подтверждения удаления пользователя ${user} введите его имя`)   
         if (importName === user) {
-            axios.delete(`https://edventuralearn.ru/user/${id}`)
+            axios.delete(`http://localhost:4444/user/${id}`)
                 .then(() => {
                     setUsers(prev => prev.filter(u => u._id !== id))
                     alert('Пользователь удален')

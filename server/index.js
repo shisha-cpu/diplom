@@ -1,4 +1,3 @@
-
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
@@ -7,9 +6,12 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import * as CourseController from './controllers/courseControllers.js'
 import YooCheckoutPkg from '@a2seven/yoo-checkout';
+import jwt from 'jsonwebtoken';
 
 import { v4 as uuidv4 } from 'uuid'; 
 import User from './models/user.js'; 
+
+const JWT_SECRET = 'your-secret-key'; // В реальном проекте используйте переменные окружения
 
 const { YooCheckout } = YooCheckoutPkg;
 
@@ -28,6 +30,7 @@ app.post('/register'  , UserController.register)
 app.post('/login' , UserController.login )
 app.get('/users' ,UserController.users )
 app.delete('/user/:id' , UserController.deleteUser)
+app.put('/user/:id/skills', UserController.updateUserSkills)
 //Курсы
 
 app.post('/course' ,CourseController.addCourse )
@@ -72,7 +75,7 @@ console.log('userId' , userId);
       },
       confirmation: {
         type: 'redirect',
-        return_url: 'https://edventuralearn.ru/',
+        return_url: 'http://localhost:4444/',
       },
       capture: true,
       description: `Пополнение баланса пользователем ${userId}`,

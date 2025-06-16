@@ -4,6 +4,22 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import './courseDetail.css';
 
+// Function to format text with newlines and markdown-style formatting
+const formatText = (text) => {
+  if (!text) return '';
+  
+  // Replace newlines with <br> tags
+  let formattedText = text.replace(/\n/g, '<br>');
+  
+  // Replace markdown-style bold with HTML bold
+  formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  // Replace markdown-style italic with HTML italic
+  formattedText = formattedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  
+  return formattedText;
+};
+
 export default function CourseDetail() {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
@@ -11,6 +27,7 @@ export default function CourseDetail() {
   const user = useSelector(state => state.user.userInfo);
   const [isAuthor, setAuthor] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
+  const [isPurchased, setIsPurchased] = useState(false);
   const navigate = useNavigate();
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState();
@@ -21,27 +38,42 @@ export default function CourseDetail() {
   const [finalTestAnswers, setFinalTestAnswers] = useState({});
   const [finalTestResults, setFinalTestResults] = useState({});
   useEffect(() => {
-    axios.post(`https://edventuralearn.ru/addView/${id}`)
+    axios.post(`http://localhost:4444/addView/${id}`)
       .catch(err => console.log(err));
   }, [id]);
 
   useEffect(() => {
-    axios.get(`https://edventuralearn.ru/course/${id}`)
+
+    
+    axios.get(`http://localhost:4444/course/${id}`)
       .then(res => {
+        console.log(res.data);
+        
         setCourse(res.data);
+        console.log(course);
+        
         setLoading(false);
       })
       .catch(err => console.log(err));
-    axios.get(`https://edventuralearn.ru/comments/${id}`)
+      console.log(11);
+    axios.get(`http://localhost:4444/comments/${id}`)
       .then(res => {
         setComments(res.data);
       });
     
-    axios.get(`https://edventuralearn.ru/fovourite/${user._id}`)
+    axios.get(`http://localhost:4444/fovourite/${user._id}`)
       .then(res => {
         if (res.data.includes(id)) {
           setLikeStatus(true);
         }
+      })
+      .catch(err => console.log(err));
+
+    // Check if course is purchased
+    axios.get(`http://localhost:4444/pushared/${user._id}`)
+      .then(res => {
+        const purchasedCourses = res.data;
+        setIsPurchased(purchasedCourses.some(course => course._id === id));
       })
       .catch(err => console.log(err));
   }, [id, user._id]);
@@ -63,7 +95,7 @@ export default function CourseDetail() {
     }));
   };
 const addLike = () => {
-  axios.post(`https://edventuralearn.ru/courseLike`, {
+  axios.post(`http://localhost:4444/courseLike`, {
     userId: user._id,
     courseId: course._id,
     action: 'plus',
@@ -74,7 +106,7 @@ const addLike = () => {
 };
 
 const removeLike = () => {
-  axios.post(`https://edventuralearn.ru/courseLike`, {
+  axios.post(`http://localhost:4444/courseLike`, {
     userId: user._id,
     courseId: course._id,
     action: 'minus',
@@ -84,7 +116,7 @@ const removeLike = () => {
   }).catch(err => console.log(err));
 };
   const handleComment = () => {
-    axios.post('https://edventuralearn.ru/comments', {
+    axios.post('http://localhost:4444/comments', {
       userId: user._id,
       courseId: course._id,
       text: commentText
@@ -128,7 +160,7 @@ const removeLike = () => {
   };
 
   const handleDelete = () => {
-    axios.delete(`https://edventuralearn.ru/courseDelete/${course._id}`)
+    axios.delete(`http://localhost:4444/courseDelete/${course._id}`)
       .then(() => navigate('/'))
       .catch(err => console.log(err));
   };
@@ -140,223 +172,261 @@ const removeLike = () => {
       [questionKey]: isCorrect ? 'Верно' : 'Неверно'
     }));
   };
-const customStyles = {
-  control: (provided) => ({
-    ...provided,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    border: 'none',
-    borderRadius: '12px',
-    minHeight: '48px',
-    boxShadow: 'none',
-    transition: 'all 0.3s ease',
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    backgroundColor: state.isFocused ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-    color: '#fff',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-  }),
-  menu: (provided) => ({
-    ...provided,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    backdropFilter: 'blur(10px)',
-    borderRadius: '12px',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-  }),
-  multiValue: (provided) => ({
-    ...provided,
-    backgroundColor: 'rgba(0, 123, 255, 0.2)',
-    borderRadius: '8px',
-  }),
-  multiValueLabel: (provided) => ({
-    ...provided,
-    color: '#fff',
-    fontSize: '14px',
-  }),
-  multiValueRemove: (provided) => ({
-    ...provided,
-    color: '#fff',
-    cursor: 'pointer',
-  }),
-  placeholder: (provided) => ({
-    ...provided,
-    color: 'rgba(255, 255, 255, 0.7)',
-  }),
-  singleValue: (provided) => ({
-    ...provided,
-    color: '#fff',
-  }),
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  }),
-  dropdownIndicator: (provided) => ({
-    ...provided,
-    color: 'rgba(255, 255, 255, 0.7)',
-  }),
-  clearIndicator: (provided) => ({
-    ...provided,
-    color: 'rgba(255, 255, 255, 0.7)',
-  }),
-  input: (provided) => ({
-    ...provided,
-    color: '#fff',
-  }),
-};
+
+  const handlePurchase = () => {
+    axios.post('http://localhost:4444/pushared', {
+      userId: user._id,
+      courseId: course._id
+    })
+    .then(res => {
+      setIsPurchased(true);
+      navigate(`/course</${course._id}`);
+    })
+    .catch(err => {
+      if (err.response?.status === 400) {
+        alert(err.response.data.message);
+      } else {
+        console.error('Error purchasing course:', err);
+      }
+    });
+  };
+
+  // Check if course is paid and not purchased
+  const isPaidAndNotPurchased = course.price > 0 && !isPurchased && !isAuthor;
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      border: 'none',
+      borderRadius: '12px',
+      minHeight: '48px',
+      boxShadow: 'none',
+      transition: 'all 0.3s ease',
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+      color: '#fff',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      backdropFilter: 'blur(10px)',
+      borderRadius: '12px',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+    }),
+    multiValue: (provided) => ({
+      ...provided,
+      backgroundColor: 'rgba(0, 123, 255, 0.2)',
+      borderRadius: '8px',
+    }),
+    multiValueLabel: (provided) => ({
+      ...provided,
+      color: '#fff',
+      fontSize: '14px',
+    }),
+    multiValueRemove: (provided) => ({
+      ...provided,
+      color: '#fff',
+      cursor: 'pointer',
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: 'rgba(255, 255, 255, 0.7)',
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: '#fff',
+    }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: 'rgba(255, 255, 255, 0.7)',
+    }),
+    clearIndicator: (provided) => ({
+      ...provided,
+      color: 'rgba(255, 255, 255, 0.7)',
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: '#fff',
+    }),
+  };
   return (
     <div className="course-detail">
       <h2 className='center'>Курс : {course.title}</h2>
       <img src={course.img} className='course-img' alt="" />
       <div className="course-info-card">
         <p>💸 {course.price > 0 ? `${course.price} руб.` : 'Бесплатно'}</p>
-        <p>🕒 {course.duration} часов</p>
+        <p>🕒 {course.duration} </p>
         <p>👀 {course.views}</p>
         <p>❤️ {course.likes}</p>
       </div>
-      <p>О курсе : {course.description}</p>
+      <p dangerouslySetInnerHTML={{ __html: formatText(course.description) }} />
 
-      {course.modules.length > 0 ? (
-        <ul>
-          <h3 className='center'>Модули курса</h3>
-          {course.modules.map((module, index) => (
-            <li key={index} className="module-item">
-              <h4 className='center'>{module.title}</h4>
-              {module.img && <img src={module.img} className='course-img' alt={module.title} />}
-              <p>{module.content}</p>
-             
-              {module.questions.length > 0 && (
-  <div className="questions-section">
-    <h4>Вопросы модуля:</h4>
-    <ul>
-      {module.questions.map((question, questionIndex) => {
-        const questionKey = `${index}-${questionIndex}`;
-        return (
-          <li key={questionIndex} className="question-item">
-            <p><strong>{question.questionText}</strong></p>
-{question.type === 'text' ? 
-  <>
-    <div className="text-answer">
-      <input 
-        type='text' 
-        placeholder='Введите свой ответ : ' 
-        value={finalTestAnswers[index] || ''} 
-        onChange={(e) => setFinalTestAnswers(prev => ({
-          ...prev,
-          [index]: e.target.value
-        }))}
-      /> 
-      <button onClick={() => handleFinalTestTextAnswer(index, finalTestAnswers[index], question.correctAnswer)}>
-        Проверить
-      </button>
-    </div>
-    {finalTestResults[index] && (
-      <p className={finalTestResults[index] === 'Верно' ? 'correct' : 'incorrect'}>
-        {finalTestResults[index]}
-      </p>
-    )}
-  </>
-  : 
-  // Остальной код для вариантов ответа
-          <>
+      {isPaidAndNotPurchased ? (
+        <div className="purchase-section">
+          <h3>Этот курс платный</h3>
+          <p>Для доступа к материалам курса необходимо его приобрести</p>
+          <button 
+            className="purchase-button"
+            onClick={handlePurchase}
+          >
+            Купить курс за {course.price} руб.
+          </button>
+        </div>
+      ) : (
+        <>
+          {course.modules.length > 0 ? (
+            <ul>
+              <h3 className='center'>Модули курса</h3>
+              {course.modules.map((module, index) => (
+                <li key={index} className="module-item">
+                  <h4 className='center'>{module.title}</h4>
+                  {module.img && <img src={module.img} className='course-img' alt={module.title} />}
+                  <p dangerouslySetInnerHTML={{ __html: formatText(module.content) }} />
+                 
+                  {module.questions.length > 0 && (
+                    <div className="questions-section">
+                      <h4>Вопросы модуля:</h4>
+                      <ul>
+                        {module.questions.map((question, questionIndex) => {
+                          const questionKey = `${index}-${questionIndex}`;
+                          return (
+                            <li key={questionIndex} className="question-item">
+                              <p dangerouslySetInnerHTML={{ __html: formatText(question.questionText) }} />
+                              {question.type === 'text' ? 
+                                <>
+                                  <div className="text-answer">
+                                    <input 
+                                      type='text' 
+                                      placeholder='Введите свой ответ : ' 
+                                      value={finalTestAnswers[index] || ''} 
+                                      onChange={(e) => setFinalTestAnswers(prev => ({
+                                        ...prev,
+                                        [index]: e.target.value
+                                      }))}
+                                    /> 
+                                    <button onClick={() => handleFinalTestTextAnswer(index, finalTestAnswers[index], question.correctAnswer)}>
+                                      Проверить
+                                    </button>
+                                  </div>
+                                  {finalTestResults[index] && (
+                                    <p className={finalTestResults[index] === 'Верно' ? 'correct' : 'incorrect'}>
+                                      {finalTestResults[index]}
+                                    </p>
+                                  )}
+                                </>
+                                : 
+                                // Остальной код для вариантов ответа
+                                <>
+                                      <ul>
+                                        {question.options.map((option, optionIdx) => (
+                                          <li 
+                                            key={optionIdx} 
+                                            className={`option-item ${answers[questionKey] === 'Верно' && option === question.correctAnswer ? 'correct' : ''}`} 
+                                            onClick={() => checkOption(index, questionIndex, option, question.correctAnswer)}
+                                          >
+                                            - {option}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                      {answers[questionKey] && (
+                                        <p className={answers[questionKey] === 'Верно' ? 'correct' : 'incorrect'}>
+                                          {answers[questionKey]}
+                                        </p>
+                                      )}
+                                    </>
+                                  }
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            ''
+          )}
+
+        {course.finalTest.length > 0 ? (
+          <ul>
+            <h3 className='center'>Итоговый тест</h3>
+            {course.finalTest.map((question, index) => (
+              <li key={index}>
+                <p><strong>{question.questionText}</strong></p>
                 <ul>
                   {question.options.map((option, optionIdx) => (
                     <li 
                       key={optionIdx} 
-                      className={`option-item ${answers[questionKey] === 'Верно' && option === question.correctAnswer ? 'correct' : ''}`} 
-                      onClick={() => checkOption(index, questionIndex, option, question.correctAnswer)}
+                      onClick={() => checkFinalTestAnswer(index, option, question.correctAnswer)}
+                      className={`option-item ${finalTestResults[index] === 'Верно' && option === question.correctAnswer ? 'correct' : ''}`}
                     >
                       - {option}
                     </li>
                   ))}
                 </ul>
-                {answers[questionKey] && (
-                  <p className={answers[questionKey] === 'Верно' ? 'correct' : 'incorrect'}>
-                    {answers[questionKey]}
+                {finalTestResults[index] && (
+                  <p className={finalTestResults[index] === 'Верно' ? 'correct' : 'incorrect'}>
+                    {finalTestResults[index]}
                   </p>
                 )}
-              </>
-            }
-          </li>
-        );
-      })}
-    </ul>
-  </div>
-)}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        ''
-      )}
-
-{course.finalTest.length > 0 ? (
-  <ul>
-    <h3 className='center'>Итоговый тест</h3>
-    {course.finalTest.map((question, index) => (
-      <li key={index}>
-        <p><strong>{question.questionText}</strong></p>
-        <ul>
-          {question.options.map((option, optionIdx) => (
-            <li 
-              key={optionIdx} 
-              onClick={() => checkFinalTestAnswer(index, option, question.correctAnswer)}
-              className={`option-item ${finalTestResults[index] === 'Верно' && option === question.correctAnswer ? 'correct' : ''}`}
-            >
-              - {option}
-            </li>
-          ))}
-        </ul>
-        {finalTestResults[index] && (
-          <p className={finalTestResults[index] === 'Верно' ? 'correct' : 'incorrect'}>
-            {finalTestResults[index]}
-          </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          ''
         )}
-      </li>
-    ))}
-  </ul>
-) : (
-  ''
-)}
-      {!likeStatus ? (
-        <button onClick={addLike}>Поставить лайк</button>
-      ) : (
-        <button onClick={removeLike}>Лайк стоит</button>
-      )}
+        {!isAuthor && (
+          !likeStatus ? (
+            <button onClick={addLike}>Поставить лайк</button>
+          ) : (
+            <button onClick={removeLike}>Лайк стоит</button>
+          )
+        )}
 
-      {isAuthor && (
-        <>
- 
-          <button onClick={redirectToStat} className="course-stat">Статистика</button>
-          <button onClick={handleDelete} className="course-delete">Удалить</button>
-        </>
-      )}
-      
-      <div className="course-comment">
-        <h3>Комментарии 💬</h3>
-        <input 
-          value={commentText} 
-          onChange={e => setCommentText(e.target.value)} 
-          type="text" 
-          placeholder='Напишите свой комментарий о курсе ....' 
-          className='comment-imput' 
-        />
-        <button onClick={handleComment}>Отправить</button>
-        <div className="comment-list">
-          {comments && comments.map((comment, id) => (
-            <>
-              {comment.text ? 
-                <>
-                  <h6 className={`${comment.user.name === user.name ? 'this-comment-author' : 'comment-author'}`}>
-                    {comment.user.name}
-                  </h6>
-                  <p className="commetn-text">{comment.text}</p>
-                </>
-                : null}
-            </>
-          ))}
+        {isAuthor && (
+          <>
+            <button onClick={redirectToStat} className="course-stat">Статистика</button>
+            <button onClick={handleDelete} className="course-delete">Удалить</button>
+          </>
+        )}
+        
+        <div className="course-comment">
+          <h3>Комментарии 💬</h3>
+          <input 
+            value={commentText} 
+            onChange={e => setCommentText(e.target.value)} 
+            type="text" 
+            placeholder='Напишите свой комментарий о курсе ....' 
+            className='comment-imput' 
+          />
+          <button onClick={handleComment}>Отправить</button>
+          <div className="comment-list">
+            {comments && comments.map((comment, id) => (
+              <>
+                {comment.text ? 
+                  <>
+                    <h6 className={`${comment.user.name === user.name ? 'this-comment-author' : 'comment-author'}`}>
+                      {comment.user.name}
+                    </h6>
+                    <p className="commetn-text" dangerouslySetInnerHTML={{ __html: formatText(comment.text) }} />
+                  </>
+                  : null}
+              </>
+            ))}
+          </div>
         </div>
-      </div>
+      </>
+      )}
     </div>  
   );
 }

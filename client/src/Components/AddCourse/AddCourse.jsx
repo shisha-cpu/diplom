@@ -233,7 +233,7 @@ export default function AddCourse() {
     console.log(courseData);
     
     axios
-      .post("https://edventuralearn.ru/course", {
+      .post("http://localhost:4444/course", {
         courseData,
         userId: user._id,
       })
@@ -414,14 +414,14 @@ const customStyles = {
   className="basic-multi-select"
   classNamePrefix="select"
 />
-        <select
+        {/* <select
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
         >
           <option value="Beginner">Новичок</option>
           <option value="Intermediate">Средний</option>
           <option value="Advanced">Продвинутый</option>
-        </select>
+        </select> */}
         <input
           type="text"
           value={img}

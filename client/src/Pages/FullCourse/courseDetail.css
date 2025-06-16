@@ -376,3 +376,47 @@
       font-size: 14px;
   }
 }
+
+.purchase-section {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 30px;
+  margin: 20px 0;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.purchase-section h3 {
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.purchase-section p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 25px;
+}
+
+.purchase-button {
+  background: linear-gradient(135deg, #00b894, #00cec9);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.purchase-button:hover {
+  background: linear-gradient(135deg, #00cec9, #00b894);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 184, 148, 0.3);
+}
+
+.purchase-button:active {
+  transform: translateY(0);
+}

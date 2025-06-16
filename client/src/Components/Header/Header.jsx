@@ -24,6 +24,8 @@ export default function Header() {
             dispatch(fetchUser(JSON.parse(storedUser)))
         }
     }, [dispatch])
+   
+    
     const [user, setUser] = useState(null)
     const [balance, setBalance] = useState(0)
     const [menuOpen, setMenuOpen] = useState(false)
@@ -39,7 +41,7 @@ export default function Header() {
             setUser(parsedUser)
 
             // Запрос баланса
-            axios.get(`https://edventuralearn.ru/balance/${parsedUser._id}`)
+            axios.get(`http://localhost:4444/balance/${parsedUser._id}`)
                 .then(res => {
              
                     
@@ -74,7 +76,7 @@ export default function Header() {
                                     <li>Пользователь: {user.name}</li>
                                     <li><Link to='/balance' className='balance-link'>Баланс: {balance}</Link></li>
                                     <li><Link to='/dashboard'>Личный кабинет</Link></li>
-                                    {user.name === 'shisha' && <li><Link to='/admin'>Панель администратора</Link></li>}
+                                    {user.name === 'admin@yandex.ru' && <li><Link to='/admin'>Панель администратора</Link></li>}
                                     <li><button onClick={removeUser}>Выйти</button></li>
                                 </ul>
                             </div>

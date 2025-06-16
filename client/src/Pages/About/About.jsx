@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import './about.css'; // Подключаем наш CSS файл
 import photo from './main.png'
 import Card from '../../Components/Card/Card';
 import StepList from '../../Components/StepList/StepList';
 import ButtonWithArrow from '../../Components/Button/ButtonWithArrow';
 import gif from '../../img/about.gif'
+
+// Lazy load non-critical components
+const LazyStepList = lazy(() => import('../../Components/StepList/StepList'));
+
 const About = () => {
   return (
     <section className="about-section py-20 px-4 sm:px-6 lg:px-8">
@@ -33,7 +37,14 @@ const About = () => {
             Главное преимущество EdVentura — это возможность не только обучаться, но и создавать собственные курсы. Пользователи могут делиться своими знаниями, зарабатывать внутреннюю валюту за прохождение их курсов и использовать её для приобретения новых знаний. Таким образом, обучение становится самодостаточным процессом, где знания обмениваются на знания.
           </p>
 
-        <img src={gif} alt="" className="about-gif" />
+        <img 
+          src={gif} 
+          alt="EdVentura platform demonstration" 
+          className="about-gif"
+          loading="lazy"
+          width="100%"
+          height="auto"
+        />
           </div>
 
  
@@ -59,9 +70,11 @@ const About = () => {
       </div>
 
 
-      <div className="steps-list about-container">
+      <div className="steps-list about-container center-around">
       <hr />
-        <StepList />
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyStepList />
+        </Suspense>
       </div>
 
       <ButtonWithArrow />

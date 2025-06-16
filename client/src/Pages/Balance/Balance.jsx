@@ -21,7 +21,7 @@ console.log(user);
     setSelectedPackage(pkg);
 
     try {
-      const res = await fetch('https://edventuralearn.ru/api/payment', {
+      const res = await fetch('http://localhost:4444/api/payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

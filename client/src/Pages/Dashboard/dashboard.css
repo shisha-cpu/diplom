@@ -289,3 +289,47 @@
 .button-group button:nth-child(4)::after {
     background-image: url('path-to-statistics-icon.svg'); /* Иконка для "Моя статистика" */
 }
+
+.skills-section {
+  margin: 20px 0;
+
+  background: transparent;
+}
+
+.skills-header {
+  margin-bottom: 15px;
+}
+
+.skills-header h4 {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.no-skills {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  margin: 0;
+  font-size: 14px;
+}

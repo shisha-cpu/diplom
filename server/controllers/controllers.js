@@ -1,5 +1,8 @@
 import User from "../models/user.js";
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = 'your-secret-key'; // В реальном проекте используйте переменные окружения
 
 // Авторизация
 export const register = async (req, res) => {
@@ -31,7 +34,15 @@ export const register = async (req, res) => {
         });
 
         const user = await userData.save();
-        res.json(user);
+        
+        // Создаем JWT токен
+        const token = jwt.sign(
+            { userId: user._id },
+            JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.json({ user, token });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -57,7 +68,14 @@ export const login = async (req, res) => {
         const isValidPass = await bcrypt.compare(password, user.password);
         
         if (isValidPass) {
-            res.send(user);
+            // Создаем JWT токен
+            const token = jwt.sign(
+                { userId: user._id },
+                JWT_SECRET,
+                { expiresIn: '24h' }
+            );
+            
+            res.json({ user, token });
         } else {
             return res.status(400).json({msg : 'Данные не верные '})
         }
@@ -112,4 +130,23 @@ export const deleteUser = async(req ,res ) =>{
             res.sendStatus(500).json({ message: err.message });
         }
     };
+
+export const updateUserSkills = async (req, res) => {
+    const { id } = req.params;
+    const { skills } = req.body;
+
+    try {
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ msg: 'Пользователь не найден' });
+        }
+
+        user.skills = skills;
+        await user.save();
+
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 

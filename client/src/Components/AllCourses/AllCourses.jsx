@@ -9,7 +9,7 @@ export default function AllCourses() {
     const [loading, setLoading] = useState(true)
     
     useEffect(() => {
-        axios.get('https://edventuralearn.ru/course/')
+        axios.get('http://localhost:4444/course/')
             .then(res => {
                 const filteredCourses = res.data.filter(course => course.accept !== false)
                 setCourses(filteredCourses)
@@ -24,7 +24,7 @@ export default function AllCourses() {
     const handleDelete = (id, userId) => {
         if (!window.confirm('Вы уверены, что хотите удалить этот курс?')) return
         
-        axios.delete(`https://edventuralearn.ru/courseDelete/${id}`, { userId })
+        axios.delete(`http://localhost:4444/courseDelete/${id}`, { userId })
             .then(() => {
                 setCourses(prev => prev.filter(course => course._id !== id))
                 alert('Курс успешно удален')
@@ -74,7 +74,7 @@ export default function AllCourses() {
                         
                         <div className="course-content">
                             <h3 className="course-title">
-                                <Link to={`/course/${course._id}`}>{course.title}</Link>
+                                <Link to={`/course>/${course._id}`}>{course.title}</Link>
                             </h3>
                             
                             {course.description && (
@@ -84,22 +84,14 @@ export default function AllCourses() {
                             )}
                             
                             <div className="course-meta">
-                                <div className="meta-item">
-                                    <FiUser className="meta-icon" />
-                                    <span>Автор: {course.authorName || 'Неизвестен'}</span>
-                                </div>
+                          
                                 
                                 <div className="meta-item">
                                     <FiClock className="meta-icon" />
                                     <span>Создан: {formatDate(course.createdAt)}</span>
                                 </div>
                                 
-                                {course.price && (
-                                    <div className="meta-item">
-                                        <FiDollarSign className="meta-icon" />
-                                        <span>Цена: {course.price} ₽</span>
-                                    </div>
-                                )}
+                       
                                 
                                 {course.rating && (
                                     <div className="meta-item">

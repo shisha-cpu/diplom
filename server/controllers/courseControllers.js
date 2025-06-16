@@ -40,13 +40,12 @@ export const userGetCourse = async(req, res) => {
             return res.status(400).json({ message: 'Курс уже куплен' });
         }
 
-        // Если курс платный, проверяем баланс
-        if (course.price > 0) {
-            if (user.balance.balance < course.price) {
-                return res.status(400).json({ message: 'Недостаточно средств' });
-            }
-            // Списываем средства
-            user.balance.balance -= course.price;
+        // Находим автора курса и переводим ему баллы в newBalance
+        const courseAuthor = await User.findById(course.author);
+        if (courseAuthor) {
+            courseAuthor.balance.nweBalance += course.price;
+            courseAuthor.balance.allHistoryBalance += course.price;
+            await courseAuthor.save();
         }
 
         // Добавляем курс
@@ -59,6 +58,7 @@ export const userGetCourse = async(req, res) => {
         res.status(500).send(err.message);
     }
 };
+
 export const getPurchased = async(req, res) => {
     try {
         const { id } = req.params
@@ -72,6 +72,7 @@ export const getPurchased = async(req, res) => {
         res.status(500).send(err.message);
     }
 }
+
 export const getCourse = async(req, res) => {
     try {
         const courses = await Course.find()
@@ -88,6 +89,8 @@ export const getCourseById = async(req, res) => {
         if (!course) {
             return res.status(404).send({ message: 'Курс не найден' })
         }
+        console.log(course);
+        
         res.json(course)
     } catch (err) {
         res.status(500).send(err.message);
@@ -127,7 +130,6 @@ export const changeLikes = async(req, res) => {
     try {
         const { userId, courseId, action } = req.body 
 
-        
         const user = await User.findOne({ _id: userId });
         if (!user) {
             res.status(404).json({ message: 'Пользователь не найден' })
@@ -136,30 +138,38 @@ export const changeLikes = async(req, res) => {
         if (!course) {
             res.status(404).json({ message: 'Курс не найден ' })
         }
+
+        // Find course author to reward them for likes
+        const courseAuthor = await User.findById(course.author);
+        if (!courseAuthor) {
+            res.status(404).json({ message: 'Автор курса не найден' })
+        }
+
         switch (action) {
             case 'plus':
-                if (userId.toString() === course.author.toString()) {
-                    user.balance.nweBalance += 1
-                    user.balance.allHistoryBalance++
-                        console.log(userId, course.author);
-
+                // Add reward to author's newBalance when someone likes their course
+                if (userId.toString() !== course.author.toString()) {
+                    courseAuthor.balance.nweBalance += 1;
+                    courseAuthor.balance.allHistoryBalance += 1;
                 }
-                course.likes += 1
-                user.fovourite.push(courseId)
+                course.likes += 1;
+                user.fovourite.push(courseId);
                 break;
             case 'minus':
-                if (user.balance.nweBalance > 0 && userId.toString() === course.author.toString()) {
-                    user.balance.nweBalance -= 1
-                    user.balance.allHistoryBalance--
+                // Remove reward from author's newBalance when someone unlikes their course
+                if (userId.toString() !== course.author.toString() && courseAuthor.balance.nweBalance > 0) {
+                    courseAuthor.balance.nweBalance -= 1;
+                    courseAuthor.balance.allHistoryBalance -= 1;
                 }
-                course.likes -= 1
+                course.likes -= 1;
                 user.fovourite = user.fovourite.filter(id => id.toString() !== courseId.toString());
                 break;
         }
-        await course.save()
-        await user.save()
+        await course.save();
+        await user.save();
+        await courseAuthor.save();
 
-        res.json(course.likes)
+        res.json(course.likes);
     } catch (err) {
         res.status(500).send(err.message);
     }
