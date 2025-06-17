@@ -9,7 +9,7 @@ export default function NewCourses() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:4444/course/')
+        axios.get('https://edventuralearn.ru/course/')
             .then(res => {
                 const filteredCourses = res.data.filter(course => course.accept !== true);
                 setCourses(filteredCourses);
@@ -23,7 +23,7 @@ export default function NewCourses() {
 
     const handleDelete = (id, userId) => {
         if (window.confirm('Вы уверены, что хотите удалить этот курс?')) {
-            axios.delete(`http://localhost:4444/courseDelete/${id}`, { userId })
+            axios.delete(`https://edventuralearn.ru/courseDelete/${id}`, { userId })
                 .then(() => {
                     setCourses(prev => prev.filter(course => course._id !== id));
                     alert('Курс удален');
@@ -37,7 +37,7 @@ export default function NewCourses() {
 
     const handlePublic = (id) => {
         if (window.confirm('Одобрить и опубликовать этот курс?')) {
-            axios.post(`http://localhost:4444/public/${id}`)
+            axios.post(`https://edventuralearn.ru/public/${id}`)
                 .then(() => {
                     setCourses(prev => prev.filter(course => course._id !== id));
                     alert('Курс одобрен и опубликован');

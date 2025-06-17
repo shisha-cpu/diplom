@@ -75,7 +75,7 @@ console.log('userId' , userId);
       },
       confirmation: {
         type: 'redirect',
-        return_url: 'http://localhost:4444/',
+        return_url: 'https://edventuralearn.ru/',
       },
       capture: true,
       description: `Пополнение баланса пользователем ${userId}`,

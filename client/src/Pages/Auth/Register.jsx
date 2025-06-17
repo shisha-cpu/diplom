@@ -274,7 +274,7 @@ export default function Register() {
     };
     
     try {
-      const res = await axios.post('http://localhost:4444/register', userData);
+      const res = await axios.post('https://edventuralearn.ru/register', userData);
       
       // Сохраняем токен в localStorage
       localStorage.setItem("token", res.data.token);

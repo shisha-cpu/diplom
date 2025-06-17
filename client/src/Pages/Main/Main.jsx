@@ -34,7 +34,7 @@ export default function Main() {
     }, [dispatch]);
 
     useEffect(() => {
-        axios.get('http://localhost:4444/course/')
+        axios.get('https://edventuralearn.ru/course/')
             .then(res => {
                 const filteredCourses = res.data.filter(course => course.accept !== false);
                 setCourses(filteredCourses);
@@ -48,7 +48,7 @@ export default function Main() {
             .catch(err => console.log(err));
 
         if (user.userInfo._id) {
-            axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
+            axios.get(`https://edventuralearn.ru/pushared/${user.userInfo._id}`)
                 .then(res => {
                     setPushared(res.data);
                 });
@@ -98,12 +98,12 @@ export default function Main() {
     };
     useEffect(()=>{
       if (user.userInfo._id) {
-          axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
+          axios.get(`https://edventuralearn.ru/pushared/${user.userInfo._id}`)
           .then(res =>{
               setPushared(prevState => [...prevState, ...res.data]);  
               
           })
-          axios.get(`http://localhost:4444/userCourse/${user.userInfo._id}`)
+          axios.get(`https://edventuralearn.ru/userCourse/${user.userInfo._id}`)
           .then(res => {
               setPushared(prevState => [...prevState, ...res.data]);  
           })
@@ -116,12 +116,12 @@ export default function Main() {
   },[user.userInfo._id])
   useEffect(()=>{
     if (user.userInfo._id) {
-        axios.get(`http://localhost:4444/pushared/${user.userInfo._id}`)
+        axios.get(`https://edventuralearn.ru/pushared/${user.userInfo._id}`)
         .then(res =>{
             setPushared(prevState => [...prevState, ...res.data]);  
             
         })
-        axios.get(`http://localhost:4444/userCourse/${user.userInfo._id}`)
+        axios.get(`https://edventuralearn.ru/userCourse/${user.userInfo._id}`)
         .then(res => {
             setPushared(prevState => [...prevState, ...res.data]);  
         })
@@ -150,7 +150,7 @@ const handleClick = async (courseId, price, course) => {
     try {
         // Сначала списываем средства
         if (price > 0) {
-            const balanceResponse = await axios.post('http://localhost:4444/balance', {
+            const balanceResponse = await axios.post('https://edventuralearn.ru/balance', {
                 action: 'minus',
                 id: user.userInfo._id,
                 sum: price,
@@ -159,7 +159,7 @@ const handleClick = async (courseId, price, course) => {
         }
 
         // Затем добавляем курс и переводим баллы автору
-        await axios.post('http://localhost:4444/pushared', { 
+        await axios.post('https://edventuralearn.ru/pushared', { 
             userId: user.userInfo._id, 
             courseId 
         });
@@ -180,7 +180,7 @@ if (shouldNavigate && selectedCourseId) {
     return <Navigate to={`/course>/${selectedCourseId}`} />;
 }
 const courseDetal = (course)=>{
-    axios.get(`http://localhost:4444/course>/${course._id}`)
+    axios.get(`https://edventuralearn.ru/course>/${course._id}`)
     .then(res => {setCourse(res.data)
 
     })

@@ -8,7 +8,7 @@ export default function CourseStat() {
     const [ctr, setCtr] = useState(0);
 
     useEffect(() => {
-        axios.get(`http://localhost:4444/course/${id}`)
+        axios.get(`https://edventuralearn.ru/course/${id}`)
             .then(res => {
                 setCourse(res.data);
             });
