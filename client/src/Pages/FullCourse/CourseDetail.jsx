@@ -38,14 +38,12 @@ export default function CourseDetail() {
   const [finalTestAnswers, setFinalTestAnswers] = useState({});
   const [finalTestResults, setFinalTestResults] = useState({});
   useEffect(() => {
-    axios.post(`https://edventuralearn.ru/addView/${id}`)
+    axios.post(`http://localhost:4444/addView/${id}`)
       .catch(err => console.log(err));
   }, [id]);
 
   useEffect(() => {
-
-    
-    axios.get(`https://edventuralearn.ru/course/${id}`)
+    axios.get(`http://localhost:4444/course/${id}`)
       .then(res => {
         console.log(res.data);
         
@@ -56,12 +54,12 @@ export default function CourseDetail() {
       })
       .catch(err => console.log(err));
       console.log(11);
-    axios.get(`https://edventuralearn.ru/comments/${id}`)
+    axios.get(`http://localhost:4444/comments/${id}`)
       .then(res => {
         setComments(res.data);
       });
     
-    axios.get(`https://edventuralearn.ru/fovourite/${user._id}`)
+    axios.get(`http://localhost:4444/fovourite/${user._id}`)
       .then(res => {
         if (res.data.includes(id)) {
           setLikeStatus(true);
@@ -70,7 +68,7 @@ export default function CourseDetail() {
       .catch(err => console.log(err));
 
     // Check if course is purchased
-    axios.get(`https://edventuralearn.ru/pushared/${user._id}`)
+    axios.get(`http://localhost:4444/pushared/${user._id}`)
       .then(res => {
         const purchasedCourses = res.data;
         setIsPurchased(purchasedCourses.some(course => course._id === id));
@@ -95,28 +93,28 @@ export default function CourseDetail() {
     }));
   };
 const addLike = () => {
-  axios.post(`https://edventuralearn.ru/courseLike`, {
+  axios.post(`http://localhost:4444/courseLike`, {
     userId: user._id,
     courseId: course._id,
     action: 'plus',
   }).then((res) => {
     setLikeStatus(true);
-    setCourse(prev => ({...prev, likes: prev.likes + 1})); // Добавьте эту строку
+    setCourse(prev => ({...prev, likes: prev.likes + 1}));
   }).catch(err => console.log(err));
 };
 
 const removeLike = () => {
-  axios.post(`https://edventuralearn.ru/courseLike`, {
+  axios.post(`http://localhost:4444/courseLike`, {
     userId: user._id,
     courseId: course._id,
     action: 'minus',
   }).then((res) => {
     setLikeStatus(false);
-    setCourse(prev => ({...prev, likes: prev.likes - 1})); // Добавьте эту строку
+    setCourse(prev => ({...prev, likes: prev.likes - 1}));
   }).catch(err => console.log(err));
 };
   const handleComment = () => {
-    axios.post('https://edventuralearn.ru/comments', {
+    axios.post('http://localhost:4444/comments', {
       userId: user._id,
       courseId: course._id,
       text: commentText
@@ -160,7 +158,7 @@ const removeLike = () => {
   };
 
   const handleDelete = () => {
-    axios.delete(`https://edventuralearn.ru/courseDelete/${course._id}`)
+    axios.delete(`http://localhost:4444/courseDelete/${course._id}`)
       .then(() => navigate('/'))
       .catch(err => console.log(err));
   };
@@ -174,7 +172,7 @@ const removeLike = () => {
   };
 
   const handlePurchase = () => {
-    axios.post('https://edventuralearn.ru/pushared', {
+    axios.post('http://localhost:4444/pushared', {
       userId: user._id,
       courseId: course._id
     })
@@ -385,7 +383,15 @@ const removeLike = () => {
         ) : (
           ''
         )}
-  
+        {!isAuthor && (
+          <div className="like-button-container">
+            {!likeStatus ? (
+              <button onClick={addLike} className="like-button">❤️ Поставить лайк</button>
+            ) : (
+              <button onClick={removeLike} className="like-button active">❤️ Убрать лайк</button>
+            )}
+          </div>
+        )}
 
         {isAuthor && (
           <>
