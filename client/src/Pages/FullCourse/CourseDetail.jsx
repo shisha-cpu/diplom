@@ -386,11 +386,13 @@ const removeLike = () => {
           ''
         )}
         {!isAuthor && (
-          !likeStatus ? (
-            <button onClick={addLike}>Поставить лайк</button>
-          ) : (
-            <button onClick={removeLike}>Лайк стоит</button>
-          )
+          <div className="like-button-container">
+            {!likeStatus ? (
+              <button onClick={addLike} className="like-button">❤️ Поставить лайк</button>
+            ) : (
+              <button onClick={removeLike} className="like-button active">❤️ Убрать лайк</button>
+            )}
+          </div>
         )}
 
         {isAuthor && (

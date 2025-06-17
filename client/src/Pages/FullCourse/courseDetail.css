@@ -420,3 +420,33 @@
 .purchase-button:active {
   transform: translateY(0);
 }
+
+.like-button-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.like-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.like-button:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+}
+
+.like-button.active {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.like-button.active:hover {
+  background-color: #ff5252;
+}
