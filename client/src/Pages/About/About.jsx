@@ -77,7 +77,9 @@ const About = () => {
         </Suspense>
       </div>
 
-      <ButtonWithArrow />
+      <div className="button-container">
+        <ButtonWithArrow />
+      </div>
 
     </section>
   );
