@@ -128,20 +128,30 @@ export const getUserCourses = async(req, res) => {
 
 export const changeLikes = async(req, res) => {
     try {
-        const { userId, courseId, action } = req.body 
+        const { userId, courseId, action } = req.body;
+        console.log('Processing like request:', { userId, courseId, action });
+
+        if (!userId || !courseId || !action) {
+            console.log('Missing required fields:', { userId, courseId, action });
+            return res.status(400).json({ message: 'Отсутствуют обязательные поля' });
+        }
 
         const user = await User.findOne({ _id: userId });
         if (!user) {
+            console.log('User not found:', userId);
             return res.status(404).json({ message: 'Пользователь не найден' });
         }
+
         const course = await Course.findOne({ _id: courseId });
         if (!course) {
-            return res.status(404).json({ message: 'Курс не найден ' });
+            console.log('Course not found:', courseId);
+            return res.status(404).json({ message: 'Курс не найден' });
         }
 
         // Find course author to reward them for likes
         const courseAuthor = await User.findById(course.author);
         if (!courseAuthor) {
+            console.log('Course author not found:', course.author);
             return res.status(404).json({ message: 'Автор курса не найден' });
         }
 
@@ -167,12 +177,15 @@ export const changeLikes = async(req, res) => {
             default:
                 return res.status(400).json({ message: 'Неверное действие' });
         }
+
         await course.save();
         await user.save();
         await courseAuthor.save();
 
-        return res.json(course.likes);
+        console.log('Successfully processed like action');
+        return res.json({ likes: course.likes });
     } catch (err) {
+        console.error('Error in changeLikes:', err);
         return res.status(500).json({ message: err.message });
     }
 }

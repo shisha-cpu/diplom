@@ -11,7 +11,7 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid'; 
 import User from './models/user.js'; 
 
-const JWT_SECRET = 'your-secret-key'; // В реальном проекте используйте переменные окружения
+const JWT_SECRET = 'iom?retryWrites=true&w=majority&appName=Clu'; 
 
 const { YooCheckout } = YooCheckoutPkg;
 
@@ -39,7 +39,7 @@ app.get('/course', CourseController.getCourse)
 app.get('/course/:id' , CourseController.getCourseById)
 app.delete('/courseDelete/:id' , CourseController.deleteCourse)
 app.get('/userCourse/:id' , CourseController.getUserCourses)
-app.post('/courseLike' , CourseController.changeLikes)
+app.post('/courseLike', CourseController.changeLikes);
 app.get('/fovourite/:id' , CourseController.getFovourite)
 app.post('/pushared' , CourseController.userGetCourse)
 app.get('/pushared/:id' , CourseController.getPurchased)
