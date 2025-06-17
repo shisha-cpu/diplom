@@ -132,17 +132,17 @@ export const changeLikes = async(req, res) => {
 
         const user = await User.findOne({ _id: userId });
         if (!user) {
-            res.status(404).json({ message: 'Пользователь не найден' })
+            return res.status(404).json({ message: 'Пользователь не найден' });
         }
         const course = await Course.findOne({ _id: courseId });
         if (!course) {
-            res.status(404).json({ message: 'Курс не найден ' })
+            return res.status(404).json({ message: 'Курс не найден ' });
         }
 
         // Find course author to reward them for likes
         const courseAuthor = await User.findById(course.author);
         if (!courseAuthor) {
-            res.status(404).json({ message: 'Автор курса не найден' })
+            return res.status(404).json({ message: 'Автор курса не найден' });
         }
 
         switch (action) {
@@ -164,14 +164,16 @@ export const changeLikes = async(req, res) => {
                 course.likes -= 1;
                 user.fovourite = user.fovourite.filter(id => id.toString() !== courseId.toString());
                 break;
+            default:
+                return res.status(400).json({ message: 'Неверное действие' });
         }
         await course.save();
         await user.save();
         await courseAuthor.save();
 
-        res.json(course.likes);
+        return res.json(course.likes);
     } catch (err) {
-        res.status(500).send(err.message);
+        return res.status(500).json({ message: err.message });
     }
 }
 
